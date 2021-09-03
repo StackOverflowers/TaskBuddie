@@ -5,10 +5,42 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
+import { HeaderComponent } from './home/header/header.component';
+import { LoginComponent } from './home/login/login.component';
+import { RegisterComponent } from './home/register/register.component';
+import { FooterComponent } from './home/footer/footer.component';
+import { ListBoardComponent } from './board/list-board/list-board.component';
+import { SaveBoardComponent } from './board/save-board/save-board.component';
+import { ListUserComponent } from './admin/list-user/list-user.component';
+import { RegisterUserComponent } from './admin/register-user/register-user.component';
+import { UpdateUserComponent } from './admin/update-user/update-user.component';
+import { RegisterRoleComponent } from './admin/register-role/register-role.component';
+import { ListRoleComponent } from './admin/list-role/list-role.component';
+import { UpdateRoleComponent } from './admin/update-role/update-role.component';
+import { ListTaskComponent } from './task/list-task/list-task.component';
+import { SaveTaskComponent } from './task/save-task/save-task.component';
+import { ListTeamComponent } from './team/list-team/list-team.component';
+import { AddMemberComponent } from './team/add-member/add-member.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    HeaderComponent,
+    LoginComponent,
+    RegisterComponent,
+    FooterComponent,
+    ListBoardComponent,
+    SaveBoardComponent,
+    ListUserComponent,
+    RegisterUserComponent,
+    UpdateUserComponent,
+    RegisterRoleComponent,
+    ListRoleComponent,
+    UpdateRoleComponent,
+    ListTaskComponent,
+    SaveTaskComponent,
+    ListTeamComponent,
+    AddMemberComponent
   ],
   imports: [
     BrowserModule,
