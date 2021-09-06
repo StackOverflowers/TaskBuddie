@@ -4,10 +4,10 @@ const BoardController = require("../controllers/board");
 const multiparty = require("connect-multiparty");
 const mult = multiparty();
 
-router.post("/saveTask", BoardController.saveTask);
-router.post("/saveTaskImg", mult, BoardController.saveTaskImg);
-router.get("/listTask", BoardController.listTask);
-router.put("/updateTask", BoardController.updateTask);
-router.delete("/deleteTask/:_id", BoardController.deleteTask);
+router.post("/registerBoard", BoardController.registerBoard);
+router.get("/listBoard", BoardController.listBoard);
+router.put("/addMember", BoardController.addMember);
+router.put("/deleteMember", BoardController.deleteMember);
+router.delete("/deleteTask/:_id", BoardController.deleteBoard);
 
 module.exports = router;
