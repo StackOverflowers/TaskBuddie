@@ -96,11 +96,11 @@ const deleteMember = async (req, res) => {
   let delMember = member.members;
 
   for (var i = 0; i < delMember.length; i++) {
-    if (delMember[i].role === "Owner")
-      return res.status(400).send("Cannot delete Owner");
-
-    if (delMember[i].id.toString() === user._id.toString())
+    if (delMember[i].id.toString() === user._id.toString()) {
+      if (delMember[i].role === "Owner")
+        return res.status(400).send("Cannot delete Owner");
       delMember.splice(i, 1);
+    }
   }
 
   let board = await Board.findByIdAndUpdate(req.body.boardId, {
@@ -130,7 +130,7 @@ const deleteBoard = async (req, body) => {
   if (!validId) return res.status(400).send("Invalid id");
 
   let taskImg = await Board.findById(req.params._id);
-  taskImg =  taskImg.imageUrl;
+  taskImg = taskImg.imageUrl;
   taskImg = taskImg.split("/")[4];
   let serverImg = "./uploads/" + taskImg;
 
@@ -139,7 +139,7 @@ const deleteBoard = async (req, body) => {
   try {
     fs.unlinkSync(serverImg);
   } catch (error) {
-    console.log("Image no found in server"); 
+    console.log("Image no found in server");
   }
   return res.status(200).send({ message: "RDdeleted" });
 };
