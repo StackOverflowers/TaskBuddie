@@ -12,6 +12,7 @@ app.use(express.json());
 app.use(cors());
 app.use("/api/role", Role);
 app.use("/api/user", User);
+app.use("/api/board", Board);
 
 app.listen(process.env.PORT, () =>
   console.log("Backend server running on port: " + process.env.PORT)
