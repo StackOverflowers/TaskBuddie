@@ -1,35 +1,24 @@
 const Board = require("../models/board");
+const User = require("../models/user");
 const mongoose = require("mongoose");
 const fs = require("fs");
 const path = require("path");
 const moment = require("moment");
 
-const saveTask = async (req, res) => {
+const registerBoard = async (req, res) => {
   if (!req.body.name || !req.body.description)
-    return res.status(400).send("Incomplete data");
+    return res.status(400).send("Incomplete Data");
 
-  const board = new Board({
-    userId: req.user._id,
-    name: req.body.name,
-    description: req.body.description,
-    taskStatus: "to-do",
+  let user = await User.findById(req.body._id);
+  if (!user) return res.status(400).send("User cannot find");
+
+  let data = [];
+  data.push({
+    id: req.body._id,
+    name: user.name,
+    role: "Owner",
+    ranking: "0",
   });
-
-  const result = await board.save();
-  if (!result) return res.status(400).send("Error registering task");
-  return res.status(200).send({ result });
-};
-
-const listTask = async (req, res) => {
-  const board = await Board.find({ userId: req.user._id });
-  if (!board || board.length === 0)
-    return res.status(400).send("You have no assigned tasks");
-  return res.status(200).send({ board });
-};
-
-const saveTaskImg = async (req, res) => {
-  if (!req.body.name || !req.body.description)
-    return res.status(400).send("Incomplete data");
 
   let imageUrl = "";
   if (req.files.image) {
@@ -46,53 +35,119 @@ const saveTaskImg = async (req, res) => {
   }
 
   const board = new Board({
-    userId: req.user._id,
+    userId: req.body._id,
+    members: data,
     name: req.body.name,
     description: req.body.description,
-    taskStatus: "to-do",
+    dnStatus: true,
     imageUrl: imageUrl,
   });
 
-  const result = await board.save();
-  if (!result) return res.status(400).send("Error registering task");
+  let result = await board.save();
+  if (!result) return res.status(400).send("Error registering board");
   return res.status(200).send({ result });
 };
 
-const updateTask = async (req, res) => {
-  let validId = mongoose.Types.ObjectId.isValid(req.body._id);
-  if (!validId) return res.status(400).send("Invalid id");
-
-  if (!req.body._id || !req.body.taskStatus)
+const addMember = async (req, res) => {
+  if (!req.body.boardId || !req.body.userId)
     return res.status(400).send("Incomplete data");
 
-  const board = await Board.findByIdAndUpdate(req.body._id, {
-    userId: req.user._id,
-    taskStatus: req.body.taskStatus,
+  let user = await User.findById(req.body.userId);
+  if (!user) return res.status(400).send("User doesn't exist");
+
+  let member = await Board.findById(req.body.boardId);
+  if (!member) return res.status(400).send("Board doesn't exist");
+
+  let newMember = member.members;
+  let data = {
+    id: user._id,
+    name: user.name,
+    role: "Guest",
+    ranking: "0",
+  };
+
+  for (var i = 0; i < newMember.length; i++) {
+    if (newMember[i].id.toString() === user._id.toString()) {
+      return res
+        .status(400)
+        .send("the user is currently a member of the board");
+    }
+  }
+
+  newMember.push(data);
+  let board = await Board.findByIdAndUpdate(req.body.boardId, {
+    members: newMember,
   });
 
-  if (!board) return res.status(400).send("Task not found");
+  if (!board) return res.status(400).send("Board not found");
   return res.status(200).send({ board });
 };
 
-const deleteTask = async (req, res) => {
-  const validId = mongoose.Types.ObjectId.isValid(req.params._id);
-  if (!validId) return res.status(400).send("Invalid id");
+const deleteMember = async (req, res) => {
+  if (!req.body.boardId || !req.body.userId)
+    return res.status(400).send("Incomplete data");
 
-  let taskImg = await Board.findById(req.params._id)
-  taskImg = taskImg.imageUrl;
-  taskImg = taskImg.split("/")[4]
-  let serverImg = "./uploads/" + taskImg
+  let user = await User.findById(req.body.userId);
+  if (!user) return res.status(400).send("User doesn't exist");
 
-  const board = await Board.findByIdAndDelete(req.params._id);
-  if (!board) return res.status(400).send("Task not found");
+  let member = await Board.findById(req.body.boardId);
+  if (!member) return res.status(400).send("Board doesn't exist");
 
-  try {
-    fs.unlinkSync(serverImg)
-  } catch (error) {
-    console.log("image no found in server")
+  let delMember = member.members;
+
+  for (var i = 0; i < delMember.length; i++) {
+    if (delMember[i].role === "Owner")
+      return res.status(400).send("Cannot delete Owner");
+
+    if (delMember[i].id.toString() === user._id.toString())
+      delMember.splice(i, 1);
   }
-  
-  return res.status(200).send({ message: "Task deleted" });
+
+  let board = await Board.findByIdAndUpdate(req.body.boardId, {
+    members: delMember,
+  });
+
+  if (!board) return res.status(400).send("Board not found");
+  return res.status(200).send("Member remove");
 };
 
-module.exports = { saveTask, listTask, updateTask, deleteTask, saveTaskImg };
+const listBoard = async (req, res) => {
+  let board = await Board.find();
+  if (!board || board.length === 0)
+    return res.status(400).send("You have no assigned tasks");
+  return res.status(200).send({ board });
+};
+
+const listBoardMember = async (req, res) => {
+  let board = await Board.find({ members: userId });
+  if (!board || board.length === 0)
+    return res.status(400).send("You have no assigned tasks");
+  return res.status(200).send({ board });
+};
+
+const deleteBoard = async (req, body) => {
+  let validId = mongoose.Types.ObjectId.isValid(req.params._id);
+  if (!validId) return res.status(400).send("Invalid id");
+
+  let taskImg = await Board.findById(req.params._id);
+  taskImg =  taskImg.imageUrl;
+  taskImg = taskImg.split("/")[4];
+  let serverImg = "./uploads/" + taskImg;
+
+  let board = await Board.findByIdAndDelete(req.params._id);
+  if (!board) return res.status(400).send("Board not found");
+  try {
+    fs.unlinkSync(serverImg);
+  } catch (error) {
+    console.log("Image no found in server"); 
+  }
+  return res.status(200).send({ message: "RDdeleted" });
+};
+
+module.exports = {
+  registerBoard,
+  listBoard,
+  addMember,
+  deleteMember,
+  deleteBoard,
+};
