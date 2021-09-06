@@ -1,0 +1,19 @@
+.headerSpacer {
+  flex: 1 1 auto;
+}
+
+a {
+  text-decoration: none;
+  color: white;
+}
+
+.bgHeader {
+  background-color: #2b475e;
+}
+
+img {
+  margin-top: 15px;
+  padding: 4px;
+  border: #f4c989 solid;
+  border-width: 2px 2px 2px 2px;
+}

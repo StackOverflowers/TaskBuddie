@@ -22,6 +22,8 @@ import { SaveTaskComponent } from './task/save-task/save-task.component';
 import { ListTeamComponent } from './team/list-team/list-team.component';
 import { AddMemberComponent } from './team/add-member/add-member.component';
 
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatButtonModule} from '@angular/material/button';
 @NgModule({
   declarations: [
     AppComponent,
@@ -46,7 +48,9 @@ import { AddMemberComponent } from './team/add-member/add-member.component';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    HttpClientModule
+    HttpClientModule,
+    MatToolbarModule,
+    MatButtonModule
   ],
   providers: [],
   bootstrap: [AppComponent]
