@@ -5,6 +5,7 @@
 a {
   text-decoration: none;
   color: #e1dcdc;
+  
 }
 
 .bgHeader {
@@ -13,7 +14,6 @@ a {
 }
 
 img {
-  margin-top: 15px;
   padding: 4px;
   border: #969191 solid;
   border-width: 0.5px 0.5px 0.5px 0.5px;
@@ -21,5 +21,20 @@ img {
 }
 ul {
   font-family: "Lilita One";
-  font-size: 25px;
+  font-size: 20px;
+  margin-top: 17px;
+}
+
+.selection {
+  font-family: "Lilita One";
+  font-size: 20px;
+  color: #e1dcdc;
+  width: 229px;
+  margin-top: 25px;
+}
+
+.option {
+  font-family: "Lilita One";
+  color: #ac7420;
+  
 }

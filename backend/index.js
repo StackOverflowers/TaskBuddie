@@ -4,7 +4,7 @@ const { dbConnection } = require("./db/db");
 const Role = require("./routes/role");
 const Board = require("./routes/board");
 const User = require("./routes/user");
-const Task = require('../backend/routes/task');
+const Task = require("../backend/routes/task");
 require("dotenv").config();
 
 const app = express();
