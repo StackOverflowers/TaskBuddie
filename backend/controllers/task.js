@@ -4,23 +4,34 @@ const fs = require("fs");
 const moment = require("moment");
 const path = require("path");
 const Board = require("../models/board");
+const User = require("../models/user");
 
 const saveTask = async (req, res) => {
-  
-    let validId = mongoose.Types.ObjectId.isValid(req.user._id);
-    console.log(req.user._id);
-    if (!validId) return res.status(400).send("Invalid id");
+  let validId = mongoose.Types.ObjectId.isValid(req.user._id);
+  console.log(req.user._id);
+  if (!validId) return res.status(400).send("Invalid id");
 
-
-  if (!req.body.name || !req.body.description || !req.body.boardName)
+  if (
+    !req.body.name ||
+    !req.body.description ||
+    !req.body.boardName ||
+    !req.body.score
+  )
     return res.status(400).send("Incomplete Data Please Try Again");
 
-  const existTask = await Task.findOne({ name: req.body.name });
-
-  if (existTask)
+  if (req.body.score <= 0 || req.body.score > 5) {
     return res
       .status(400)
-      .send("Sorry The task already exist please update or create a new one");
+      .send("Sorry you cant just use a number between 1 and 5");
+  }
+  const existTask = await Task.find({ boardName: req.body.boardName });
+
+  let existantInBoard = existTask.some(
+    (element) => element.name == req.body.name
+  );
+
+  if (existantInBoard)
+    return res.status(400).send("Take Another Board that task already exist");
 
   console.log(req.body.boardName);
   const board = await Board.findOne({ name: req.body.boardName });
@@ -44,8 +55,6 @@ const saveTask = async (req, res) => {
     }
   }
 
- 
-
   //Author sera verdaderamente req.user.name
 
   //falta campo boardId:board._id
@@ -60,8 +69,9 @@ const saveTask = async (req, res) => {
     imageUrl: imageUrl,
     taskStatus: "to-do",
     dbStatus: true,
-    score: 0,
+    score: req.body.score,
     boardName: board.name,
+    assigned: false,
   });
 
   let result = await task.save();
@@ -79,7 +89,6 @@ const updateTask = async (req, res) => {
   if (!req.body._id || !req.body.taskStatus)
     return res.status(400).send("Sorry Please Check Out All The camps please");
 
-  let scoreUser = 0;
   let status = Boolean;
 
   if (req.body.taskStatus == "done") {
@@ -90,14 +99,41 @@ const updateTask = async (req, res) => {
     status = true;
   }
 
-  console.log(req.body._id);
+  const inactiveTask = await Task.findById({ _id: req.body._id });
+
+  if (inactiveTask.dbStatus == false) {
+    return res.status(400).send("You already did that Task");
+  }
 
   const task = await Task.findByIdAndUpdate(req.body._id, {
     taskStatus: req.body.taskStatus,
-    score: scoreUser,
     dbStatus: status,
     userModify: req.user.name,
   });
+
+  const user = await User.findById(task.assignedTo);
+
+  if (!user)
+    return res
+      .status(400)
+      .send("Please check that user dont have assigned this task");
+
+  if (scoreUser == 1) {
+    let parser = parseInt(scoreUser);
+    let acumulador = 0;
+
+    for (iterator of user.EarnedPoints) {
+      acumulador = iterator + parser;
+    }
+
+    const userPoints = await User.findByIdAndUpdate(user._id, {
+      $push: { EarnedPoints: acumulador },
+    });
+
+    if (!userPoints) return res.status(400).send("Cant Save the points");
+
+    return res.status(200).send({ userPoints });
+  }
 
   if (!task) return res.status(400).send("Sorry Please Try again");
 
@@ -114,13 +150,12 @@ const listTask = async (req, res) => {
       { dbStatus: "true" },
     ],
   });
-
+  console.log(task);
   if (!task || task.length == 0)
     return res
       .status(400)
       .send("Sorry Cant Find Any task please go and create a task");
 
-  console.log(task);
   return res.status(200).send({ task });
 };
 
@@ -129,6 +164,11 @@ const deleteTask = async (req, res) => {
   if (!validId) return res.status(400).send("Invalid id");
 
   let taskImg = await Task.findById(req.params._id);
+
+  if (taskImg.taskStatus === "done")
+    return res
+      .status(400)
+      .send("Sorry cant Erase that Task its Already Completed");
 
   taskImg = taskImg.imageUrl;
   taskImg = taskImg.split("/")[4];
@@ -148,4 +188,95 @@ const deleteTask = async (req, res) => {
   return res.status(200).send({ message: "Task deleted" });
 };
 
-module.exports = { saveTask, updateTask, listTask, deleteTask };
+const asignTask = async (req, res) => {
+  //el id hace referencia al id de la tarea que se va a asignar
+  //name al nombre del usuario
+
+  if (!req.body._idtask || !req.body._idUser)
+    return res
+      .status(400)
+      .send("Sorry please have to specify a task for the user");
+
+  let assignedtask = await Task.findOne({ _id: req.body._idtask });
+
+  console.log(assignedtask);
+  if (assignedtask.assigned === true)
+    return res.status(400).send(" Sorry the task its already assigned");
+
+  const existingUser = await User.findOne({ _id: req.body._idUser });
+
+  console.log(existingUser);
+
+  const task = await Task.findByIdAndUpdate(
+    { _id: req.body._idtask },
+    {
+      assigned: true,
+      assignedTo: existingUser._id,
+    }
+  );
+
+  let data = {
+    name: task.name,
+    idTask: task._id,
+    scoretask: task.score,
+    completed: false,
+  };
+
+  const user = await User.findByIdAndUpdate(
+    { _id: req.body._idUser },
+    {
+      $push: { AssignedTasks: data },
+    }
+  );
+
+  console.log(user);
+  console.log(task);
+
+  return res.status(200).send({ user });
+};
+
+const unassingTask = async (req, res) => {
+  if (!req.body._idUser || !req.body._idTask)
+    return res.status(400).send("Sorry please have to specify a user");
+
+  const user = await User.findById(req.body._idUser);
+  if (!user) return res.status(400).send("The user dont exist please check");
+  const task = await Task.findById(req.body._idTask);
+  if (!task)
+    return res.status(400).send("Sorry the task dont exist please check");
+
+  const indice = user.AssignedTasks.findIndex(
+    (element) => element.name === task.name
+  );
+
+  if (!indice) return res.status(400).send("Sorry Cant Find the task");
+
+  const arreglo = user.AssignedTasks;
+
+  arreglo.splice(indice, 1);
+
+  const task2 = await Task.findByIdAndUpdate(req.body._idTask, {
+    assigned: false,
+  });
+
+  if (!task2)
+    return res.status(400).send("Cant update the task please try again");
+
+  const user2 = await User.findByIdAndUpdate(req.body._idUser, {
+    AssignedTasks: arreglo,
+  });
+
+  if (!user2)
+    return res.status(400).send("Sorry the user dont exist please check");
+
+  return res.status(200).send({ message: "Succes Unassing The task" });
+};
+
+module.exports = {
+  saveTask,
+  updateTask,
+  listTask,
+  deleteTask,
+  asignTask,
+  unassingTask,
+};

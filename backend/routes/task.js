@@ -11,6 +11,7 @@ router.post("/saveTask",mult,Upload,Auth, ValidateUser,taskController.saveTask);
 router.put("/updateTask",Auth, ValidateUser,taskController.updateTask);
 router.get("/listTask/:boardName?",Auth, ValidateUser, taskController.listTask);
 router.delete("/deleteTask/:_id",Auth, ValidateUser,taskController.deleteTask)
-
+router.put("/assignTask",taskController.asignTask);
+router.put("/unassingTask",taskController.unassingTask)
 
 module.exports = router;

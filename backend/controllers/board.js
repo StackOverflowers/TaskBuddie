@@ -6,10 +6,10 @@ const path = require("path");
 const moment = require("moment");
 
 const registerBoard = async (req, res) => {
-  if (!req.body.name || !req.body.description)
+  if (!req.body.name  || !req.body.description)
     return res.status(400).send("Incomplete Data");
 
-  let user = await User.findById(req.body._id);
+  let user = await User.findById(req.user._id);
   if (!user) return res.status(400).send("User cannot find");
 
   let data = [];
