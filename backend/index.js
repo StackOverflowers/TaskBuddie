@@ -4,7 +4,7 @@ const { dbConnection } = require("./db/db");
 const Role = require("./routes/role");
 const Board = require("./routes/board");
 const User = require("./routes/user");
-const Task = require('../backend/routes/task');
+const Task = require("../backend/routes/task");
 require("dotenv").config();
 
 const app = express();
@@ -14,10 +14,7 @@ app.use(cors());
 app.use("/api/role", Role);
 app.use("/api/user", User);
 app.use("/api/board", Board);
-<<<<<<< HEAD
-app.use('/api/task',Task);
-=======
->>>>>>> e90ad7a3a13513da44b110f705085687e4416935
+app.use("/api/task", Task);
 
 app.listen(process.env.PORT, () =>
   console.log("Backend server running on port: " + process.env.PORT)
