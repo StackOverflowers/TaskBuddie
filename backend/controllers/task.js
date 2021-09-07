@@ -190,7 +190,7 @@ const deleteTask = async (req, res) => {
 
 const asignTask = async (req, res) => {
   //el id hace referencia al id de la tarea que se va a asignar
-  //name al nombre del usuario
+ 
 
   if (!req.body._idtask || !req.body._idUser)
     return res
@@ -198,6 +198,8 @@ const asignTask = async (req, res) => {
       .send("Sorry please have to specify a task for the user");
 
   let assignedtask = await Task.findOne({ _id: req.body._idtask });
+
+  if(!assignedtask) return res.status(400).send("Sorry Cant find the task please check")
 
   console.log(assignedtask);
   if (assignedtask.assigned === true)
@@ -244,6 +246,9 @@ const unassingTask = async (req, res) => {
   const task = await Task.findById(req.body._idTask);
   if (!task)
     return res.status(400).send("Sorry the task dont exist please check");
+
+    if (task.assigned !== true)
+    return res.status(400).send(" Sorry the task its not asigned please Check");
 
   const indice = user.AssignedTasks.findIndex(
     (element) => element.name === task.name
