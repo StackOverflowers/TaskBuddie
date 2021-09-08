@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-<<<<<<< HEAD
 import { UserService } from '../../services/user.service';
 import { Router } from '@angular/router';
 import {
@@ -7,13 +6,10 @@ import {
   MatSnackBarHorizontalPosition,
   MatSnackBarVerticalPosition,
 } from '@angular/material/snack-bar';
-=======
->>>>>>> ef4f91b8044e31908c59b791082523de9c0ec1cd
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
-<<<<<<< HEAD
   styleUrls: ['./register.component.css'],
 })
 export class RegisterComponent implements OnInit {
@@ -76,15 +72,4 @@ export class RegisterComponent implements OnInit {
       panelClass: ['style-snackBarFalse'],
     });
   }
-=======
-  styleUrls: ['./register.component.css']
-})
-export class RegisterComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
->>>>>>> ef4f91b8044e31908c59b791082523de9c0ec1cd
 }

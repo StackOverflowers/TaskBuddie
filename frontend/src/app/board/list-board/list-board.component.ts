@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-<<<<<<< HEAD
 import { BoardService } from '../../services/board.service';
 import {
   MatSnackBar,
@@ -7,8 +6,6 @@ import {
   MatSnackBarVerticalPosition,
 } from '@angular/material/snack-bar';
 
-=======
->>>>>>> ef4f91b8044e31908c59b791082523de9c0ec1cd
 
 @Component({
   selector: 'app-list-board',
@@ -16,7 +13,6 @@ import {
   styleUrls: ['./list-board.component.css']
 })
 export class ListBoardComponent implements OnInit {
-<<<<<<< HEAD
   taskData: any;
   message: string = '';
   horizontalPosition: MatSnackBarHorizontalPosition = 'end';
@@ -61,12 +57,3 @@ export class ListBoardComponent implements OnInit {
     });
   }
 }
-=======
-
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
-}
->>>>>>> ef4f91b8044e31908c59b791082523de9c0ec1cd

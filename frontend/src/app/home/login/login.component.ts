@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-<<<<<<< HEAD
 import { UserService } from '../../services/user.service';
 import { Router } from '@angular/router';
 import {
@@ -7,13 +6,10 @@ import {
   MatSnackBarHorizontalPosition,
   MatSnackBarVerticalPosition,
 } from '@angular/material/snack-bar';
-=======
->>>>>>> ef4f91b8044e31908c59b791082523de9c0ec1cd
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-<<<<<<< HEAD
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
@@ -73,15 +69,4 @@ export class LoginComponent implements OnInit {
       panelClass: ['style-snackBarFalse'],
     });
   }
-=======
-  styleUrls: ['./login.component.css']
-})
-export class LoginComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
->>>>>>> ef4f91b8044e31908c59b791082523de9c0ec1cd
 }
