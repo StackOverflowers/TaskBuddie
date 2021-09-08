@@ -9,12 +9,12 @@ const registerBoard = async (req, res) => {
   if (!req.body.name || !req.body.description)
     return res.status(400).send("Incomplete Data");
 
-  let user = await User.findById(req.body._id);
+  let user = await User.findById(req.user._id);
   if (!user) return res.status(400).send("User cannot find");
 
   let data = [];
   data.push({
-    id: req.body._id,
+    id: user._id,
     name: user.name,
     role: "Owner",
     ranking: "0",
@@ -35,11 +35,11 @@ const registerBoard = async (req, res) => {
   }
 
   const board = new Board({
-    userId: req.body._id,
+    userId: req.user._id,
     members: data,
     name: req.body.name,
     description: req.body.description,
-    dnStatus: true,
+    dbStatus: true,
     imageUrl: imageUrl,
   });
 
@@ -67,7 +67,7 @@ const addMember = async (req, res) => {
   };
 
   for (var i = 0; i < newMember.length; i++) {
-    if (newMember[i].id.toString() === user._id.toString()) {
+    if (newMember[i].id === user._id.toString()) {
       return res
         .status(400)
         .send("the user is currently a member of the board");
@@ -112,20 +112,23 @@ const deleteMember = async (req, res) => {
 };
 
 const listBoard = async (req, res) => {
-  let board = await Board.find();
+  let board = await Board.find({userId: req.user._id});
   if (!board || board.length === 0)
     return res.status(400).send("You have no assigned tasks");
   return res.status(200).send({ board });
 };
 
 const listBoardMember = async (req, res) => {
-  let board = await Board.find({ members: userId });
+  let user  = await User.findById(req.user._id);
+  if(!user) return res.status(400).send("User not found");
+
+  let board = await Board.find({'members.id' : user._id });
   if (!board || board.length === 0)
     return res.status(400).send("You have no assigned tasks");
   return res.status(200).send({ board });
 };
 
-const deleteBoard = async (req, body) => {
+const deleteBoard = async (req, res) => {
   let validId = mongoose.Types.ObjectId.isValid(req.params._id);
   if (!validId) return res.status(400).send("Invalid id");
 
@@ -141,12 +144,13 @@ const deleteBoard = async (req, body) => {
   } catch (error) {
     console.log("Image no found in server");
   }
-  return res.status(200).send({ message: "RDdeleted" });
+  return res.status(200).send({ message: "deleted board" });
 };
 
 module.exports = {
   registerBoard,
   listBoard,
+  listBoardMember,
   addMember,
   deleteMember,
   deleteBoard,
