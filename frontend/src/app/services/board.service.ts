@@ -12,31 +12,20 @@ export class BoardService {
     this.env = environment.APP_URL;
   }
 
-  saveTask(board: any) {
-    return this._http.post<any>(this.env + 'board/saveTask', board);
+  registerBoard(board: any) {
+    return this._http.post<any>(this.env + 'board/registerBoard', board);
   }
 
-  saveTaskImg(board: any) {
-    return this._http.post<any>(this.env + 'board/saveTaskImg', board);
+  listBoard() {
+    return this._http.get<any>(this.env + 'board/listBoard');
   }
 
-  listTask() {
-    return this._http.get<any>(this.env + 'board/listTask');
+  addMember(board: any) {
+    return this._http.put<any>(this.env + 'board/addMember', board);
   }
-
-  updateTask(board: any) {
-    return this._http.put<any>(this.env + 'board/updateTask', board);
-  }
-
-  deleteTask(board: any) {
-    return this._http.delete<any>(this.env + 'board/deleteTask/' + board._id);
-  }
-
+  
   registerMember(board: any) {
     return this._http.post<any>(this.env + 'board/registerMember/', board);
-  }
-  updateMember(board: any) {
-    return this._http.put<any>(this.env + 'board/updateMember/', board);
   }
 
   deleteMember(board: any) {

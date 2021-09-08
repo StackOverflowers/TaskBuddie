@@ -22,17 +22,17 @@ const registerBoard = async (req, res) => {
 
   let imageUrl = "";
   if (req.files.image) {
-    if (req.files.image.type != null) {
-      const url = req.protocol + "://" + req.get("host") + "/";
-      const serverImg =
-        "./uploads/" + moment().unix() + path.extname(req.files.image.path);
-      fs.createReadStream(req.files.image.path).pipe(
-        fs.createWriteStream(serverImg)
-      );
-      imageUrl =
-        url + "uploads/" + moment().unix() + path.extname(req.files.image.path);
-    }
+   if (req.files.image.type != null) {
+    const url = req.protocol + "://" + req.get("host") + "/";
+    const serverImg =
+     "./uploads/" + moment().unix() + path.extname(req.files.image.path);
+  fs.createReadStream(req.files.image.path).pipe(
+     fs.createWriteStream(serverImg)
+    );
+ imageUrl =
+    url + "uploads/" + moment().unix() + path.extname(req.files.image.path);
   }
+ }
 
   const board = new Board({
     userId: req.body._id,
