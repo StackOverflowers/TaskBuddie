@@ -38,13 +38,5 @@
     height: 100%;
   }
   
-  /*change color of animation input*/
-  
-  ::ng-deep .mat-form-field  {
-    background-color: #ac7420 !important;
-  }
-  
-  ::ng-deep .mat-focused .mat-form-field-label {
-    color: #ac7420 !important;
-  }
+
   
