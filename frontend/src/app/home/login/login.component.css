@@ -40,7 +40,7 @@
   
   /*change color of animation input*/
   
-  ::ng-deep .mat-form-field-ripple  {
+  ::ng-deep .mat-form-field  {
     background-color: #ac7420 !important;
   }
   
