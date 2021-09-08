@@ -138,7 +138,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTM2M2Y4YTc4ZGY2MjU3ZDg0YjNmOGYiLCJuYW1lIjoiRGFuaWVsIFNhbmNoZXoiLCJyb2xlSWQiOiI2MTM2M2Y4Nzc4ZGY2MjU3ZDg0YjNmOGIiLCJpYXQiOjE2MzA5NDUxNjJ9.NT8AmDXnNbNT48aFlLmeimYLsw6cwZnNSdAZPKH0uBQ",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTM4N2EwNzg1OWFhMjNhZjQxODNkOGEiLCJuYW1lIjoicmFtYWxlcyBjYXJsYW5nYXMiLCJyb2xlSWQiOiI2MTM2M2Y4Nzc4ZGY2MjU3ZDg0YjNmOGIiLCJpYXQiOjE2MzEwOTEyMDd9.Sxi56fGNNVnNYRsOFK8cDrJx-57qM7avBMy-iUNVhs4",
 									"type": "string"
 								}
 							]
@@ -146,7 +146,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3001/api/task/listTask/Danya2",
+							"raw": "http://localhost:3001/api/task/listTask/613647108ca3a74ac84dbd9f",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -156,7 +156,7 @@
 								"api",
 								"task",
 								"listTask",
-								"Danya2"
+								"613647108ca3a74ac84dbd9f"
 							]
 						}
 					},
@@ -309,6 +309,68 @@
 								"api",
 								"task",
 								"unassingTask"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "ListRanking",
+			"item": [
+				{
+					"name": "http://localhost:3001/api/task/listRanking",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3001/api/task/listRanking",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"task",
+								"listRanking"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "listAssignedTask",
+			"item": [
+				{
+					"name": "http://localhost:3001/api/task/listAssignedTasks",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTM4N2EwNzg1OWFhMjNhZjQxODNkOGEiLCJuYW1lIjoicmFtYWxlcyBjYXJsYW5nYXMiLCJyb2xlSWQiOiI2MTM2M2Y4Nzc4ZGY2MjU3ZDg0YjNmOGIiLCJpYXQiOjE2MzEwOTEyMDd9.Sxi56fGNNVnNYRsOFK8cDrJx-57qM7avBMy-iUNVhs4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3001/api/task/listAssignedTasks",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"task",
+								"listAssignedTasks"
 							]
 						}
 					},

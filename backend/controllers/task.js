@@ -83,7 +83,7 @@ const saveTask = async (req, res) => {
 
 const updateTask = async (req, res) => {
   let validId = mongoose.Types.ObjectId.isValid(req.user._id);
-  console.log(req.user._id);
+
   if (!validId) return res.status(400).send("Invalid id");
 
   if (!req.body._id || !req.body.taskStatus)
@@ -101,8 +101,15 @@ const updateTask = async (req, res) => {
 
   const inactiveTask = await Task.findById({ _id: req.body._id });
 
-  if (inactiveTask.dbStatus == false) {
-    return res.status(400).send("You already did that Task");
+  const user = await User.findById(inactiveTask.assignedTo);
+
+  if (req.user._id != inactiveTask.assignedTo)
+    return res
+      .status(400)
+      .send("Please check that user dont have assigned this task");
+
+  if (inactiveTask.dbStatus == false || !inactiveTask || inactiveTask == null) {
+    return res.status(400).send("You already did that Task ");
   }
 
   const task = await Task.findByIdAndUpdate(req.body._id, {
@@ -111,28 +118,49 @@ const updateTask = async (req, res) => {
     userModify: req.user.name,
   });
 
-  const user = await User.findById(task.assignedTo);
-
-  if (!user)
-    return res
-      .status(400)
-      .send("Please check that user dont have assigned this task");
-
   if (scoreUser == 1) {
-    let parser = parseInt(scoreUser);
-    let acumulador = 0;
+    let acumScore = 1;
 
-    for (iterator of user.EarnedPoints) {
-      acumulador = iterator + parser;
-    }
+    let data = {};
 
-    const userPoints = await User.findByIdAndUpdate(user._id, {
-      $push: { EarnedPoints: acumulador },
+    let filtrotask = user.AssignedTasks;
+
+    filtrotask.filter = (element) => element.idTask === task._id;
+
+    filtrotask.map((element) => {
+      element.completed = true;
     });
 
-    if (!userPoints) return res.status(400).send("Cant Save the points");
+    if (user.EarnedPoints.length == 0) {
+      data = {
+        scorecompleted: acumScore,
+      };
 
-    return res.status(200).send({ userPoints });
+      const userPoints = await User.findByIdAndUpdate(user._id, {
+        $push: { EarnedPoints: data },
+      });
+
+      if (!userPoints) return res.status(400).send("Cant Save the points");
+
+      return res.status(200).send({ userPoints });
+    } else {
+      let existe = user.EarnedPoints.some(
+        (element) => element.scorecompleted >= 1
+      );
+
+      if (existe) {
+        const nuevopuntaje = user.EarnedPoints.map((element) => {
+          data = {
+            name: user.name,
+            scorecompleted: element.scorecompleted + 1,
+          };
+        });
+
+        const userPoints = await User.findByIdAndUpdate(user._id, {
+          EarnedPoints: data,
+        });
+      }
+    }
   }
 
   if (!task) return res.status(400).send("Sorry Please Try again");
@@ -144,12 +172,9 @@ const updateTask = async (req, res) => {
 //es decir trae todas las tareas de los todos los tableros.
 
 const listTask = async (req, res) => {
-  const task = await Task.find({
-    $and: [
-      { boardName: new RegExp(req.params["boardName"], "i") },
-      { dbStatus: "true" },
-    ],
-  });
+  if (!req.params._id) return res.status(400).send("Sorry cant show the tasks");
+  console.log(req.params._id);
+  const task = await Task.find({ boardId: req.params._id });
   console.log(task);
   if (!task || task.length == 0)
     return res
@@ -190,7 +215,7 @@ const deleteTask = async (req, res) => {
 
 const asignTask = async (req, res) => {
   //el id hace referencia al id de la tarea que se va a asignar
- 
+  //name al nombre del usuario
 
   if (!req.body._idtask || !req.body._idUser)
     return res
@@ -198,8 +223,6 @@ const asignTask = async (req, res) => {
       .send("Sorry please have to specify a task for the user");
 
   let assignedtask = await Task.findOne({ _id: req.body._idtask });
-
-  if(!assignedtask) return res.status(400).send("Sorry Cant find the task please check")
 
   console.log(assignedtask);
   if (assignedtask.assigned === true)
@@ -214,6 +237,7 @@ const asignTask = async (req, res) => {
     {
       assigned: true,
       assignedTo: existingUser._id,
+      username: existingUser.name,
     }
   );
 
@@ -247,7 +271,7 @@ const unassingTask = async (req, res) => {
   if (!task)
     return res.status(400).send("Sorry the task dont exist please check");
 
-    if (task.assigned !== true)
+  if (task.assigned !== true)
     return res.status(400).send(" Sorry the task its not asigned please Check");
 
   const indice = user.AssignedTasks.findIndex(
@@ -277,6 +301,40 @@ const unassingTask = async (req, res) => {
   return res.status(200).send({ message: "Succes Unassing The task" });
 };
 
+const listAsignedTasks = async (req, res) => {
+  const validId = mongoose.Types.ObjectId.isValid(req.user._id);
+  if (!validId) return res.status(400).send("Invalid id");
+
+  const user = await User.find({ _id: req.user._id });
+
+  for (const iterator of user) {
+    console.log(iterator.AssignedTasks);
+    return res.status(200).send(iterator.AssignedTasks);
+  }
+
+  if (
+    !user.AssignedTasks ||
+    user.AssignedTasks.length === 0 ||
+    user.AssignedTasks === null
+  )
+    return res.status(400).send("Sorry the user dont have asigned tasks ");
+};
+
+const listRankingPoints = async (req, res) => {
+  const user = await User.find();
+
+  let ranking = [];
+
+  for (let i of user) {
+    let filtro = i.EarnedPoints.filter((element) => element.scorecompleted > 1);
+    for (let j of filtro) {
+      ranking.push(j);
+    }
+  }
+
+  return res.status(200).send(ranking);
+};
+
 module.exports = {
   saveTask,
   updateTask,
@@ -284,4 +342,6 @@ module.exports = {
   deleteTask,
   asignTask,
   unassingTask,
+  listAsignedTasks,
+  listRankingPoints,
 };
