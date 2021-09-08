@@ -24,6 +24,7 @@ import { AddMemberComponent } from './team/add-member/add-member.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
+<<<<<<< HEAD
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
@@ -40,6 +41,16 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { BoardService } from '../app/services/board.service';
 import { UserService } from '../app/services/user.service';
 import { TokenInterceptorService } from '../app/services/token-interceptor.service';
+=======
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatButtonModule} from '@angular/material/button';
+import {MatInputModule} from '@angular/material/input';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatCardModule} from '@angular/material/card';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatIconModule } from '@angular/material/icon';
+>>>>>>> ef4f91b8044e31908c59b791082523de9c0ec1cd
 
 @NgModule({
   declarations: [
@@ -59,7 +70,11 @@ import { TokenInterceptorService } from '../app/services/token-interceptor.servi
     ListTaskComponent,
     SaveTaskComponent,
     ListTeamComponent,
+<<<<<<< HEAD
     AddMemberComponent,
+=======
+    AddMemberComponent
+>>>>>>> ef4f91b8044e31908c59b791082523de9c0ec1cd
   ],
   imports: [
     BrowserModule,
@@ -76,6 +91,7 @@ import { TokenInterceptorService } from '../app/services/token-interceptor.servi
     MatSnackBarModule,
     MatExpansionModule,
     MatIconModule,
+<<<<<<< HEAD
     MatSelectModule,
     MatPaginatorModule,
   ],
@@ -87,6 +103,8 @@ import { TokenInterceptorService } from '../app/services/token-interceptor.servi
       useClass: TokenInterceptorService,
       multi: true,
     },
+=======
+>>>>>>> ef4f91b8044e31908c59b791082523de9c0ec1cd
   ],
   bootstrap: [AppComponent],
 })

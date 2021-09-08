@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+<<<<<<< HEAD
 import { BoardService } from '../../services/board.service';
 import { Router } from '@angular/router';
 import {
@@ -6,6 +7,8 @@ import {
   MatSnackBarHorizontalPosition,
   MatSnackBarVerticalPosition,
 } from '@angular/material/snack-bar';
+=======
+>>>>>>> ef4f91b8044e31908c59b791082523de9c0ec1cd
 
 @Component({
   selector: 'app-save-board',
@@ -13,6 +16,7 @@ import {
   styleUrls: ['./save-board.component.css']
 })
 export class SaveBoardComponent implements OnInit {
+<<<<<<< HEAD
   registerData: any;
   selectedFile: any;
   message: string = '';
@@ -28,10 +32,15 @@ export class SaveBoardComponent implements OnInit {
     this.registerData = {};
     this.selectedFile = null;
   }
+=======
+
+  constructor() { }
+>>>>>>> ef4f91b8044e31908c59b791082523de9c0ec1cd
 
   ngOnInit(): void {
   }
 
+<<<<<<< HEAD
 
   uploadImg(event: any) {
     this.selectedFile = <File>event.target.files[0];
@@ -84,4 +93,6 @@ export class SaveBoardComponent implements OnInit {
   }
 
 
+=======
+>>>>>>> ef4f91b8044e31908c59b791082523de9c0ec1cd
 }

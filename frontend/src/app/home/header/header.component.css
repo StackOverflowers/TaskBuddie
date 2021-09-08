@@ -5,7 +5,10 @@
 a {
   text-decoration: none;
   color: #e1dcdc;
+<<<<<<< HEAD
   
+=======
+>>>>>>> ef4f91b8044e31908c59b791082523de9c0ec1cd
 }
 
 .bgHeader {
@@ -14,6 +17,10 @@ a {
 }
 
 img {
+<<<<<<< HEAD
+=======
+  margin-top: 15px;
+>>>>>>> ef4f91b8044e31908c59b791082523de9c0ec1cd
   padding: 4px;
   border: #969191 solid;
   border-width: 0.5px 0.5px 0.5px 0.5px;
@@ -21,6 +28,7 @@ img {
 }
 ul {
   font-family: "Lilita One";
+<<<<<<< HEAD
   font-size: 20px;
   margin-top: 17px;
 }
@@ -37,4 +45,7 @@ ul {
   font-family: "Lilita One";
   color: #ac7420;
   
+=======
+  font-size: 25px;
+>>>>>>> ef4f91b8044e31908c59b791082523de9c0ec1cd
 }
