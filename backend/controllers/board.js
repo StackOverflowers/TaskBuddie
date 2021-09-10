@@ -87,7 +87,7 @@ const deleteMember = async (req, res) => {
   if (!req.body.boardId || !req.body.userId)
     return res.status(400).send("Incomplete data");
 
-  let user = await User.findById(req.body.userId);
+  let user = await User.findById(req.body.userId);z
   if (!user) return res.status(400).send("User doesn't exist");
 
   let member = await Board.findById(req.body.boardId);

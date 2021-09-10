@@ -17,11 +17,6 @@ router.get(
 );
 router.put("/addMember", Auth, ValidateUser, BoardController.addMember);
 router.put("/deleteMember", Auth, ValidateUser, BoardController.deleteMember);
-router.delete(
-  "/deleteTask/:_id",
-  Auth,
-  ValidateUser,
-  BoardController.deleteBoard
-);
+router.delete(  "/deleteTask/:_id",  Auth,  ValidateUser,  BoardController.deleteBoard );
 
 module.exports = router;

@@ -23,6 +23,11 @@ import { AddMemberComponent } from './team/add-member/add-member.component';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { UserService } from './services/user.service';
+import { RoleService } from './services/role.service';
+import { BoardService } from './services/board.service';
+import { TokenInterceptorService } from './services/token-interceptor.service';
+import { AuthGuard } from './guard/auth.guard';
 
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
@@ -34,6 +39,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { ListBoardMemberComponent } from './board/list-board-member/list-board-member.component';
 
 @NgModule({
   declarations: [
@@ -54,6 +60,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     SaveTaskComponent,
     ListTeamComponent,
     AddMemberComponent,
+    ListBoardMemberComponent,
   ],
   imports: [
     BrowserModule,
@@ -73,7 +80,18 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     MatSelectModule,
     MatPaginatorModule,
   ],
-  providers: [],
+  providers: [
+    UserService,
+    RoleService,
+    BoardService,
+    TokenInterceptorService,
+    AuthGuard,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptorService,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
