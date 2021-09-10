@@ -9,7 +9,16 @@
       <a routerLink="saveBoard">Create board</a>
     </ul>
     <ul>
-      <a routerLink="listUser">Admin</a>
+      <mat-form-field
+      *ngIf="_userService.loggedIn() && _userService.isAdmin()"
+      appearance="fill"
+    >
+      <mat-label>Admin option</mat-label>
+      <mat-select>
+        <mat-option value="option1" routerLink="listUser">Users</mat-option>
+        <mat-option value="option2" routerLink="listRole">Role</mat-option>
+      </mat-select>
+    </mat-form-field>
     </ul>
     <span class="headerSpacer"></span>
     <ul>

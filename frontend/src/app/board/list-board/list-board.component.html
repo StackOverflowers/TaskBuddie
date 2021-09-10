@@ -5,19 +5,21 @@
       <div class = "col mt-4" *ngFor="let board of boardData" hideToggle="false" >
 
         <div class="example-button-container">
-          <button mat-mini-fab class="button" routerLink="/saveTask">
+          <button mat-mini-fab color="primary" class="button" routerLink="/saveTask">
             New ListTask
           </button>
         </div>
       <mat-card class="example-card" style="width: 20rem;">
         
         <mat-card-header>          
-          <mat-card-title>{{ board.name }}</mat-card-title>
+          <mat-card-title routerLink="/listTask">{{ board.name }}</mat-card-title>
           <mat-card-subtitle> {{ board.description }} </mat-card-subtitle>
         </mat-card-header>        
-        <img mat-card-image src="{{ board.imageUrl }}" >
+        <img mat-card-image src="{{ board.imageUrl }}" routerLink="/listTask">
 
         <p>
+          <mat-icon color="primary" routerLink="/listBoardMember">accessibility</mat-icon >
+          <span class="spacer"></span>
           <mat-icon color="primary" routerLink="/listBoardMember">build</mat-icon >
           <span class="spacer"></span>
           <mat-icon color="primary" (click)="deleteBoard(board)">delete</mat-icon > </p>

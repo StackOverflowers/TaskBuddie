@@ -41,6 +41,9 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { ListBoardMemberComponent } from './board/list-board-member/list-board-member.component';
 
+import { MatTableModule } from '@angular/material/table';
+import { MatSortModule } from '@angular/material/sort';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -70,15 +73,17 @@ import { ListBoardMemberComponent } from './board/list-board-member/list-board-m
     ReactiveFormsModule,
     HttpClientModule,
     MatToolbarModule,
-    MatInputModule,
+    MatButtonModule,
     MatFormFieldModule,
     MatCardModule,
-    MatButtonModule,
+    MatInputModule,
     MatSnackBarModule,
     MatExpansionModule,
     MatIconModule,
     MatSelectModule,
+    MatTableModule,
     MatPaginatorModule,
+    MatSortModule,
   ],
   providers: [
     UserService,

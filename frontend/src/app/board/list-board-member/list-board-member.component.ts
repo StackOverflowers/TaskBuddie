@@ -28,7 +28,7 @@ export class ListBoardMemberComponent implements OnInit {
   ngOnInit(): void {
     this._boardService.listBoardMember().subscribe(
       (res) => {
-        this.memberData = res.board;
+        this.memberData = res.board.members;
       },
       (err) => {
         this.message = err.error;

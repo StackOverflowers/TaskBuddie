@@ -31,14 +31,14 @@ export class LoginComponent implements OnInit {
 
   login() {
     if (!this.loginData.email || !this.loginData.password) {
-      this.message = 'Failed process: Incomplete data';
+      this.message = 'Failed process: Imcomplete data';
       this.openSnackBarError();
       this.loginData = {};
     } else {
       this._userService.login(this.loginData).subscribe(
         (res) => {
           localStorage.setItem('token', res.jwtToken);
-          this._router.navigate(['/listBoard']);
+          this._router.navigate(['/listTask']);
           this.getRole(this.loginData.email);
           this.loginData = {};
         },

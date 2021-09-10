@@ -20,6 +20,10 @@ export class BoardService {
     return this._http.get<any>(this.env + 'board/listBoard');
   }
 
+  listMember() {
+    return this._http.get<any>(this.env + 'board/listMember' );
+  }
+
   listBoardMember() {
     return this._http.get<any>(this.env + 'board/listBoardMember' );
   }
@@ -34,7 +38,7 @@ export class BoardService {
   }
 
   deleteBoard(board: any) {
-    return this._http.delete<any>(this.env + 'board/deleteTask/' + board._id);
+    return this._http.delete<any>(this.env + 'board/deleteBoard/' + board._id);
   }
 
 }
