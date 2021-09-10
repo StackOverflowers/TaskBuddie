@@ -23,17 +23,17 @@ const registerBoard = async (req, res) => {
 
   let imageUrl = "";
   if (req.files.image) {
-   if (req.files.image.type != null) {
-    const url = req.protocol + "://" + req.get("host") + "/";
-    const serverImg =
-     "./uploads/" + moment().unix() + path.extname(req.files.image.path);
-  fs.createReadStream(req.files.image.path).pipe(
-     fs.createWriteStream(serverImg)
-    );
- imageUrl =
-    url + "uploads/" + moment().unix() + path.extname(req.files.image.path);
+    if (req.files.image.type != null) {
+      const url = req.protocol + "://" + req.get("host") + "/";
+      const serverImg =
+        "./uploads/" + moment().unix() + path.extname(req.files.image.path);
+      fs.createReadStream(req.files.image.path).pipe(
+        fs.createWriteStream(serverImg)
+      );
+      imageUrl =
+        url + "uploads/" + moment().unix() + path.extname(req.files.image.path);
+    }
   }
- }
 
   const board = new Board({
     userId: req.user._id,
@@ -93,7 +93,8 @@ const deleteMember = async (req, res) => {
   if (!req.body.boardId || !req.body.userId)
     return res.status(400).send("Incomplete data");
 
-  let user = await User.findById(req.body.userId);z
+  let user = await User.findById(req.body.userId);
+  z;
   if (!user) return res.status(400).send("User doesn't exist");
 
   let member = await Board.findById(req.body.boardId);
@@ -127,7 +128,6 @@ const listBoard = async (req, res) => {
     return res.status(400).send("You have no assigned tasks");
   return res.status(200).send({ board });
 };
-
 
 // Lista los board de un usuario en los que es invitado y porpietario
 const listBoardMember = async (req, res) => {
@@ -166,7 +166,6 @@ const deleteBoard = async (req, res) => {
   return res.status(200).send({ message: "deleted board" });
 };
 
-
 //Actualiza un board
 const updateBoard = async (req, res) => {
   let validId = mongoose.Types.ObjectId.isValid(req.body._id);
@@ -190,13 +189,13 @@ const updateBoard = async (req, res) => {
 };
 
 //Lista los miembrios de un board
-const listMember = async (req,res) =>{
+const listMember = async (req, res) => {
   let board = await Board.findById(req.body.boardId);
-  if(!board) return res.status(400).send("Board doesn't exist");
+  if (!board) return res.status(400).send("Board doesn't exist");
 
   let members = board.members;
-  return res.status(200).send({members});
-}
+  return res.status(200).send({ members });
+};
 
 module.exports = {
   registerBoard,
