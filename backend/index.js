@@ -14,8 +14,7 @@ app.use(cors());
 app.use("/api/role", Role);
 app.use("/api/user", User);
 app.use("/api/board", Board);
-app.use("/api/task", Task);
-app.use("/uploads", express.static("uploads"));
+app.use('/api/task',Task);
 
 app.listen(process.env.PORT, () =>
   console.log("Backend server running on port: " + process.env.PORT)

@@ -1,30 +1,20 @@
 <mat-toolbar class="bgHeader">
-  <ul>
-    <img
-      src="../../../assets/img/header-task-buddie.jpg"
-      height="50px"
-      alt=""
-    />
-  </ul>
-  <ul>
-    <a routerLink="listTasks">List board</a>
-  </ul>
-  <ul>
-    <a routerLink="saveTask">Create board</a>
-  </ul>
-  <ul>
-    <mat-form-field class="selection" appearance="fill">
-      <mat-label >User administration</mat-label>
-      <mat-select>
-        <mat-option value="option1" routerLink="listUser" class="option">Users</mat-option>
-        <mat-option value="option2" routerLink="listRole" class="option">Role</mat-option>
-      </mat-select>
-    </mat-form-field>
-  </ul>
-  <span class="headerSpacer"></span>
-  <ul>
-    <a mat-button routerLink="signUp"> Sign Up </a>
-    <a mat-button routerLink="login"> Login </a>
-    <a mat-button>Logout</a>
-  </ul>
-</mat-toolbar>
+    <ul>
+        <img src="../../../assets/img/header-task-buddie.jpg" height="50px" alt="">
+    </ul>
+    <ul>
+      <a routerLink="listBoard">List board</a>
+    </ul>
+    <ul>
+      <a routerLink="saveBoard">Create board</a>
+    </ul>
+    <ul>
+      <a routerLink="listUser">Admin</a>
+    </ul>
+    <span class="headerSpacer"></span>
+    <ul>
+      <a mat-button routerLink="signUp"> Sign Up </a>
+      <a mat-button routerLink="login"> Login </a>
+      <a mat-button>Logout</a>
+    </ul>
+  </mat-toolbar>
