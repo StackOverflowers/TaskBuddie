@@ -40,6 +40,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { BoardService } from '../app/services/board.service';
 import { UserService } from '../app/services/user.service';
 import { TokenInterceptorService } from '../app/services/token-interceptor.service';
+import { TaskService } from "../app/services/task.service";
+import { ListboardtasksComponent } from './board/listboardtasks/listboardtasks.component';
 
 @NgModule({
   declarations: [
@@ -60,6 +62,7 @@ import { TokenInterceptorService } from '../app/services/token-interceptor.servi
     SaveTaskComponent,
     ListTeamComponent,
     AddMemberComponent,
+    ListboardtasksComponent,
   ],
   imports: [
     BrowserModule,
@@ -87,6 +90,7 @@ import { TokenInterceptorService } from '../app/services/token-interceptor.servi
       useClass: TokenInterceptorService,
       multi: true,
     },
+    TaskService
   ],
   bootstrap: [AppComponent],
 })

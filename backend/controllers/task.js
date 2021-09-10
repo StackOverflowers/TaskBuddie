@@ -216,7 +216,8 @@ const deleteTask = async (req, res) => {
 const asignTask = async (req, res) => {
   //el id hace referencia al id de la tarea que se va a asignar
   //name al nombre del usuario
-
+  console.log(req.body._idtask)
+  console.log(req.body._idUser)
   if (!req.body._idtask || !req.body._idUser)
     return res
       .status(400)
@@ -230,7 +231,7 @@ const asignTask = async (req, res) => {
 
   const existingUser = await User.findOne({ _id: req.body._idUser });
 
-  console.log(existingUser);
+  console.log(existingUser.name);
 
   const task = await Task.findByIdAndUpdate(
     { _id: req.body._idtask },
@@ -246,6 +247,7 @@ const asignTask = async (req, res) => {
     idTask: task._id,
     scoretask: task.score,
     completed: false,
+    username: existingUser.name,
   };
 
   const user = await User.findByIdAndUpdate(
@@ -286,6 +288,7 @@ const unassingTask = async (req, res) => {
 
   const task2 = await Task.findByIdAndUpdate(req.body._idTask, {
     assigned: false,
+    assignedTo:req.user._id
   });
 
   if (!task2)
@@ -300,6 +303,21 @@ const unassingTask = async (req, res) => {
 
   return res.status(200).send({ message: "Succes Unassing The task" });
 };
+
+const listAsignedTaskForPerson = async (req, res) => {
+/* 
+  const validId = mongoose.Types.ObjectId.isValid(req.user._id);
+  if (!validId) return res.status(400).send("Invalid id");
+*/
+console.log(req.body._id)
+  if(!req.body._idUser) return res.status(400).send("Sorry Have to specify the user ");
+
+  const task = await Task.find({assignedTo: req.body._idUser})
+
+  return res.status(200).send({ task});
+
+
+}
 
 const listAsignedTasks = async (req, res) => {
   const validId = mongoose.Types.ObjectId.isValid(req.user._id);
@@ -335,6 +353,21 @@ const listRankingPoints = async (req, res) => {
   return res.status(200).send(ranking);
 };
 
+
+const getAlltask = async (req, res) => {
+  const task = await Task.find();
+
+  filtro = task.filter(element => element.assigned != true);
+
+  console.log(filtro);
+
+  return res.status(200).send({filtro});
+
+}
+
+
+
+
 module.exports = {
   saveTask,
   updateTask,
@@ -344,4 +377,6 @@ module.exports = {
   unassingTask,
   listAsignedTasks,
   listRankingPoints,
+  getAlltask,
+  listAsignedTaskForPerson
 };
