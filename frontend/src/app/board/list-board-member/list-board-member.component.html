@@ -1,0 +1,34 @@
+<div class="bgComponent">
+    <div class="accordion_display">
+      <div class="accordion_size">
+        <div class="example-button-container">
+            <button mat-mini-fab class="button" routerLink="/saveTask">
+              New Member
+            </button>
+          </div>
+        <mat-accordion multi="true" *ngIf="memberData.length">            
+          <mat-expansion-panel *ngFor="let member of memberData" hideToggle="false">            
+            <mat-expansion-panel-header>
+                
+              <mat-panel-title>
+                <span>{{ member.name }}</span>
+                <span class="spacer"></span>               
+              </mat-panel-title>
+
+            </mat-expansion-panel-header>
+            <mat-panel-description>
+              {{ member['members']}}
+              {{ member.ranking }}
+            </mat-panel-description>
+            
+            <mat-action-row>                        
+              <span class="spacer"></span>
+              <mat-icon color="primary">delete</mat-icon >                
+            </mat-action-row>
+
+          </mat-expansion-panel>
+        </mat-accordion>
+      </div>
+    </div>
+  </div>
+  
