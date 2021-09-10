@@ -12,6 +12,7 @@ import { RegisterComponent } from './home/register/register.component';
 import { ListTaskComponent } from './task/list-task/list-task.component';
 import { SaveTaskComponent } from './task/save-task/save-task.component';
 import { ListboardtasksComponent } from "../app/board/listboardtasks/listboardtasks.component";
+import { AsignComponent } from './task/asign/asign.component';
 
 const routes: Routes = [
   { path: '', component: LoginComponent, pathMatch: 'full' },
@@ -28,6 +29,7 @@ const routes: Routes = [
   { path: 'saveBoard', component : SaveBoardComponent},
   { path: 'listBoard', component : ListBoardComponent},
   {path: 'listBoard/listboardtasks/:_id', component : ListboardtasksComponent},
+  {path: 'asign', component : AsignComponent},
    
 ];
 

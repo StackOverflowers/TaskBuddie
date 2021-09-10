@@ -44,8 +44,8 @@ export class UserService {
     return this._http.get<any>(this.env + 'user/getRole/' + email);
   }
 
-  listUser(name: string) {
-    return this._http.get<any>(this.env + 'user/listUsers/' + name);
+  listUser() {
+    return this._http.get<any>(this.env + 'user/listUsers/' );
   }
 
   updateUser(user: any) {
@@ -59,4 +59,7 @@ export class UserService {
   registerAdmin(user: any) {
     return this._http.post<any>(this.env + 'user/registerAdmin', user);
   }
+
+  
+
 }

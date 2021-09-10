@@ -42,6 +42,7 @@ import { UserService } from '../app/services/user.service';
 import { TokenInterceptorService } from '../app/services/token-interceptor.service';
 import { TaskService } from "../app/services/task.service";
 import { ListboardtasksComponent } from './board/listboardtasks/listboardtasks.component';
+import { AsignComponent } from './task/asign/asign.component';
 
 @NgModule({
   declarations: [
@@ -63,6 +64,7 @@ import { ListboardtasksComponent } from './board/listboardtasks/listboardtasks.c
     ListTeamComponent,
     AddMemberComponent,
     ListboardtasksComponent,
+    AsignComponent,
   ],
   imports: [
     BrowserModule,
