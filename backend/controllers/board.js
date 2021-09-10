@@ -5,6 +5,7 @@ const fs = require("fs");
 const path = require("path");
 const moment = require("moment");
 
+// Registra board
 const registerBoard = async (req, res) => {
   if (!req.body.name || !req.body.description)
     return res.status(400).send("Incomplete Data");
@@ -48,6 +49,7 @@ const registerBoard = async (req, res) => {
   return res.status(200).send({ result });
 };
 
+// Agrega miembro a un board específico ( recibe userId y boardId)
 const addMember = async (req, res) => {
   if (!req.body.boardId || !req.body.userId)
     return res.status(400).send("Incomplete data");
@@ -86,6 +88,7 @@ const addMember = async (req, res) => {
   return res.status(200).send({ board });
 };
 
+// Borra un miembro de un board
 const deleteMember = async (req, res) => {
   if (!req.body.boardId || !req.body.userId)
     return res.status(400).send("Incomplete data");
@@ -117,6 +120,7 @@ const deleteMember = async (req, res) => {
   return res.status(200).send("Member remove");
 };
 
+//Lista todos los board de un usuario en los que es propietario
 const listBoard = async (req, res) => {
   let board = await Board.find({ userId: req.user._id });
   if (!board || board.length === 0)
@@ -124,6 +128,8 @@ const listBoard = async (req, res) => {
   return res.status(200).send({ board });
 };
 
+
+// Lista los board de un usuario en los que es invitado y porpietario
 const listBoardMember = async (req, res) => {
   let user = await User.findById(req.user._id);
   if (!user) return res.status(400).send("User not found");
@@ -134,6 +140,7 @@ const listBoardMember = async (req, res) => {
   return res.status(200).send({ board });
 };
 
+//Borra un board
 const deleteBoard = async (req, res) => {
   let validId = mongoose.Types.ObjectId.isValid(req.params._id);
   if (!validId) return res.status(400).send("Invalid id");
@@ -159,6 +166,8 @@ const deleteBoard = async (req, res) => {
   return res.status(200).send({ message: "deleted board" });
 };
 
+
+//Actualiza un board
 const updateBoard = async (req, res) => {
   let validId = mongoose.Types.ObjectId.isValid(req.body._id);
   if (!validId) return res.status(400).send("Invalid id");
@@ -180,6 +189,15 @@ const updateBoard = async (req, res) => {
   return res.status(200).send({ board });
 };
 
+//Lista los miembrios de un board
+const listMember = async (req,res) =>{
+  let board = await Board.findById(req.body.boardId);
+  if(!board) return res.status(400).send("Board doesn't exist");
+
+  let members = board.members;
+  return res.status(200).send({members});
+}
+
 module.exports = {
   registerBoard,
   listBoard,
@@ -188,4 +206,5 @@ module.exports = {
   deleteMember,
   deleteBoard,
   updateBoard,
+  listMember,
 };

@@ -15,6 +15,12 @@ router.get(
   ValidateUser,
   BoardController.listBoardMember
 );
+router.get(
+  "/listMember",
+  Auth,
+  ValidateUser,
+  BoardController.listMember
+);
 router.put("/addMember", Auth, ValidateUser, BoardController.addMember);
 router.put("/deleteMember", Auth, ValidateUser, BoardController.deleteMember);
 router.put("/updateBoard", Auth, ValidateUser, BoardController.updateBoard);
