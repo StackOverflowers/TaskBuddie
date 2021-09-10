@@ -5,6 +5,7 @@ import { ListUserComponent } from './admin/list-user/list-user.component';
 import { RegisterRoleComponent } from './admin/register-role/register-role.component';
 import { UpdateRoleComponent } from './admin/update-role/update-role.component';
 import { UpdateUserComponent } from './admin/update-user/update-user.component';
+import { ListBoardMemberComponent } from './board/list-board-member/list-board-member.component';
 import { ListBoardComponent } from './board/list-board/list-board.component';
 import { SaveBoardComponent } from './board/save-board/save-board.component';
 import { LoginComponent } from './home/login/login.component';
@@ -26,6 +27,7 @@ const routes: Routes = [
   { path: 'saveTask', component : SaveTaskComponent},
   { path: 'saveBoard', component : SaveBoardComponent},
   { path: 'listBoard', component : ListBoardComponent},
+  { path: 'listBoardMember', component : ListBoardMemberComponent},
    
 ];
 

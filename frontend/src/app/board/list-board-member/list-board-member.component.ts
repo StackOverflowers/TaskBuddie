@@ -6,14 +6,13 @@ import {
   MatSnackBarVerticalPosition,
 } from '@angular/material/snack-bar';
 
-
 @Component({
-  selector: 'app-list-board',
-  templateUrl: './list-board.component.html',
-  styleUrls: ['./list-board.component.css']
+  selector: 'app-list-board-member',
+  templateUrl: './list-board-member.component.html',
+  styleUrls: ['./list-board-member.component.css']
 })
-export class ListBoardComponent implements OnInit {
-  boardData: any;
+export class ListBoardMemberComponent implements OnInit {
+  memberData: any;
   message: string = '';
   horizontalPosition: MatSnackBarHorizontalPosition = 'end';
   verticalPosition: MatSnackBarVerticalPosition = 'top';
@@ -23,13 +22,13 @@ export class ListBoardComponent implements OnInit {
     private _boardService: BoardService,
     private _snackBar: MatSnackBar
   ) {
-    this.boardData = {};
+    this.memberData = {};
   }
 
   ngOnInit(): void {
-    this._boardService.listBoard().subscribe(
+    this._boardService.listBoardMember().subscribe(
       (res) => {
-        this.boardData = res.board;
+        this.memberData = res.board;
       },
       (err) => {
         this.message = err.error;
@@ -38,12 +37,13 @@ export class ListBoardComponent implements OnInit {
     );
   }
 
-  deleteBoard(board: any) {
-    this._boardService.deleteBoard(board).subscribe(
+
+  deleteTask(task: any) {
+    this._boardService.deleteMember(task).subscribe(
       (res) => {
-        let index = this.boardData.indexOf(board);
+        let index = this.memberData.indexOf(task);
         if (index > -1) {
-          this.boardData.splice(index, 1);
+          this.memberData.splice(index, 1);
           this.message = res.message;
           this.openSnackBarSuccesfull();
         }
@@ -54,7 +54,6 @@ export class ListBoardComponent implements OnInit {
       }
     );
   }
-  
 
   openSnackBarSuccesfull() {
     this._snackBar.open(this.message, 'X', {
