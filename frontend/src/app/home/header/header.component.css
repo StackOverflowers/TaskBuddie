@@ -33,3 +33,7 @@ mat-toolbar {
     width: 160px;
   
 }
+
+mat-menu{
+  margin-left: 50px;
+}
