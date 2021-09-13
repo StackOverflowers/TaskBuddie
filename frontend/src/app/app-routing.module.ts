@@ -13,6 +13,7 @@ import { RegisterComponent } from './home/register/register.component';
 import { RegisterUserComponent } from './admin/register-user/register-user.component';
 import { ListTaskComponent } from './task/list-task/list-task.component';
 import { SaveTaskComponent } from './task/save-task/save-task.component';
+import { ProfileComponent } from './home/profile/profile.component';
 
 const routes: Routes = [
   { path: '', component: LoginComponent, pathMatch: 'full' },
@@ -29,6 +30,8 @@ const routes: Routes = [
   { path: 'saveBoard', component : SaveBoardComponent},
   { path: 'listBoard', component : ListBoardComponent},
   { path: 'listBoardMember', component : ListBoardMemberComponent},
+  { path: 'profile', component : ProfileComponent},
+
    
 ];
 

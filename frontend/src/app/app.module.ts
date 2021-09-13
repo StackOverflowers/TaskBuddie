@@ -43,6 +43,7 @@ import { ListBoardMemberComponent } from './board/list-board-member/list-board-m
 
 import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
+import { ProfileComponent } from './home/profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -64,6 +65,7 @@ import { MatSortModule } from '@angular/material/sort';
     ListTeamComponent,
     AddMemberComponent,
     ListBoardMemberComponent,
+    ProfileComponent,
   ],
   imports: [
     BrowserModule,

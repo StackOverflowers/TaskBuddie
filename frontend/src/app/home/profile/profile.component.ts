@@ -1,34 +1,50 @@
-import { Component, OnInit } from '@angular/core';
-import { BoardService } from '../../services/board.service';
+import { Component, ViewChild } from '@angular/core';
+import { UserService } from '../../services/user.service';
+import { Router } from '@angular/router';
 import {
   MatSnackBar,
   MatSnackBarHorizontalPosition,
   MatSnackBarVerticalPosition,
 } from '@angular/material/snack-bar';
+import { BoardService } from '../../services/board.service';
 
 @Component({
-  selector: 'app-list-board-member',
-  templateUrl: './list-board-member.component.html',
-  styleUrls: ['./list-board-member.component.css']
+  selector: 'app-profile',
+  templateUrl: './profile.component.html',
+  styleUrls: ['./profile.component.css']
 })
-export class ListBoardMemberComponent implements OnInit {
-  memberData: any;
+export class ProfileComponent { 
+
+  boardData: any; 
+  userData: any;
   message: string = '';
   horizontalPosition: MatSnackBarHorizontalPosition = 'end';
   verticalPosition: MatSnackBarVerticalPosition = 'top';
   durationInSeconds: number = 2;
 
   constructor(
+    private _userService: UserService,
+    private _router: Router,
+    private _snackBar: MatSnackBar,
     private _boardService: BoardService,
-    private _snackBar: MatSnackBar
   ) {
-    this.memberData = {};
+    this.userData = {};
+    this.boardData = {};
   }
 
   ngOnInit(): void {
-    this._boardService.listMember().subscribe(
+    this._userService.listUser('Pepita perla').subscribe(
       (res) => {
-        this.memberData = res.board;        
+        this.userData = res.users;    
+      },
+      (err) => {
+        this.message = err.error;
+        this.openSnackBarError();
+      }
+    );
+    this._boardService.listBoardMember().subscribe(
+      (res) => {
+        this.boardData = res.board;        
       },
       (err) => {
         this.message = err.error;
@@ -38,22 +54,8 @@ export class ListBoardMemberComponent implements OnInit {
   }
 
 
-  deleteTask(task: any) {
-    this._boardService.deleteMember(task).subscribe(
-      (res) => {
-        let index = this.memberData.indexOf(task);
-        if (index > -1) {
-          this.memberData.splice(index, 1);
-          this.message = res.message;
-          this.openSnackBarSuccesfull();
-        }
-      },
-      (err) => {
-        this.message = err.error;
-        this.openSnackBarError();
-      }
-    );
-  }
+  updateUser(user: any) {}
+
 
   openSnackBarSuccesfull() {
     this._snackBar.open(this.message, 'X', {
