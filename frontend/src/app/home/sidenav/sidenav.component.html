@@ -3,30 +3,29 @@
         <img src="../../../assets/img/logo.png" alt="Company Logo">
     </div>
     <mat-divider></mat-divider>
-    <h2 matSubheader class="mt-2">Welcome</h2>
+    <h2 matSubheader *ngIf="_userService.loggedIn()" class="mt-2" class="user">Welcome {{userData.name}}</h2>
+    <h2 matSubheader *ngIf="!_userService.loggedIn()" class="mt-2">Welcome Visitor</h2>
     <a *ngIf="!_userService.loggedIn()" mat-list-item routerLink="" routerLinkActive="list-item-active">
         <mat-icon>home</mat-icon>Home
     </a>
     <a *ngIf="!_userService.loggedIn()" mat-list-item routerLink="signUp" routerLinkActive="list-item-active">
-        <mat-icon>dashboard</mat-icon>Sign Up
+        <mat-icon>account_circle</mat-icon>Sign Up
     </a>
     <a *ngIf="!_userService.loggedIn()" mat-list-item routerLink="login" routerLinkActive="list-item-active">
-        <mat-icon>dashboard</mat-icon>Login
+        <mat-icon>supervised_user_circle</mat-icon>Login
     </a>
     <a *ngIf="_userService.loggedIn()" mat-list-item routerLink="listBoard" routerLinkActive="list-item-active">
-        <mat-icon>dashboard</mat-icon>list Your Boards
+        <mat-icon>add_to_photos</mat-icon>list Your Boards
     </a>
     <a *ngIf="_userService.loggedIn()" mat-list-item routerLink="saveBoard" routerLinkActive="list-item-active">
         <mat-icon>edit</mat-icon>Create board
     </a>
     <a *ngIf="_userService.loggedIn()" mat-list-item routerLink="asign" routerLinkActive="list-item-active">
-        <mat-icon>edit</mat-icon>assign a task
+        <mat-icon>assignment</mat-icon>assign a task
     </a>
     <a *ngIf="_userService.loggedIn()" mat-list-item routerLink="profile" routerLinkActive="list-item-active">
-        <mat-icon>edit</mat-icon>Profile
+        <mat-icon>group</mat-icon>Profile
     </a>
-    <a mat-list-item  *ngIf="_userService.loggedIn()" (click)="_userService.logout()">
-        <mat-icon>edit</mat-icon>Logout
-    </a>
+    
     
 </mat-nav-list> 

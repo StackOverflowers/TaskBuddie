@@ -3,7 +3,7 @@
     <button mat-icon-button (click)="toggleSidebar()">
       <mat-icon>menu</mat-icon>
     </button>
-    <div class="row mr-2 ml-auto">
+    <div class="row mr-2 ml-auto" *ngIf="_userService.loggedIn()">
       <ul class="row m-0 align-items-center">
         <li>
           <button
@@ -11,16 +11,16 @@
             [matMenuTriggerFor]="menu"
             class="user mt-2 d-flex align-items-center"
           >
-            <img src="../../../assets/img/header-task-buddie.jpg" alt="" class="user-image mr-1 p-2" />
+            <img src="../../../assets/img/ico_2.png" alt="" class="user-image mr-1 p-2" />
 
-            User Name
+            {{userData.name}}
             <mat-icon class="user-image-icon ml-1"
               >keyboard_arrow_down</mat-icon
             >
           </button>
-          <mat-menu #menu="matMenu">
-            <button mat-menu-item >
-              <mat-icon>exit_to_app</mat-icon>
+          <mat-menu #menu="matMenu" >
+            <button mat-menu-item   (click)="_userService.logout()">
+              <mat-icon >exit_to_app</mat-icon>
               Logout
             </button>
           </mat-menu>

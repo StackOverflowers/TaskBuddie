@@ -166,7 +166,9 @@ const profile = async (req, res) => {
   
   console.log(user)
 
-  return res.status({user});
+  
+  return res.status(200).send({user});
+
 
 }
 
