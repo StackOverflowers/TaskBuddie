@@ -14,6 +14,7 @@ import {
 })
 export class ListBoardComponent implements OnInit {
   boardData: any;
+  memberData: any;
   message: string = '';
   horizontalPosition: MatSnackBarHorizontalPosition = 'end';
   verticalPosition: MatSnackBarVerticalPosition = 'top';
@@ -24,6 +25,7 @@ export class ListBoardComponent implements OnInit {
     private _snackBar: MatSnackBar
   ) {
     this.boardData = {};
+    this.memberData = {};
   }
 
   ngOnInit(): void {
@@ -38,6 +40,21 @@ export class ListBoardComponent implements OnInit {
     );
   }
 
+  listmember(board: any){
+    console.log(board);    
+    this._boardService.listMember(board).subscribe(
+      (res) => {
+        
+        this.memberData = res.members;
+        console.log(this.memberData);
+        
+      },
+      (err) => {
+        this.message = err.error;
+        this.openSnackBarError();
+      }
+    );
+  }
   
 
 

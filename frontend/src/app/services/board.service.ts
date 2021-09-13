@@ -20,8 +20,10 @@ export class BoardService {
     return this._http.get<any>(this.env + 'board/listBoard');
   }
 
-  listMember() {
-    return this._http.get<any>(this.env + 'board/listMember' );
+  listMember(board: any) {
+      
+    return this._http.get<any>(this.env + 'board/listMember/' + board._id );
+
   }
 
   listBoardMember() {
