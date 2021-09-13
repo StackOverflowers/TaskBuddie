@@ -37,6 +37,7 @@ export class ListboardtasksComponent implements OnInit {
 
   ngOnInit(): void {
     this.ruta = this.route.params;
+    console.log(this.ruta)
     this.id=this.ruta._value;
     console.log(this.id._id)
     this.ids=this.id._id

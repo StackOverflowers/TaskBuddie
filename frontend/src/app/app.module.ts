@@ -34,6 +34,9 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSidenavModule } from "@angular/material/sidenav";
+import { MatMenuModule } from "@angular/material/menu";
+import {  MatDividerModule} from "@angular/material/divider";
 
 //servicios
 
@@ -43,6 +46,8 @@ import { TokenInterceptorService } from '../app/services/token-interceptor.servi
 import { TaskService } from "../app/services/task.service";
 import { ListboardtasksComponent } from './board/listboardtasks/listboardtasks.component';
 import { AsignComponent } from './task/asign/asign.component';
+import { SidenavComponent } from './home/sidenav/sidenav.component';
+import {MatListModule} from '@angular/material/list'; 
 
 @NgModule({
   declarations: [
@@ -65,6 +70,7 @@ import { AsignComponent } from './task/asign/asign.component';
     AddMemberComponent,
     ListboardtasksComponent,
     AsignComponent,
+    SidenavComponent,
   ],
   imports: [
     BrowserModule,
@@ -83,6 +89,10 @@ import { AsignComponent } from './task/asign/asign.component';
     MatIconModule,
     MatSelectModule,
     MatPaginatorModule,
+    MatSidenavModule,
+    MatMenuModule,
+    MatDividerModule,
+    MatListModule
   ],
   providers: [
     UserService,
