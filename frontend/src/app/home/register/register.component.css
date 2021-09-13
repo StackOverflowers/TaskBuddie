@@ -47,12 +47,3 @@ mat-card-title {
 ::ng-deep .mat-focused .mat-form-field-label {
   color: #ac7420 !important;
 }
-
-.bgComponent {
-  background-image: url("../../../assets/img/airbuddies.png");
-  background-repeat: no-repeat;
-  background-size: cover;
-  width: 100%;
-  height: 100%;
-  padding-bottom: 30%;
-}
