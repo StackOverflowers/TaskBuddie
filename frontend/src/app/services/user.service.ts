@@ -26,6 +26,10 @@ export class UserService {
     return !!localStorage.getItem('token');
   }
 
+  nameIn() {
+    return localStorage.getItem('name');
+  }
+
   getToken() {
     return localStorage.getItem('token');
   }
@@ -37,11 +41,16 @@ export class UserService {
   logout() {
     localStorage.removeItem('token');
     localStorage.removeItem('role');
+    localStorage.removeItem('name');
     this._router.navigate(['/login']);
   }
 
   getRole(email: string) {
     return this._http.get<any>(this.env + 'user/getRole/' + email);
+  }
+
+  getNombre(email: string) {
+    return this._http.get<any>(this.env + 'user/getNombre/' + email);
   }
 
   listUser(name: string) {

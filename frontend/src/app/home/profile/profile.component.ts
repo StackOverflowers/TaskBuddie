@@ -21,6 +21,7 @@ export class ProfileComponent {
   horizontalPosition: MatSnackBarHorizontalPosition = 'end';
   verticalPosition: MatSnackBarVerticalPosition = 'top';
   durationInSeconds: number = 2;
+  nombre : any;
 
   constructor(
     private _userService: UserService,
@@ -30,10 +31,11 @@ export class ProfileComponent {
   ) {
     this.userData = {};
     this.boardData = {};
+    this.nombre =  this._userService.nameIn();
   }
 
   ngOnInit(): void {
-    this._userService.listUser('Pepita perla').subscribe(
+    this._userService.listUser( this.nombre ).subscribe(
       (res) => {
         this.userData = res.users;    
       },

@@ -40,6 +40,7 @@ export class LoginComponent implements OnInit {
           localStorage.setItem('token', res.jwtToken);
           this._router.navigate(['/listBoard']);
           this.getRole(this.loginData.email);
+          this.getNombre(this.loginData.email);
           this.loginData = {};
         },
         (err) => {
@@ -54,6 +55,17 @@ export class LoginComponent implements OnInit {
     this._userService.getRole(email).subscribe(
       (res) => {
         localStorage.setItem('role', res.role);
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+  }
+
+  getNombre(email: string) {
+    this._userService.getNombre(email).subscribe(
+      (res) => {
+        localStorage.setItem('name', res.name);
       },
       (err) => {
         console.log(err);
