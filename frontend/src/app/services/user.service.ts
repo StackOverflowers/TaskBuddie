@@ -17,7 +17,7 @@ export class UserService {
     return this._http.post<any>(this.env + 'user/registerUser', user);
   }
 
-  
+
   login(user: any) {
     return this._http.post<any>(this.env + 'user/login', user);
   }
@@ -26,13 +26,10 @@ export class UserService {
     return !!localStorage.getItem('token');
   }
 
-<<<<<<< HEAD
-=======
   nameIn() {
     return localStorage.getItem('name');
   }
 
->>>>>>> d2c4779c08fb5b1ad55c2bdf9f5d1380263f387b
   getToken() {
     return localStorage.getItem('token');
   }
@@ -44,10 +41,7 @@ export class UserService {
   logout() {
     localStorage.removeItem('token');
     localStorage.removeItem('role');
-<<<<<<< HEAD
-=======
     localStorage.removeItem('name');
->>>>>>> d2c4779c08fb5b1ad55c2bdf9f5d1380263f387b
     this._router.navigate(['/login']);
   }
 
@@ -55,17 +49,12 @@ export class UserService {
     return this._http.get<any>(this.env + 'user/getRole/' + email);
   }
 
-<<<<<<< HEAD
-  listUser() {
-    return this._http.get<any>(this.env + 'user/listUsers/' );
-=======
   getNombre(email: string) {
     return this._http.get<any>(this.env + 'user/getNombre/' + email);
   }
 
   listUser(name: string) {
     return this._http.get<any>(this.env + 'user/listUsers/' + name);
->>>>>>> d2c4779c08fb5b1ad55c2bdf9f5d1380263f387b
   }
 
   updateUser(user: any) {
@@ -79,10 +68,14 @@ export class UserService {
   registerAdmin(user: any) {
     return this._http.post<any>(this.env + 'user/registerAdmin', user);
   }
-<<<<<<< HEAD
-
   
+  listUserAll(){
+    return this._http.get<any>(this.env + 'user/listUsers/');
+  }
 
-=======
->>>>>>> d2c4779c08fb5b1ad55c2bdf9f5d1380263f387b
+  getProfile(){
+    return this._http.get<any>(this.env + 'user/getProfile');
+  }
+
+
 }

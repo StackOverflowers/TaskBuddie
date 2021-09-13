@@ -35,9 +35,10 @@ export class ProfileComponent {
   }
 
   ngOnInit(): void {
-    this._userService.listUser( this.nombre ).subscribe(
+    this._userService.getProfile().subscribe(
       (res) => {
-        this.userData = res.users;    
+        this.userData = res.user;  
+        console.log(this.userData)
       },
       (err) => {
         this.message = err.error;

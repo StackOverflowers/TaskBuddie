@@ -38,7 +38,6 @@
     height: 100%;
   }
   
-<<<<<<< HEAD
   /*change color of animation input*/
   
   ::ng-deep .mat-form-field-ripple  {
@@ -49,14 +48,3 @@
     color: #ac7420 !important;
   }
   
-=======
-
-  .bgComponent {
-    background-image: url("../../../assets/img/airbuddies.png");
-    background-repeat: no-repeat;
-    background-size: cover;
-    width: 100%;
-    height: 100%;
-    padding-bottom: 30%;
-  }
->>>>>>> d2c4779c08fb5b1ad55c2bdf9f5d1380263f387b

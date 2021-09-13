@@ -28,38 +28,10 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {}
-<<<<<<< HEAD
 
   login() {
     if (!this.loginData.email || !this.loginData.password) {
       this.message = 'Failed process: Incomplete data';
-      this.openSnackBarError();
-      this.loginData = {};
-    } else {
-      this._userService.login(this.loginData).subscribe(
-        (res) => {
-          localStorage.setItem('token', res.jwtToken);
-          this._router.navigate(['/listBoard']);
-          this.getRole(this.loginData.email);
-          this.loginData = {};
-        },
-        (err) => {
-          this.message = err.error;
-          this.openSnackBarError();
-        }
-      );
-    }
-  }
-
-  getRole(email: string) {
-    this._userService.getRole(email).subscribe(
-      (res) => {
-        localStorage.setItem('role', res.role);
-=======
-
-  login() {
-    if (!this.loginData.email || !this.loginData.password) {
-      this.message = 'Failed process: Imcomplete data';
       this.openSnackBarError();
       this.loginData = {};
     } else {
@@ -79,10 +51,10 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  getRole(email: string) {
-    this._userService.getRole(email).subscribe(
+  getNombre(email: string) {
+    this._userService.getNombre(email).subscribe(
       (res) => {
-        localStorage.setItem('role', res.role);
+        localStorage.setItem('name', res.name);
       },
       (err) => {
         console.log(err);
@@ -90,11 +62,10 @@ export class LoginComponent implements OnInit {
     );
   }
 
-  getNombre(email: string) {
-    this._userService.getNombre(email).subscribe(
+  getRole(email: string) {
+    this._userService.getRole(email).subscribe(
       (res) => {
-        localStorage.setItem('name', res.name);
->>>>>>> d2c4779c08fb5b1ad55c2bdf9f5d1380263f387b
+        localStorage.setItem('role', res.role);
       },
       (err) => {
         console.log(err);

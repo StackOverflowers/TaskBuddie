@@ -161,6 +161,18 @@ const getNombre = async (req, res) => {
   return res.status(200).send({ name });
 };
 
+const profile = async (req, res) => {
+  const user = await User.findOne({_id:req.user._id});
+  
+  console.log(user)
+
+  return res.status({user});
+
+}
+
+
+
+
 module.exports = {
   registerUser,
   login,
@@ -171,4 +183,5 @@ module.exports = {
   registerAdmin,
   getRole,
   getNombre,
+  profile
 };

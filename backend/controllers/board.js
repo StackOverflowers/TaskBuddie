@@ -123,6 +123,7 @@ const deleteMember = async (req, res) => {
 
 //Lista todos los board de un usuario en los que es propietario
 const listBoard = async (req, res) => {
+  
   let board = await Board.find({ userId: req.user._id });
   if (!board || board.length === 0)
     return res.status(400).send("You have no assigned tasks");
@@ -131,8 +132,10 @@ const listBoard = async (req, res) => {
 
 // Lista los board de un usuario en los que es invitado y porpietario
 const listBoardMember = async (req, res) => {
-  let board = await Board.find({ members: userId });
+  let user = await User.findById(req.user._id);
+  if (!user) return res.status(400).send("User not found");
 
+  let board = await Board.find({ "members.id": user._id });
   if (!board || board.length === 0)
     return res.status(400).send("You have no assigned tasks");
   return res.status(200).send({ board });
@@ -166,13 +169,42 @@ const deleteBoard = async (req, res) => {
   
 };
 
+const updateBoard = async (req, res) => {
+  let validId = mongoose.Types.ObjectId.isValid(req.body._id);
+  if (!validId) return res.status(400).send("Invalid id");
+
+  if (!req.body.name || !req.body.description)
+    return res.status(400).send("Incomplete data");
+
+  const memberInfo = await Board.findById(req.body._id);
+  if (!memberInfo) return res.status(400).send("Board not found");
+
+  if (memberInfo.userId.toString() !== req.user._id.toString())
+    return res.status(400).send("You have no permisiion");
+
+  const board = await Board.findByIdAndUpdate(req.body._id, {
+    name: req.body.name,
+    description: req.body.description,
+  });
+  if (!board) return res.status(400).send("Board not found");
+  return res.status(200).send({ board });
+};
+
+const listMember = async (req, res) => {
+  let board = await Board.findById(req.params.boardId);
+  if (!board) return res.status(400).send("Board doesn't exist");
+
+  let members = board.members;
+  return res.status(200).send({ members });
+};
+
 module.exports = {
   registerBoard,
   listBoard,
   listBoardMember,
   addMember,
+  updateBoard,
   deleteMember,
   deleteBoard,
-  updateBoard,
   listMember,
 };

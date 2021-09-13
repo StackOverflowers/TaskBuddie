@@ -1,34 +1,31 @@
-<mat-toolbar class="bgHeader">
-    <ul>
-        <img src="../../../assets/img/header-task-buddie.jpg" height="50px" alt="">
-    </ul>
-    <ul>
-      <a routerLink="listBoard">List board</a>
-    </ul>
-    <ul>
-      <a routerLink="saveBoard">Create board</a>
-    </ul>
-    <ul>
-      <mat-form-field
-      *ngIf="_userService.loggedIn() && _userService.isAdmin()"
-      appearance="fill"
-    >
-      <mat-label>Admin option</mat-label>
-      <mat-select>
-        <mat-option value="option1" routerLink="listUser">Users</mat-option>
-        <mat-option value="option2" routerLink="listRole">Role</mat-option>
-      </mat-select>
-    </mat-form-field>
-    </ul>
-    <ul>
-      <a routerLink="asign">assign a task</a>
-    </ul>
-    <span class="headerSpacer"></span>
-    <ul>
-    <a *ngIf="!_userService.loggedIn()" mat-button routerLink="signUp" >Sign Up</a>
-    <a *ngIf="!_userService.loggedIn()" mat-button routerLink="login">Login</a>
-    <a *ngIf="_userService.loggedIn()" mat-button routerLink="profile"> Profile</a>
-    <a *ngIf="_userService.loggedIn()" mat-button (click)="_userService.logout()" >Logout</a>
+<mat-toolbar>
+  <mat-toolbar-row class="justify-content-between">
+    <button mat-icon-button (click)="toggleSidebar()">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <div class="row mr-2 ml-auto">
+      <ul class="row m-0 align-items-center">
+        <li>
+          <button
+            mat-button
+            [matMenuTriggerFor]="menu"
+            class="user mt-2 d-flex align-items-center"
+          >
+            <img src="./assets/user.jpg" alt="" class="user-image mr-1 p-2" />
 
-    </ul>
-  </mat-toolbar>
+            User Name
+            <mat-icon class="user-image-icon ml-1"
+              >keyboard_arrow_down</mat-icon
+            >
+          </button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item>
+              <mat-icon>exit_to_app</mat-icon>
+              Logout
+            </button>
+          </mat-menu>
+        </li>
+      </ul>
+    </div>
+  </mat-toolbar-row>
+</mat-toolbar>

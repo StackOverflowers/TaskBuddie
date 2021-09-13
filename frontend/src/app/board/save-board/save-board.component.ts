@@ -52,11 +52,7 @@ export class SaveBoardComponent implements OnInit {
 
       this._boardService.registerBoard(data).subscribe(
         (res) => {
-<<<<<<< HEAD
           this._router.navigate(['/listTask']);
-=======
-          this._router.navigate(['/listBoard']);
->>>>>>> d2c4779c08fb5b1ad55c2bdf9f5d1380263f387b
           this.message = 'Task create';
           this.openSnackBarSuccesfull();
           this.registerData = {};
