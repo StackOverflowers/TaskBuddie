@@ -1,4 +1,5 @@
 .bgComponent {
+<<<<<<< HEAD
     
     background-repeat: no-repeat;
     background-size: cover;
@@ -70,3 +71,73 @@
     background-color: #e0982b;
     margin: 8px 8px 8px 0;
   }
+=======
+  background-image: url("../../../assets/img/airbuddies.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 100%;
+  height: 100%;
+  padding-bottom: 5%;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  padding: 20px 16px 0px;
+}
+
+table {
+  width: 100%;
+}
+
+.mat-form-field {
+  font-size: 14px;
+  width: 100%;
+}
+
+td,
+th {
+  width: 15%;
+}
+
+.bgShearch {
+  background-color: #161f29;
+  color: #ffffff;
+}
+
+.mat-icon {
+  padding: 15px;
+}
+
+.colorUpdate {
+  color: #0938d3;
+  cursor: pointer;
+  padding-right: 15px;
+}
+
+.colorDelete {
+  color: #af0a20;
+  cursor: pointer;
+  padding-right: 15px;
+}
+
+.deleteIcon:hover {
+  color: #ff0000;
+  cursor: pointer;
+  padding-right: 15px;
+}
+
+.updateIcon:hover {
+  color: #20cbff;
+  cursor: pointer;
+  padding-right: 15px;
+}
+
+.button {
+  display: flex;
+  justify-content: center;
+  background-color: #4de008;
+  width: 5%;
+  height: 5%;
+}
+>>>>>>> d2c4779c08fb5b1ad55c2bdf9f5d1380263f387b

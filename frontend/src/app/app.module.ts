@@ -23,6 +23,11 @@ import { AddMemberComponent } from './team/add-member/add-member.component';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { UserService } from './services/user.service';
+import { RoleService } from './services/role.service';
+import { BoardService } from './services/board.service';
+import { TokenInterceptorService } from './services/token-interceptor.service';
+import { AuthGuard } from './guard/auth.guard';
 
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
@@ -37,9 +42,6 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 
 //servicios
 
-import { BoardService } from '../app/services/board.service';
-import { UserService } from '../app/services/user.service';
-import { TokenInterceptorService } from '../app/services/token-interceptor.service';
 import { TaskService } from "../app/services/task.service";
 import { ListboardtasksComponent } from './board/listboardtasks/listboardtasks.component';
 import { AsignComponent } from './task/asign/asign.component';
@@ -74,10 +76,10 @@ import { AsignComponent } from './task/asign/asign.component';
     ReactiveFormsModule,
     HttpClientModule,
     MatToolbarModule,
-    MatInputModule,
+    MatButtonModule,
     MatFormFieldModule,
     MatCardModule,
-    MatButtonModule,
+    MatInputModule,
     MatSnackBarModule,
     MatExpansionModule,
     MatIconModule,
