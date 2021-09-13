@@ -190,7 +190,7 @@ const updateBoard = async (req, res) => {
 
 //Lista los miembrios de un board
 const listMember = async (req, res) => {
-  let board = await Board.findById(req.body.boardId);
+  let board = await Board.findById(req.params.boardId);
   if (!board) return res.status(400).send("Board doesn't exist");
 
   let members = board.members;

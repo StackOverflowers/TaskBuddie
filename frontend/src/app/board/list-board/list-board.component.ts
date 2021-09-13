@@ -38,6 +38,9 @@ export class ListBoardComponent implements OnInit {
     );
   }
 
+  
+
+
   deleteBoard(board: any) {
     this._boardService.deleteBoard(board).subscribe(
       (res) => {

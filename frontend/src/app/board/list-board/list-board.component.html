@@ -16,9 +16,33 @@
           <mat-card-subtitle> {{ board.description }} </mat-card-subtitle>
         </mat-card-header>        
         <img mat-card-image src="{{ board.imageUrl }}" routerLink="/listTask">
+        {{ board._id }} 
+      
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" role="dialog">
+          <div class="modal-dialog">
+      
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Modal Header</h4>
+              </div>
+              <div class="modal-body">
+                <p>Some text in the modal.</p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+      
+          </div>
+        </div>
 
-        <p>
-          <mat-icon color="primary" routerLink="/listBoardMember">accessibility</mat-icon >
+        <p>          
+
+          <mat-icon color="primary" data-toggle="modal" data-target="#myModal">
+            accessibility </mat-icon>
           <span class="spacer"></span>
           <mat-icon color="primary" routerLink="/listBoardMember">build</mat-icon >
           <span class="spacer"></span>

@@ -16,7 +16,7 @@ router.get(
   BoardController.listBoardMember
 );
 router.get(
-  "/listMember",
+  "/listMember/:boardId",
   Auth,
   ValidateUser,
   BoardController.listMember
