@@ -22,6 +22,7 @@ const registerUser = async (req, res) => {
     password: hash,
     roleId: role._id,
     dbStatus: true,
+    photo: "https://i.ibb.co/hYCLvVm/user-logo-2.png" 
   });
 
   const result = await user.save();
@@ -95,6 +96,34 @@ const updateUser = async (req, res) => {
   return res.status(200).send({ user });
 };
 
+// Actualizar foto de perfil del usuario
+const updatePhoto = async (req, res) => {
+  if (!req.body._id) return res.status(400).send("Incomplete data**");
+
+  let imageUrl = "";
+  
+  if (req.files.photo) {
+    if (req.files.photo.type != null) {
+      const url = req.protocol + "://" + req.get("host") + "/";
+      const serverImg =
+        "./uploads/" + moment().unix() + path.extname(req.files.photo.path);
+      fs.createReadStream(req.files.photo.path).pipe(
+        fs.createWriteStream(serverImg)
+      );
+      imageUrl =
+        url + "uploads/" + moment().unix() + path.extname(req.files.photo.path);
+    }
+  }
+
+  const user = await User.findByIdAndUpdate(req.body._id, {
+    photo: req.body.imageUrl,
+  });
+  if (!user) return res.status(400).send("Error uploading photo");
+  return res.status(200).send({ user });
+};
+
+  
+// Cambiar estado del usuario a inactivo cuando él desee eliminar su perfil de la app
 const deleteUser = async (req, res) => {
   if (!req.body._id) return res.status(400).send("Incomplete data");
 
@@ -171,4 +200,5 @@ module.exports = {
   registerAdmin,
   getRole,
   getNombre,
+  updatePhoto
 };
