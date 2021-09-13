@@ -164,10 +164,12 @@ const getNombre = async (req, res) => {
 const profile = async (req, res) => {
   const user = await User.findOne({_id:req.user._id});
   
-  console.log(user)
+  if(!user) return res.status(400).send("Please Login in the account please");
 
-  
+  console.log(user);
+
   return res.status(200).send({user});
+
 
 
 }

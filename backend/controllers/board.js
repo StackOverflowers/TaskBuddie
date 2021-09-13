@@ -5,7 +5,6 @@ const fs = require("fs");
 const path = require("path");
 const moment = require("moment");
 
-// Registra board
 const registerBoard = async (req, res) => {
   if (!req.body.name || !req.body.description)
     return res.status(400).send("Incomplete Data");
@@ -49,7 +48,6 @@ const registerBoard = async (req, res) => {
   return res.status(200).send({ result });
 };
 
-// Agrega miembro a un board específico ( recibe userId y boardId)
 const addMember = async (req, res) => {
   if (!req.body.boardId || !req.body.userId)
     return res.status(400).send("Incomplete data");
@@ -59,9 +57,6 @@ const addMember = async (req, res) => {
 
   let member = await Board.findById(req.body.boardId);
   if (!member) return res.status(400).send("Board doesn't exist");
-
-  if (member.userId.toString() !== req.user._id.toString())
-    return res.status(400).send("You have no permisiion");
 
   let newMember = member.members;
   let data = {
@@ -88,20 +83,15 @@ const addMember = async (req, res) => {
   return res.status(200).send({ board });
 };
 
-// Borra un miembro de un board
 const deleteMember = async (req, res) => {
   if (!req.body.boardId || !req.body.userId)
     return res.status(400).send("Incomplete data");
 
   let user = await User.findById(req.body.userId);
-  z;
   if (!user) return res.status(400).send("User doesn't exist");
 
   let member = await Board.findById(req.body.boardId);
   if (!member) return res.status(400).send("Board doesn't exist");
-
-  if (member.userId.toString() !== req.user._id.toString())
-    return res.status(400).send("You have no permisiion");
 
   let delMember = member.members;
 
@@ -121,21 +111,16 @@ const deleteMember = async (req, res) => {
   return res.status(200).send("Member remove");
 };
 
-//Lista todos los board de un usuario en los que es propietario
 const listBoard = async (req, res) => {
-  
-  let board = await Board.find({ userId: req.user._id });
+  let board = await Board.find();
   if (!board || board.length === 0)
     return res.status(400).send("You have no assigned tasks");
   return res.status(200).send({ board });
 };
 
-// Lista los board de un usuario en los que es invitado y porpietario
 const listBoardMember = async (req, res) => {
-  let user = await User.findById(req.user._id);
-  if (!user) return res.status(400).send("User not found");
+  let board = await Board.find({ members: userId });
 
-  let board = await Board.find({ "members.id": user._id });
   if (!board || board.length === 0)
     return res.status(400).send("You have no assigned tasks");
   return res.status(200).send({ board });
@@ -145,19 +130,13 @@ const deleteBoard = async (req, res) => {
   let validId = mongoose.Types.ObjectId.isValid(req.params._id);
   if (!validId) return res.status(400).send("Invalid id");
 
-  let boardImg = await Board.findById(req.params._id);
-  if (!boardImg) return res.status(400).send("Board not found");
-
-  if (boardImg.userId.toString() !== req.user._id.toString())
-    return res.status(400).send("You have no permisiion");
-
-  boardImg = boardImg.imageUrl;
-  boardImg = boardImg.split("/")[4];
-  let serverImg = "./uploads/" + boardImg;
+  let taskImg = await Board.findById(req.params._id);
+  taskImg = taskImg.imageUrl;
+  taskImg = taskImg.split("/")[4];
+  let serverImg = "./uploads/" + taskImg;
 
   let board = await Board.findByIdAndDelete(req.params._id);
   if (!board) return res.status(400).send("Board not found");
-
   try {
     fs.unlinkSync(serverImg);
   } catch (error) {
@@ -166,36 +145,7 @@ const deleteBoard = async (req, res) => {
 
   return res.status(200).send({ message: "deleted board" });
 
-  
-};
-
-const updateBoard = async (req, res) => {
-  let validId = mongoose.Types.ObjectId.isValid(req.body._id);
-  if (!validId) return res.status(400).send("Invalid id");
-
-  if (!req.body.name || !req.body.description)
-    return res.status(400).send("Incomplete data");
-
-  const memberInfo = await Board.findById(req.body._id);
-  if (!memberInfo) return res.status(400).send("Board not found");
-
-  if (memberInfo.userId.toString() !== req.user._id.toString())
-    return res.status(400).send("You have no permisiion");
-
-  const board = await Board.findByIdAndUpdate(req.body._id, {
-    name: req.body.name,
-    description: req.body.description,
-  });
-  if (!board) return res.status(400).send("Board not found");
-  return res.status(200).send({ board });
-};
-
-const listMember = async (req, res) => {
-  let board = await Board.findById(req.params.boardId);
-  if (!board) return res.status(400).send("Board doesn't exist");
-
-  let members = board.members;
-  return res.status(200).send({ members });
+ 
 };
 
 module.exports = {
@@ -203,8 +153,6 @@ module.exports = {
   listBoard,
   listBoardMember,
   addMember,
-  updateBoard,
   deleteMember,
   deleteBoard,
-  listMember,
 };

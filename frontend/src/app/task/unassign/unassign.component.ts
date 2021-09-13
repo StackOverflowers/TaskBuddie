@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from "../../services/user.service";
 import { TaskService } from "../../services/task.service";
+import { UserService } from "../../services/user.service";
 import {
   MatSnackBar,
   MatSnackBarHorizontalPosition,
@@ -9,78 +9,84 @@ import {
 
 
 @Component({
-  selector: 'app-asign',
-  templateUrl: './asign.component.html',
-  styleUrls: ['./asign.component.css']
+  selector: 'app-unassign',
+  templateUrl: './unassign.component.html',
+  styleUrls: ['./unassign.component.css']
 })
-export class AsignComponent implements OnInit {
+export class UnassignComponent implements OnInit {
   public userData:any;
   public taskData:any;
   public array2:any;
   public name:any;
   public registerData:any;
-  message: string;
+  public message: string;
+  public tasksassinged:any;
+  public show:boolean;
   horizontalPosition: MatSnackBarHorizontalPosition = 'end';
   verticalPosition: MatSnackBarVerticalPosition = 'top';
   durationInSeconds: number = 2;
-  
-  constructor(private _userService: UserService , private _taskService: TaskService , private _snackBar: MatSnackBar) { 
-    this.userData ={};
-    this.taskData ={};
-    this.array2=[];
-    this.name={};
+
+  constructor(private _task:TaskService , private _snackBar: MatSnackBar , private _userService: UserService) { 
     this.message="";
+    this.userData={}
     this.registerData={};
+    this.tasksassinged={}
+    this.show = false;
     
   }
 
   ngOnInit(): void {
-    this.getUserData();
-    this.getTaskData();
+    this.getUserData()
+    this.listme()
+    
   }
-
 
   getUserData(){
-      this._userService.listUserAll().subscribe(
-        (res)=>{
-          this.userData = res.users;
-          
-          
-        }
-      )
-  }
-
-
-  getTaskData(){
-    this._taskService.getTasks().subscribe(
-        (res)=>{
-          this.taskData= res.filtro;
-          
-          
-        }
-    )
-  }
-
-  assingTask(){
-    
-    console.log(this.registerData),
-    
-    this._taskService.AssignTask(this.registerData).subscribe(
-      
+    this._userService.listUserAll().subscribe(
       (res)=>{
-        console.log(res);
-        this.message = "Task asign";
-        this.openSnackBarSuccesfull();
-        this.getTaskData()
-      },
-      (err)=>{
-        this.message = err.error;
-        this.openSnackBarError();
+        this.userData = res.users;
+        
+        
       }
     )
-   
-    
+}
+
+listme(){
+  console.log(this.registerData)
+  this._task.Unasign(this.registerData).subscribe(
+    (res)=>{
+      this.tasksassinged= res.task;
+      console.log(this.tasksassinged)
+      this.show = true;
+
+      
+      
+      
+    }
+  )
+}
+
+
+unassignThistask(){
+  if(!this.registerData._idTask || ! this.registerData._idUser){
+    this.message = "Sorry have to fill al the camps please check"
   }
+  else{
+    this._task.UnassignTask(this.registerData).subscribe(
+      (res)=>{
+        this.message = res.message;
+        this.openSnackBarSuccesfull();
+        this.listme()
+      },
+      (error)=>{
+        console.log(error)
+        this.message= error;
+        this.openSnackBarError();
+        
+      }
+    )
+  }
+}
 
   openSnackBarSuccesfull() {
     this._snackBar.open(this.message, 'X', {
@@ -99,4 +105,5 @@ export class AsignComponent implements OnInit {
       panelClass: ['style-snackBarFalse'],
     });
   }
+
 }

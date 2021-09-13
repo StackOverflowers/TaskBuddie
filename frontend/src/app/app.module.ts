@@ -23,11 +23,6 @@ import { AddMemberComponent } from './team/add-member/add-member.component';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { UserService } from './services/user.service';
-import { RoleService } from './services/role.service';
-import { BoardService } from './services/board.service';
-import { TokenInterceptorService } from './services/token-interceptor.service';
-import { AuthGuard } from './guard/auth.guard';
 
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
@@ -38,24 +33,21 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
-
-import {MatTableModule} from '@angular/material/table'; 
+import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSidenavModule } from "@angular/material/sidenav";
 import { MatMenuModule } from "@angular/material/menu";
 import {  MatDividerModule} from "@angular/material/divider";
-import {MatListModule} from '@angular/material/list'; 
-
-
-import { MatPaginatorModule } from '@angular/material/paginator';
-import { MatSortModule } from '@angular/material/sort';
 
 //servicios
 
-import { TaskService } from "../app/services/task.service";
-import { ListboardtasksComponent } from './board/listboardtasks/listboardtasks.component';
+import { BoardService } from '../app/services/board.service';
+import { UserService } from '../app/services/user.service';
+import { TokenInterceptorService } from '../app/services/token-interceptor.service';
 import { AsignComponent } from './task/asign/asign.component';
+import { ListboardtasksComponent } from './board/listboardtasks/listboardtasks.component';
+import { UnassignComponent } from './task/unassign/unassign.component';
 import { SidenavComponent } from './home/sidenav/sidenav.component';
-
+import {MatListModule} from '@angular/material/list'; 
 @NgModule({
   declarations: [
     AppComponent,
@@ -75,8 +67,9 @@ import { SidenavComponent } from './home/sidenav/sidenav.component';
     SaveTaskComponent,
     ListTeamComponent,
     AddMemberComponent,
-    ListboardtasksComponent,
     AsignComponent,
+    ListboardtasksComponent,
+    UnassignComponent,
     SidenavComponent,
   ],
   imports: [
@@ -87,17 +80,15 @@ import { SidenavComponent } from './home/sidenav/sidenav.component';
     ReactiveFormsModule,
     HttpClientModule,
     MatToolbarModule,
-    MatButtonModule,
+    MatInputModule,
     MatFormFieldModule,
     MatCardModule,
-    MatInputModule,
+    MatButtonModule,
     MatSnackBarModule,
     MatExpansionModule,
     MatIconModule,
     MatSelectModule,
     MatPaginatorModule,
-    MatTableModule,
-    MatSortModule,
     MatSidenavModule,
     MatMenuModule,
     MatDividerModule,
@@ -111,7 +102,6 @@ import { SidenavComponent } from './home/sidenav/sidenav.component';
       useClass: TokenInterceptorService,
       multi: true,
     },
-    TaskService
   ],
   bootstrap: [AppComponent],
 })

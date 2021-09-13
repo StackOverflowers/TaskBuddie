@@ -76,6 +76,4 @@ export class UserService {
   getProfile(){
     return this._http.get<any>(this.env + 'user/getProfile');
   }
-
-
 }

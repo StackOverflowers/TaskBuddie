@@ -47,7 +47,6 @@ export class ListBoardComponent implements OnInit {
       panelClass: ['style-snackBarTrue'],
     });
   }
-  
 
   openSnackBarError() {
     this._snackBar.open(this.message, 'X', {
