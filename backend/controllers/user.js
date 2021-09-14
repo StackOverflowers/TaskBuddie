@@ -98,7 +98,7 @@ const updateUser = async (req, res) => {
 
 // Actualizar foto de perfil del usuario
 const updatePhoto = async (req, res) => {
-  if (!req.body._id) return res.status(400).send("Incomplete data**");
+  if (!req.body._id) return res.status(400).send("Incomplete data");
 
   let imageUrl = "";
   
