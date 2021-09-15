@@ -38,9 +38,11 @@ export class ListUserComponent {
   }
 
   ngOnInit(): void {
-    this._userService.listUser('').subscribe(
+    this._userService.listUserAll().subscribe(
       (res) => {
         this.userData = res.users;
+        console.log(this.userData);
+        
         this.dataSource = new MatTableDataSource(this.userData);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;

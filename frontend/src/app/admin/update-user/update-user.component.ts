@@ -63,9 +63,10 @@ export class UpdateUserComponent implements OnInit {
     });
   }
 
+
   updateUser() {
     if (!this.registerData.name || !this.registerData.email) {
-      this.message = 'Failed process: Imcomplete data';
+      this.message = 'Failed process: Incomplete data';
       this.openSnackBarError();
     } else {
       this._userService.updateUser(this.registerData).subscribe(

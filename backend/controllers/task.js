@@ -8,7 +8,7 @@ const User = require("../models/user");
 
 const saveTask = async (req, res) => {
   let validId = mongoose.Types.ObjectId.isValid(req.user._id);
-  console.log(req.user._id);
+  //console.log(req.user._id);
   if (!validId) return res.status(400).send("Invalid id");
 
   if (
@@ -216,8 +216,8 @@ const deleteTask = async (req, res) => {
 const asignTask = async (req, res) => {
   //el id hace referencia al id de la tarea que se va a asignar
   //name al nombre del usuario
-  console.log(req.body._idtask)
-  console.log(req.body._idUser)
+  // console.log(req.body._idtask)
+  // console.log(req.body._idUser)
   if (!req.body._idtask || !req.body._idUser)
     return res
       .status(400)

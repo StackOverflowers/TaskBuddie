@@ -43,7 +43,7 @@ export class LoginComponent implements OnInit {
           this._router.navigate(['/saveBoard']);
           this.getRole(this.loginData.email);
           this.loginData = {};
-          location.reload();
+          
         },
         (err) => {
           this.message = err.error;

@@ -20,6 +20,10 @@ export class BoardService {
     return this._http.get<any>(this.env + 'board/listBoard');
   }
 
+  listBoardMember() {
+    return this._http.get<any>(this.env + 'board/listBoardMember' );
+  }
+  
   addMember(board: any) {
     return this._http.put<any>(this.env + 'board/addMember', board);
   }

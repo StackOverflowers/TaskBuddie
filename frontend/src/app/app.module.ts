@@ -51,6 +51,7 @@ import {MatListModule} from '@angular/material/list';
 import { CarouselModule } from 'ngx-owl-carousel-o';
 import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
+import { ProfileComponent } from './home/profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -75,6 +76,7 @@ import { MatSortModule } from '@angular/material/sort';
     ListboardtasksComponent,
     UnassignComponent,
     SidenavComponent,
+    ProfileComponent,
   ],
   imports: [
     BrowserModule,
