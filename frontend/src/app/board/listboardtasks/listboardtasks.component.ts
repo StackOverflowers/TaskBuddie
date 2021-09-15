@@ -18,35 +18,53 @@ export class ListboardtasksComponent implements OnInit {
   horizontalPosition: MatSnackBarHorizontalPosition = 'end';
   verticalPosition: MatSnackBarVerticalPosition = 'top';
   durationInSeconds: number = 2;
-  public user:any;
-  public ruta:any;
-  public id:any;
-  public ids:any;
-  
+  _id:String;
+  board:Array<string>
   constructor(
     private _boardService: TaskService,
     private _snackBar: MatSnackBar,
-    private route: ActivatedRoute
+    private _arouter: ActivatedRoute,
   ) { 
-
-    this.user = {};
-    this.ruta = {};
-    this.id={};
-    this.ids="";
+    this._id=""
+    this.taskData=[]
+    this.board=['to-do','in-progress','done']
   }
 
   ngOnInit(): void {
-    this.ruta = this.route.params;
-    this.id=this.ruta._value;
-    console.log(this.id._id)
-    this.ids=this.id._id
-    console.log(this.ids);
-    this._boardService.getBoardTask(this.ids).subscribe(
-      (res)=>{
-        this.taskData = res.task
-        console.log(this.taskData)
+    this._arouter.params.subscribe(
+      (params)=>{
+        this._id=params['_id'];
+        this._boardService.getBoardTask(this._id).subscribe(
+          (res)=>{
+            this.taskData = res.task;
+            console.log(this.taskData)
+            
+          },
+          (err)=>{
+            this.message=err.error;
+            this.openSnackBarError()
+
+          }
+        )
       }
-    )  
+    )
   }
 
+  openSnackBarSuccesfull() {
+    this._snackBar.open(this.message, 'X', {
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition,
+      duration: this.durationInSeconds * 1000,
+      panelClass: ['style-snackBarTrue'],
+    });
+  }
+
+  openSnackBarError() {
+    this._snackBar.open(this.message, 'X', {
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition,
+      duration: this.durationInSeconds * 1000,
+      panelClass: ['style-snackBarFalse'],
+    });
+  }
 }
