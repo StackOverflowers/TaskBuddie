@@ -33,7 +33,7 @@ const saveTask = async (req, res) => {
   if (existantInBoard)
     return res.status(400).send("Take Another Board that task already exist");
 
-  console.log(req.body.boardName);
+  
   const board = await Board.findOne({ name: req.body.boardName });
 
   if (!board)
