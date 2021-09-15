@@ -2,6 +2,10 @@ const bcrypt = require("bcrypt");
 const User = require("../models/user");
 const Role = require("../models/role");
 const mongoose = require("mongoose");
+const fs = require("fs");
+const path = require("path");
+const moment = require("moment");
+const { findById } = require("../models/user");
 
 const registerUser = async (req, res) => {
   if (!req.body.name || !req.body.email || !req.body.password)
@@ -22,7 +26,7 @@ const registerUser = async (req, res) => {
     password: hash,
     roleId: role._id,
     dbStatus: true,
-    photo: "https://i.ibb.co/hYCLvVm/user-logo-2.png" 
+    photo: "https://i.ibb.co/hYCLvVm/user-logo-2.png",
   });
 
   const result = await user.save();
@@ -98,10 +102,26 @@ const updateUser = async (req, res) => {
 
 // Actualizar foto de perfil del usuario
 const updatePhoto = async (req, res) => {
-  if (!req.body._id) return res.status(400).send("Incomplete data");
+  if (!req.body._id || !req.files.photo)
+    return res.status(400).send("Incomplete data");
+
+  let user = await User.findById(req.body._id);
+
+  if (user.photo !== "https://i.ibb.co/hYCLvVm/user-logo-2.png") {
+    img = user.photo;
+    img = img.split("/")[4]; //Separar por / y tomar la posición 4 de la ruta guardada
+
+    // Tomar la imagen que está guardada en el servidor
+    let serverImg = "./uploads/" + img; // Aquí estoy posicionandome en este path
+    try {
+      fs.unlinkSync(serverImg);
+    } catch (err) {
+      console.log("Image no found in server");
+    }
+  }
 
   let imageUrl = "";
-  
+
   if (req.files.photo) {
     if (req.files.photo.type != null) {
       const url = req.protocol + "://" + req.get("host") + "/";
@@ -115,14 +135,16 @@ const updatePhoto = async (req, res) => {
     }
   }
 
-  const user = await User.findByIdAndUpdate(req.body._id, {
-    photo: req.body.imageUrl,
+  user = await User.findByIdAndUpdate(req.body._id, {
+    photo: imageUrl,
   });
-  if (!user) return res.status(400).send("Error uploading photo");
+
+  let result = await user.save();
+
+  if (!result) return res.status(200).send("Error uploading photo");
   return res.status(200).send({ user });
 };
 
-  
 // Cambiar estado del usuario a inactivo cuando él desee eliminar su perfil de la app
 const deleteUser = async (req, res) => {
   if (!req.body._id) return res.status(400).send("Incomplete data");
@@ -190,6 +212,16 @@ const getNombre = async (req, res) => {
   return res.status(200).send({ name });
 };
 
+const getId = async (req, res) => {
+  const users = await User.findOne({ email: req.params.email })
+    .populate("roleId")
+    .exec();
+  if (!users || users.length === 0)
+    return res.status(400).send("No search results");
+  const _id = users._id;
+  return res.status(200).send({ _id });
+};
+
 module.exports = {
   registerUser,
   login,
@@ -200,5 +232,6 @@ module.exports = {
   registerAdmin,
   getRole,
   getNombre,
-  updatePhoto
+  getId,
+  updatePhoto,
 };

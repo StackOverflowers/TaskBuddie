@@ -5,14 +5,16 @@
         <img
           class="imagenProfile"
           mat-card-image
-          src="{{ user.photo }}"
+          src="{{ user.photo }}" 
           alt="User photo"
         />
         <input class="inputFile" type="file" (change)="uploadImg($event)" />
+         
         <button
           (click)="savePhoto()"
           class="button colorButton"
           mat-raised-button
+          
         >
           Update
         </button>

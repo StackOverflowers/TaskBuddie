@@ -53,6 +53,10 @@ export class UserService {
     return this._http.get<any>(this.env + 'user/getNombre/' + email);
   }
 
+  getId(email: string) {
+    return this._http.get<any>(this.env + 'user/getId/' + email);
+  }
+
   listUser(name: string) {
     return this._http.get<any>(this.env + 'user/listUsers/' + name);
   }

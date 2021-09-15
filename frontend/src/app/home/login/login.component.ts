@@ -41,6 +41,7 @@ export class LoginComponent implements OnInit {
           this._router.navigate(['/listBoard']);
           this.getRole(this.loginData.email);
           this.getNombre(this.loginData.email);
+          this.getId(this.loginData.email);
           this.loginData = {};
         },
         (err) => {
@@ -66,6 +67,17 @@ export class LoginComponent implements OnInit {
     this._userService.getNombre(email).subscribe(
       (res) => {
         localStorage.setItem('name', res.name);
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+  }
+
+  getId(email: string) {
+    this._userService.getId(email).subscribe(
+      (res) => {
+        localStorage.setItem('_id', res._id);
       },
       (err) => {
         console.log(err);
