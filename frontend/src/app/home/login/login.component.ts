@@ -40,7 +40,7 @@ export class LoginComponent implements OnInit {
       this._userService.login(this.loginData).subscribe(
         (res) => {
           localStorage.setItem('token', res.jwtToken);
-          this._router.navigate(['/listBoard']);
+          this._router.navigate(['/saveBoard']);
           this.getRole(this.loginData.email);
           this.loginData = {};
           location.reload();
@@ -79,9 +79,10 @@ export class LoginComponent implements OnInit {
       this._userService.registerUser(this.registerData).subscribe(
         (res) => {
           localStorage.setItem('token', res.jwtToken);
-          this._router.navigate(['/saveTask']);
+          this._router.navigate(['/saveBoard']);
           this.message = 'Successfull user registration';
           this.openSnackBarSuccesfull();
+          this.getRole(this.loginData.email);
           this.registerData = {};
           location.reload();
         },
