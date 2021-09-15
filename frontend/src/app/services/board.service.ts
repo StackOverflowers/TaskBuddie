@@ -32,6 +32,12 @@ export class BoardService {
     return this._http.delete<any>(this.env + 'board/deleteMember/' + board._id);
   }
 
+  deleteBoard(board: any) {
+    return this._http.delete<any>(this.env + 'board/deleteBoard/' + board._id);
+  }
 
+  updateBoard(board: any) {
+    return this._http.delete<any>(this.env + 'board/updateBoard/', board._id);
+  }
 
 }
