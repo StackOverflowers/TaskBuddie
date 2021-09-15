@@ -57,6 +57,10 @@ export class UserService {
     return this._http.get<any>(this.env + 'user/listUsers/' + name);
   }
 
+  findUser(_id: string) {
+    return this._http.get<any>(this.env + 'user/findUser/' + _id);
+  }
+
   updateUser(user: any) {
     return this._http.put<any>(this.env + 'user/updateUser', user);
   }

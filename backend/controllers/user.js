@@ -165,16 +165,17 @@ const profile = async (req, res) => {
   const user = await User.findOne({_id:req.user._id});
   
   if(!user) return res.status(400).send("Please Login in the account please");
-
-  console.log(user);
-
   return res.status(200).send({user});
-
-
-
 }
 
-
+const findUser = async (req, res) => {  
+  const user = await User.findOne({ _id: req.params["_id"] })
+    .populate("roleId")
+    .exec();
+  if (!user || user.length === 0)
+    return res.status(400).send("No search results");
+  return res.status(200).send({ user });
+};
 
 
 module.exports = {
@@ -187,5 +188,6 @@ module.exports = {
   registerAdmin,
   getRole,
   getNombre,
-  profile
+  profile,
+  findUser,
 };

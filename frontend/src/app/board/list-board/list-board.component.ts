@@ -7,11 +7,10 @@ import {
   MatSnackBarVerticalPosition,
 } from '@angular/material/snack-bar';
 
-
 @Component({
   selector: 'app-list-board',
   templateUrl: './list-board.component.html',
-  styleUrls: ['./list-board.component.css']
+  styleUrls: ['./list-board.component.css'],
 })
 export class ListBoardComponent implements OnInit {
   taskData: any;
@@ -19,12 +18,10 @@ export class ListBoardComponent implements OnInit {
   horizontalPosition: MatSnackBarHorizontalPosition = 'end';
   verticalPosition: MatSnackBarVerticalPosition = 'top';
   durationInSeconds: number = 2;
-  
 
   constructor(
     private _boardService: BoardService,
     private _snackBar: MatSnackBar
-      
   ) {
     this.taskData = [];
   }
@@ -33,7 +30,7 @@ export class ListBoardComponent implements OnInit {
     this._boardService.listBoard().subscribe(
       (res) => {
         this.taskData = res.board;
-        console.log(this.taskData)
+        console.log(this.taskData);
       },
       (err) => {
         this.message = err.error;
@@ -43,58 +40,35 @@ export class ListBoardComponent implements OnInit {
   }
 
   customOptions: OwlOptions = {
-
     loop: false,
-
     mouseDrag: true,
-
     touchDrag: false,
-
     pullDrag: true,
-
     dots: false,
-
     navSpeed: 800,
-
     navText: ['', ''],
 
     responsive: {
-
       0: {
-
-        items: 1
-
+        items: 1,
       },
 
       400: {
-
-        items: 2
-
+        items: 2,
       },
 
       740: {
-
-        items: 3
-
+        items: 3,
       },
 
       940: {
-
-        items: 6
-
-      }
-
+        items: 6,
+      },
     },
 
-    nav: false
+    nav: false,
+  };
 
-  }
-
-  
-
-    
-
- 
   openSnackBarSuccesfull() {
     this._snackBar.open(this.message, 'X', {
       horizontalPosition: this.horizontalPosition,

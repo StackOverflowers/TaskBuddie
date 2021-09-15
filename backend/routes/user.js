@@ -14,5 +14,6 @@ router.post("/registerAdmin", UserController.registerAdmin);
 router.get("/getRole/:email", UserController.getRole);
 router.get("/getNombre/:email", UserController.getNombre);
 router.get("/getProfile", Auth, ValidateUser, UserController.profile);
+router.get(  "/findUser/:_id",Auth,ValidateUser, UserController.findUser);
 
 module.exports = router;
