@@ -101,14 +101,12 @@ const updateUser = async (req, res) => {
 
 // Actualizar foto de perfil del usuario
 const updatePhoto = async (req, res) => {
-  console.log(req.body._id);
-  console.log(req.files.photo)
+
   if (!req.body._id || !req.files.photo)
     return res.status(400).send("Incomplete data");
 
   let user = await User.findById(req.body._id);
-    console.log(req.files.photo)
-    console.log(req.user.photo)
+
   if (user.photo !== "https://i.ibb.co/hYCLvVm/user-logo-2.png") {
     img = user.photo;
     img = img.split("/")[4]; //Separar por / y tomar la posición 4 de la ruta guardada
@@ -241,6 +239,15 @@ const findUser = async (req, res) => {
   return res.status(200).send({ user });
 };
 
+const findUserByEmail = async(req,res) =>{
+  if(!req.body.email) return res.status(400).send("Incomplete data");
+
+  const user = await User.findOne({email: req.body.email});
+  if (!user || user.length === 0)
+    return res.status(400).send("User doesn't exists");
+  return res.status(200).send({ user });
+}
+
 
 module.exports = {
   registerUser,
@@ -256,4 +263,5 @@ module.exports = {
   findUser,
   updatePhoto,
   getId,
+  findUserByEmail,
 };

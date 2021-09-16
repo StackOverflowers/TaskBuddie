@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from '../../services/user.service';
-import { RoleService } from '../../services/role.service';
+import { BoardService } from '../../services/board.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import {
   MatSnackBar,
@@ -9,13 +8,12 @@ import {
 } from '@angular/material/snack-bar';
 
 @Component({
-  selector: 'app-update-role',
-  templateUrl: './update-role.component.html',
-  styleUrls: ['./update-role.component.css'],
+  selector: 'app-update-board',
+  templateUrl: './update-board.component.html',
+  styleUrls: ['./update-board.component.css']
 })
-export class UpdateRoleComponent implements OnInit {
+export class UpdateBoardComponent implements OnInit {
   registerData: any;
-  roles: Array<any>;
   message: string = '';
   _id: string;
   horizontalPosition: MatSnackBarHorizontalPosition = 'end';
@@ -23,24 +21,21 @@ export class UpdateRoleComponent implements OnInit {
   durationInSeconds: number = 2;
 
   constructor(
-    private _userService: UserService,
-    private _roleService: RoleService,
+    private _boardService: BoardService,
     private _router: Router,
     private _Arouter: ActivatedRoute,
     private _snackBar: MatSnackBar
-  ) {
+  ) { 
     this.registerData = {};
     this._id = '';
-    this.roles = [];
   }
 
   ngOnInit(): void {
     this._Arouter.params.subscribe((params) => {
       this._id = params['_id'];
-      this._roleService.findRole(this._id).subscribe(
-        (res) => {          
-          this.registerData = res.role;
-          console.log(this.registerData )
+      this._boardService.getBoard(this._id).subscribe(
+        (res) => {
+          this.registerData = res.board;
         },
         (err) => {
           this.message = err.error;
@@ -50,15 +45,17 @@ export class UpdateRoleComponent implements OnInit {
     });
   }
 
-  updateRole() {
+
+  updateBoard() {
     if (!this.registerData.name || !this.registerData.description) {
-      this.message = 'Failed process: Imcomplete data';
+      this.message = 'Failed process: Incomplete data';
       this.openSnackBarError();
     } else {
-      this._roleService.updateRole(this.registerData).subscribe(
+      console.log(this.registerData);      
+      this._boardService.updateBoard(this.registerData).subscribe(
         (res) => {
-          this._router.navigate(['/listRole']);
-          this.message = 'Successfull edit role';
+          this._router.navigate(['/listBoard']);
+          this.message = 'Successfull edit board';
           this.openSnackBarSuccesfull();
           this.registerData = {};
         },

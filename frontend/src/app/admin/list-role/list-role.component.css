@@ -1,5 +1,5 @@
 .bgComponent {
-    background-image: url("../../../assets/img/airbuddies.png");
+  background-image: url("../../../assets/img/bg2.png");
     background-repeat: no-repeat;
     background-size: cover;
     width: 100%;
@@ -22,13 +22,17 @@
     width: 100%;
   }
   
+  .textTable{
+    margin-left: 10px;
+  }
+
   td,
   th {
     width: 15%;
   }
   
   .bgShearch {
-    background-color: #161f29;
+    background-color: #e0982b;
     color: #ffffff;
   }
   
@@ -63,8 +67,6 @@
   .button {
     display: flex;
     justify-content: center;
-    background-color: #4de008;
-    width: 5%;
-    height: 5%;
+    background-color: #e0982b;
+    margin: 8px 8px 8px 0;
   }
-  

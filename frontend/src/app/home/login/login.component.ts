@@ -40,7 +40,7 @@ export class LoginComponent implements OnInit {
       this._userService.login(this.loginData).subscribe(
         (res) => {
           localStorage.setItem('token', res.jwtToken);
-          this._router.navigate(['/listBoard']);
+          this._router.navigate(['/welcome']);
           this.getRole(this.loginData.email);
           this.getNombre(this.loginData.email);
           this.getId(this.loginData.email);
@@ -89,12 +89,14 @@ export class LoginComponent implements OnInit {
       this._userService.registerUser(this.registerData).subscribe(
         (res) => {
           localStorage.setItem('token', res.jwtToken);
-          this._router.navigate(['/saveBoard']);
+          this._router.navigate(['/welcome']);
           this.message = 'Successfull user registration';
           this.openSnackBarSuccesfull();
           this.getRole(this.loginData.email);
+          this.getNombre(this.loginData.email);
+          this.getId(this.loginData.email);
           this.registerData = {};
-          location.reload();
+          //location.reload();
         },
         (err) => {
           this.message = err.error;
