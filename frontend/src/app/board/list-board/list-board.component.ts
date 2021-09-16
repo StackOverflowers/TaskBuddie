@@ -74,10 +74,10 @@ export class ListBoardComponent implements OnInit {
 
   customOptions: OwlOptions = {
     loop: false,
-    mouseDrag: true,
-    touchDrag: false,
-    pullDrag: true,
-    dots: false,
+    mouseDrag: false,
+    touchDrag: true,
+    pullDrag: false,
+    dots: true,
     navSpeed: 800,
     navText: ['', ''],
 
@@ -94,6 +94,7 @@ export class ListBoardComponent implements OnInit {
       940: {
         items: 4,
       },
+      
     },
     nav: false,
   };
