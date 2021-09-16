@@ -241,6 +241,15 @@ const findUser = async (req, res) => {
   return res.status(200).send({ user });
 };
 
+const findUserByEmail = async(req,res) =>{
+  if(!req.body.email) return res.status(400).send("Incomplete data");
+
+  const user = await User.findOne({email: req.body.email});
+  if (!user || user.length === 0)
+    return res.status(400).send("User doesn't exists");
+  return res.status(200).send({ user });
+}
+
 
 module.exports = {
   registerUser,
@@ -256,4 +265,5 @@ module.exports = {
   findUser,
   updatePhoto,
   getId,
+  findUserByEmail,
 };

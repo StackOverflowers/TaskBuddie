@@ -114,11 +114,11 @@ const deleteMember = async (req, res) => {
   });
 
   if (!board) return res.status(400).send("Board not found");
-  return res.status(200).send("Member remove");
+  return res.status(200).send({board});
 };
 
 const listBoard = async (req, res) => {
-  let board = await Board.find({userId: req.user._id});
+  let board = await Board.find({ userId: req.user._id });
   if (!board || board.length === 0)
     return res.status(400).send("You have no assigned tasks");
   return res.status(200).send({ board });
@@ -126,9 +126,9 @@ const listBoard = async (req, res) => {
 
 const listBoardMember = async (req, res) => {
   let user = await User.findById(req.user._id);
-  if(!user) return res.status(400).send("User not found");
+  if (!user) return res.status(400).send("User not found");
 
-  console.log(typeof user._id + " " + typeof req.user._id);
+
   let board = await Board.find({ "members.id": user._id });
   if (!board || board.length === 0)
     return res.status(400).send("You have no assigned tasks");
@@ -189,6 +189,12 @@ const listMember = async (req, res) => {
   return res.status(200).send({ members });
 };
 
+const getBoard = async (req, res) => {
+  let board = await Board.findById(req.params._id);
+  if (!board) return res.status(400).send("Board doesn't find");
+  return res.status(200).send({ board });
+};
+
 module.exports = {
   registerBoard,
   listBoard,
@@ -198,4 +204,5 @@ module.exports = {
   deleteBoard,
   updateBoard,
   listMember,
+  getBoard,
 };

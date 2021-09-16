@@ -33,7 +33,7 @@ export class BoardService {
   }
 
   deleteMember(board: any) {
-    return this._http.delete<any>(this.env + 'board/deleteMember/' + board._id);
+    return this._http.put<any>(this.env + 'board/deleteMember/' , board);
   }
 
   deleteBoard(board: any) {
@@ -42,6 +42,14 @@ export class BoardService {
 
   updateBoard(board: any) {
     return this._http.delete<any>(this.env + 'board/updateBoard/', board._id);
+  }
+
+  listMember(board: any){
+    return this._http.get<any>(this.env + 'board/listMember/' , board._id)
+  }
+
+  getBoard(board: any) {
+    return this._http.get<any>(this.env + 'board/getBoard/' + board)
   }
 
 }
