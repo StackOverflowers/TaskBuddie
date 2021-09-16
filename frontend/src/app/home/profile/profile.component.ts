@@ -1,13 +1,12 @@
 import { Component } from '@angular/core';
 import { UserService } from '../../services/user.service';
-import { BoardService } from "../../services/board.service";
 import { Router, ActivatedRoute } from '@angular/router';
 import {
   MatSnackBar,
   MatSnackBarHorizontalPosition,
   MatSnackBarVerticalPosition,
 } from '@angular/material/snack-bar';
-
+import { BoardService } from '../../services/board.service';
 
 @Component({
   selector: 'app-profile',
@@ -36,26 +35,23 @@ export class ProfileComponent {
     this.boardData = {};
     this.nombre = this._userService.nameIn();
     this.selectedFile = null;
-    this._id = localStorage.getItem('_id');
+    this._id = '';
   }
 
   ngOnInit(): void {
-  
-      console.log(this._id);
-      
-      this._userService.findUser(this._id).subscribe(
-        (res) => {
-          this.userData = res.user;
-          console.log(this.userData);
-        },
-        (err) => {
-          this.message = err.error;
-          this.openSnackBarError();
-        }
-      );
+     this._userService.getProfile().subscribe(
+       (res)=>{
+         this.userData = res.user;
+         this._id=this.userData._id;
+         console.log(this._id)
+       },
+       (err)=>{
+         this.message = err.error;
+         this.openSnackBarError();
+       }
+     )
 
-
-    this._boardService.listBoardMember().subscribe(
+     this._boardService.listBoardMember().subscribe(
       (res) => {
         this.boardData = res.board;
       },
@@ -73,19 +69,16 @@ export class ProfileComponent {
   }
 
   savePhoto() {
-    
-    
     const data = new FormData();
     if (this.selectedFile != null) {
       data.append('photo', this.selectedFile, this.selectedFile.name);
       data.append('_id', this._id);
-      //console.log(data.append);
+      console.log(data)
+     
     }
-    //console.log({data});
-    
     this._userService.updatePhoto(data).subscribe(
       (res) => {
-        console.log("Hola chicos");
+        console.log(res)
         this._router.navigate(['/profile']);
         this.message = 'Updated photo';
         this.openSnackBarSuccesfull();
@@ -96,6 +89,7 @@ export class ProfileComponent {
         this.openSnackBarError();
       }
     );
+
   }
 
   openSnackBarSuccesfull() {

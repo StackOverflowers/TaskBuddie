@@ -18,7 +18,7 @@ export class TaskService {
 
 
    AssignTask(task: Object){
-     console.log(task)
+     
      
 
      return this.http.put<any>(this.env + 'task/assignTask', task );
@@ -37,4 +37,13 @@ export class TaskService {
      return this.http.put<any>(this.env + 'task/unassingTask',task);
    }
 
+
+   getTaskForBoard(board: Object){
+     
+     return this.http.post<any>(this.env + 'task/listBoardTasK', board )
+   }
+
+   getTaskMemeber(board: Object){
+    return this.http.post<any>(this.env + 'task/listmemberstasks', board)
+   }
 }

@@ -33,7 +33,7 @@ const saveTask = async (req, res) => {
   if (existantInBoard)
     return res.status(400).send("Take Another Board that task already exist");
 
-  
+  console.log(req.body.boardName);
   const board = await Board.findOne({ name: req.body.boardName });
 
   if (!board)
@@ -101,22 +101,43 @@ const updateTask = async (req, res) => {
 
   const inactiveTask = await Task.findById({ _id: req.body._id });
 
-  const user = await User.findById(inactiveTask.assignedTo);
+  console.log(inactiveTask);
 
+  const user = await User.findById(inactiveTask.assignedTo);
+  /*
   if (req.user._id != inactiveTask.assignedTo)
     return res
       .status(400)
       .send("Please check that user dont have assigned this task");
+*/
+
+  /*
 
   if (inactiveTask.dbStatus == false || !inactiveTask || inactiveTask == null) {
     return res.status(400).send("You already did that Task ");
   }
+
+  */
 
   const task = await Task.findByIdAndUpdate(req.body._id, {
     taskStatus: req.body.taskStatus,
     dbStatus: status,
     userModify: req.user.name,
   });
+
+  const board = await Board.findById(task.boardId);
+
+  const filter = board.members.some(
+    (element) => element.name === req.user.name
+  );
+  console.log(filter);
+
+  if (!filter)
+    return res
+      .status(400)
+      .send(
+        "Sorry you are not allowed because you are not member of this board please contact the owner"
+      );
 
   if (scoreUser == 1) {
     let acumScore = 1;
@@ -147,6 +168,29 @@ const updateTask = async (req, res) => {
       let existe = user.EarnedPoints.some(
         (element) => element.scorecompleted >= 1
       );
+
+      let existe2 = board.members.some(
+        (element) => element.name == req.user.name
+      );
+
+      if (existe2) {
+        board.members.map((element) => {
+          if (element.id == req.user._id) {
+            element.ranking++;
+            return element;
+          } else {
+            return element;
+          }
+        });
+        console.log(board.members);
+        const boarActualizado = await Board.findByIdAndUpdate(task.boardId, {
+          members: board.members,
+        });
+        if (!boarActualizado)
+          return res
+            .status(400)
+            .send("Cant save or the user dont corresponds into this board");
+      }
 
       if (existe) {
         const nuevopuntaje = user.EarnedPoints.map((element) => {
@@ -216,8 +260,7 @@ const deleteTask = async (req, res) => {
 const asignTask = async (req, res) => {
   //el id hace referencia al id de la tarea que se va a asignar
   //name al nombre del usuario
-  // console.log(req.body._idtask)
-  // console.log(req.body._idUser)
+  
   if (!req.body._idtask || !req.body._idUser)
     return res
       .status(400)
@@ -225,7 +268,24 @@ const asignTask = async (req, res) => {
 
   let assignedtask = await Task.findOne({ _id: req.body._idtask });
 
-  console.log(assignedtask);
+  
+
+  let board = await Board.findById(assignedtask.boardId);
+
+  
+  const filter = board.members.some(
+    (element) => element.id == req.body._idUser
+  );
+  console.log(filter);
+
+  if (!filter)
+    return res
+      .status(400)
+      .send(
+        "Sorry you are not allowed because you are not member of this board please contact the owner"
+      );
+
+  
   if (assignedtask.assigned === true)
     return res.status(400).send(" Sorry the task its already assigned");
 
@@ -288,7 +348,7 @@ const unassingTask = async (req, res) => {
 
   const task2 = await Task.findByIdAndUpdate(req.body._idTask, {
     assigned: false,
-    assignedTo:req.user._id
+    assignedTo: req.user._id,
   });
 
   if (!task2)
@@ -305,19 +365,18 @@ const unassingTask = async (req, res) => {
 };
 
 const listAsignedTaskForPerson = async (req, res) => {
-/* 
+  /* 
   const validId = mongoose.Types.ObjectId.isValid(req.user._id);
   if (!validId) return res.status(400).send("Invalid id");
 */
-console.log(req.body._id)
-  if(!req.body._idUser) return res.status(400).send("Sorry Have to specify the user ");
+  console.log(req.body._id);
+  if (!req.body._idUser)
+    return res.status(400).send("Sorry Have to specify the user ");
 
-  const task = await Task.find({assignedTo: req.body._idUser})
+  const task = await Task.find({ assignedTo: req.body._idUser });
 
-  return res.status(200).send({ task});
-
-
-}
+  return res.status(200).send({ task });
+};
 
 const listAsignedTasks = async (req, res) => {
   const validId = mongoose.Types.ObjectId.isValid(req.user._id);
@@ -353,22 +412,55 @@ const listRankingPoints = async (req, res) => {
   return res.status(200).send(ranking);
 };
 
-
 const getAlltask = async (req, res) => {
   const task = await Task.find();
 
-  filtro = task.filter(element => element.assigned != true);
+  filtro = task.filter((element) => element.assigned != true);
 
   console.log(filtro);
 
-  return res.status(200).send({filtro});
+  return res.status(200).send({ filtro });
+};
+
+const getTaskBoard = async (req, res) => {
+ 
+  if(!req.body.boardID) return res.status(400).send("Sorry please specify THE BOARD");
+
+  const tasks = await Task.find({boardId: req.body.boardID});
+  
+  if(!tasks || tasks.length === 0) return res.status(400).send("Sorry no tasks in that board");
+
+  const filter = tasks.filter((element)=> element.assigned != true )
+
+  if(filter.lengt==0) return res.status(400).send("Sorry this board have all the tasks asigned please generate a new one");
+
+  return res.status(200).send({filter})
+}
+
+const getMembers = async (req, res) => {
+
+  console.log(req.body.boardID)
+  if(!req.body.boardID) return res.status(400).send("Sorry please specify THE BOARD");
+
+  const board = await Board.find({_id:req.body.boardID});
+  console.log(board)
+
+  if(!board) return res.status(400).send("Board not found");
+
+  let arrayMembers = [];
+
+  for(let i of board){
+    let miembros = i.members
+    return res.status(200).send(miembros)
+  }
+
+  
+
 
 }
 
-
-
-
 module.exports = {
+  getTaskBoard,
   saveTask,
   updateTask,
   listTask,
@@ -378,5 +470,6 @@ module.exports = {
   listAsignedTasks,
   listRankingPoints,
   getAlltask,
-  listAsignedTaskForPerson
+  listAsignedTaskForPerson,
+  getMembers
 };
