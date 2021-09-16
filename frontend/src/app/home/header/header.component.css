@@ -5,9 +5,14 @@ mat-toolbar {
   
 }
 
+.menu{
+  color: white;
+}
+
 ul , li {
    
     list-style: none;
+    color: white;
     
 }
 button {
