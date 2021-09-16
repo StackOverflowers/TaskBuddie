@@ -15,9 +15,11 @@ import { UpdateRoleComponent } from './admin/update-role/update-role.component';
 import { UpdateUserComponent } from './admin/update-user/update-user.component';
 import { LoginComponent } from './home/login/login.component';
 import { RegisterComponent } from './home/register/register.component';
+import { WelcomeComponent } from './home/welcome/welcome.component';
+import { UpdateBoardComponent } from './board/update-board/update-board.component';
 
 const routes: Routes = [
-  { path: '', component: LoginComponent, pathMatch: 'full' },
+  { path: '', component: WelcomeComponent, pathMatch: 'full' },
   { path: 'registerUser', component: RegisterComponent },
   { path: 'signUp', component: RegisterComponent },
   { path: 'login', component: LoginComponent },
@@ -34,6 +36,8 @@ const routes: Routes = [
   {path: 'listBoard/listboardtasks/:_id', component : ListboardtasksComponent},
   {path:'unassign',component:UnassignComponent},
   { path: 'profile', component : ProfileComponent},
+  { path: 'welcome', component : WelcomeComponent},
+  { path: 'updateBoard', component : UpdateBoardComponent},
    
 ];
 

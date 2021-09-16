@@ -52,6 +52,8 @@ import { CarouselModule } from 'ngx-owl-carousel-o';
 import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
 import { ProfileComponent } from './home/profile/profile.component';
+import { WelcomeComponent } from './home/welcome/welcome.component';
+import { UpdateBoardComponent } from './board/update-board/update-board.component';
 
 @NgModule({
   declarations: [
@@ -77,6 +79,8 @@ import { ProfileComponent } from './home/profile/profile.component';
     UnassignComponent,
     SidenavComponent,
     ProfileComponent,
+    WelcomeComponent,
+    UpdateBoardComponent,
   ],
   imports: [
     BrowserModule,
