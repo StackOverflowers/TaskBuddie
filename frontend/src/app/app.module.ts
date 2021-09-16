@@ -49,6 +49,9 @@ import { UnassignComponent } from './task/unassign/unassign.component';
 import { SidenavComponent } from './home/sidenav/sidenav.component';
 import {MatListModule} from '@angular/material/list'; 
 import { CarouselModule } from 'ngx-owl-carousel-o';
+import { MatTableModule } from '@angular/material/table';
+import { MatSortModule } from '@angular/material/sort';
+import { ProfileComponent } from './home/profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -73,6 +76,7 @@ import { CarouselModule } from 'ngx-owl-carousel-o';
     ListboardtasksComponent,
     UnassignComponent,
     SidenavComponent,
+    ProfileComponent,
   ],
   imports: [
     BrowserModule,
@@ -95,7 +99,10 @@ import { CarouselModule } from 'ngx-owl-carousel-o';
     MatMenuModule,
     MatDividerModule,
     MatListModule,
-    CarouselModule
+    CarouselModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
   ],
   providers: [
     UserService,

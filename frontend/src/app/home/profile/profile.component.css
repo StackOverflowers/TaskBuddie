@@ -1,18 +1,58 @@
 .bgComponent {
-    background-image: url("../../../assets/img/airbuddies.png");
+    background-image: url("../../../assets/img/bg2.png");
     background-repeat: no-repeat;
     background-size: cover;
     width: 100%;
     height: 100%;
     padding-bottom: 5%;
   }
-  
+ 
+  .label{
+    cursor: default;
+
+  }
+
   .container {
     display: flex;
     flex-direction: column;
-    padding: 20px 16px 0px;
+    padding: 12px 10px 0px;
+    width: 90%;
+    height: 90%;
   }
   
+.imagenProfile{
+  width: 279px;
+  height: 279px;
+  border: #2b475e;
+  border-style: double;
+  }
+
+.inputFile{
+  background: #f4c989;
+  border: 1px solid #ac7420;
+  border-top: 1px solid #e0982b;
+  border-left: 1px solid #e0982b;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+  color: #ac7420;
+  display: inline-block;
+  font-size: 11px;
+  text-decoration: none;
+  cursor: pointer;
+  margin-top: 10px;
+  line-height: normal;
+  padding: 10px;
+  position: relative;
+  width: 280px;
+  }
+
+  .card{
+    background-color: rgba(255, 153, 0, 0.322);
+    padding:40px;
+    margin:10px;
+  }
+
   table {
     width: 100%;
   }
@@ -63,7 +103,10 @@
   .button {
     display: flex;
     justify-content: center;
-    background-color: #4de008;
+    padding: 2px;
+    margin-top: 10px;
+    background-color: #e0982b;
+    color: #e1dcdc;
     width: 5%;
     height: 5%;
   }

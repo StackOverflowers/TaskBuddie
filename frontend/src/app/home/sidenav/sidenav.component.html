@@ -26,6 +26,15 @@
     <a *ngIf="_userService.loggedIn()" mat-list-item routerLink="profile" routerLinkActive="list-item-active">
         <mat-icon>group</mat-icon>Profile
     </a>
-    
-    
+
+    <a *ngIf="_userService.loggedIn()"
+    appearance="fill" mat-list-item routerLink="listUser" routerLinkActive="list-item-active">
+        <mat-icon>group</mat-icon> Users
+    </a>
+
+    <a *ngIf="_userService.loggedIn()"
+    appearance="fill" mat-list-item routerLink="listRole" routerLinkActive="list-item-active">
+        <mat-icon>group</mat-icon> Roles
+    </a>
+        
 </mat-nav-list> 
