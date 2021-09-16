@@ -18,7 +18,8 @@
               <mat-icon [routerLink]="['listMembers/', board._id]"> person_pin</mat-icon>
             </div>
             <div class="stat border">
-              <mat-icon>update</mat-icon>
+              <mat-icon class="colorUpdate updateIcon"
+              [routerLink]="['/updateBoard/', board._id]" >update</mat-icon>
             </div>
             <div class="stat">
               <mat-icon (click)="deleteBoard(board)"> delete_sweep</mat-icon>

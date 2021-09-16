@@ -101,14 +101,12 @@ const updateUser = async (req, res) => {
 
 // Actualizar foto de perfil del usuario
 const updatePhoto = async (req, res) => {
-  console.log(req.body._id);
-  console.log(req.files.photo)
+
   if (!req.body._id || !req.files.photo)
     return res.status(400).send("Incomplete data");
 
   let user = await User.findById(req.body._id);
-    console.log(req.files.photo)
-    console.log(req.user.photo)
+
   if (user.photo !== "https://i.ibb.co/hYCLvVm/user-logo-2.png") {
     img = user.photo;
     img = img.split("/")[4]; //Separar por / y tomar la posición 4 de la ruta guardada

@@ -17,9 +17,11 @@ import { LoginComponent } from './home/login/login.component';
 import { RegisterComponent } from './home/register/register.component';
 import { ListTeamComponent } from './team/list-team/list-team.component';
 import { AddMemberComponent } from './team/add-member/add-member.component';
+import { WelcomeComponent } from './home/welcome/welcome.component';
+import { UpdateBoardComponent } from './board/update-board/update-board.component';
 
 const routes: Routes = [
-  { path: '', component: LoginComponent, pathMatch: 'full' },
+  { path: '', component: WelcomeComponent, pathMatch: 'full' },
   { path: 'registerUser', component: RegisterComponent },
   { path: 'signUp', component: RegisterComponent },
   { path: 'login', component: LoginComponent },
@@ -38,6 +40,22 @@ const routes: Routes = [
   { path: 'profile', component: ProfileComponent },
   { path: 'listBoard/listMembers/:_id', component: ListTeamComponent },
   { path: 'addMember/:_id', component: AddMemberComponent },
+  { path: 'listUser', component : ListUserComponent},
+  { path: 'registerRole', component : RegisterRoleComponent},
+  { path: 'updateRole/:_id', component : UpdateRoleComponent},
+  { path: 'updateUser/:_id', component : UpdateUserComponent},
+  { path: 'listRole', component : ListRoleComponent},
+  { path: 'listTask', component : ListTaskComponent},
+  { path: 'saveTask', component : SaveTaskComponent},
+  { path: 'saveBoard', component : SaveBoardComponent},
+  { path: 'listBoard', component : ListBoardComponent},
+  {path: 'asign', component : AsignComponent},
+  {path: 'listBoard/listboardtasks/:_id', component : ListboardtasksComponent},
+  {path:'unassign',component:UnassignComponent},
+  { path: 'profile', component : ProfileComponent},
+  { path: 'welcome', component : WelcomeComponent},
+  { path: 'updateBoard/:_id', component : UpdateBoardComponent},
+   
 ];
 
 @NgModule({
