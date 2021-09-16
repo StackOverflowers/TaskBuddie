@@ -37,7 +37,7 @@ const routes: Routes = [
   {path:'unassign',component:UnassignComponent},
   { path: 'profile', component : ProfileComponent},
   { path: 'welcome', component : WelcomeComponent},
-  { path: 'updateBoard', component : UpdateBoardComponent},
+  { path: 'updateBoard/:_id', component : UpdateBoardComponent},
    
 ];
 

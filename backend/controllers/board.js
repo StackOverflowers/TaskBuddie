@@ -189,6 +189,14 @@ const listMember = async (req, res) => {
   return res.status(200).send({ members });
 };
 
+const getBoard = async(req,res) =>{
+  let board = await Board.findById(req.params._id);
+  console.log(req.params._id);
+  if(!board) return res.status(400).send("Board doesn't find");
+  console.log({board});
+  return res.status(200).send({board})
+}
+
 module.exports = {
   registerBoard,
   listBoard,
@@ -198,4 +206,5 @@ module.exports = {
   deleteBoard,
   updateBoard,
   listMember,
+  getBoard,
 };

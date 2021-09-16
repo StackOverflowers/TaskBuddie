@@ -41,7 +41,11 @@ export class BoardService {
   }
 
   updateBoard(board: any) {
-    return this._http.delete<any>(this.env + 'board/updateBoard/', board._id);
+    return this._http.put<any>(this.env + 'board/updateBoard/', board);
+  }
+
+  getBoard(board: any) {
+    return this._http.get<any>(this.env + 'board/getBoard/' + board)
   }
 
 }

@@ -32,5 +32,6 @@ router.delete(
   ValidateUser,
   BoardController.deleteBoard
 );
+router.get("/getBoard/:_id" , Auth, ValidateUser, BoardController.getBoard);
 
 module.exports = router;
