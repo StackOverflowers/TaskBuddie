@@ -25,7 +25,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'listUser', component : ListUserComponent},
   { path: 'registerRole', component : RegisterRoleComponent},
-  { path: 'updateRole', component : UpdateRoleComponent},
+  { path: 'updateRole/:_id', component : UpdateRoleComponent},
   { path: 'updateUser/:_id', component : UpdateUserComponent},
   { path: 'listRole', component : ListRoleComponent},
   { path: 'listTask', component : ListTaskComponent},
