@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from '../../services/user.service';
-import { Router } from '@angular/router';
+import { BoardService } from '../../services/board.service';
+import { Router, ActivatedRoute } from '@angular/router';
 import {
   MatSnackBar,
   MatSnackBarHorizontalPosition,
@@ -8,42 +8,54 @@ import {
 } from '@angular/material/snack-bar';
 
 @Component({
-  selector: 'app-register',
-  templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css'],
+  selector: 'app-update-board',
+  templateUrl: './update-board.component.html',
+  styleUrls: ['./update-board.component.css']
 })
-export class RegisterComponent implements OnInit {
+export class UpdateBoardComponent implements OnInit {
   registerData: any;
   message: string = '';
+  _id: string;
   horizontalPosition: MatSnackBarHorizontalPosition = 'end';
   verticalPosition: MatSnackBarVerticalPosition = 'top';
   durationInSeconds: number = 2;
 
   constructor(
-    private _userService: UserService,
+    private _boardService: BoardService,
     private _router: Router,
+    private _Arouter: ActivatedRoute,
     private _snackBar: MatSnackBar
-  ) {
+  ) { 
     this.registerData = {};
+    this._id = '';
   }
 
-  ngOnInit(): void {}
-
-  registerUser() {
-    if (
-      !this.registerData.name ||
-      !this.registerData.email ||
-      !this.registerData.password
-    ) {
-      this.message = 'Complete all fields before trying to register';
-      this.openSnackBarError();
-      this.registerData = {};
-    } else {
-      this._userService.registerUser(this.registerData).subscribe(
+  ngOnInit(): void {
+    this._Arouter.params.subscribe((params) => {
+      this._id = params['_id'];
+      this._boardService.getBoard(this._id).subscribe(
         (res) => {
-          localStorage.setItem('token', res.jwtToken);
-          this._router.navigate(['/saveBoard']);
-          this.message = 'Successfull user registration';
+          this.registerData = res.board;
+        },
+        (err) => {
+          this.message = err.error;
+          this.openSnackBarError();
+        }
+      );
+    });
+  }
+
+
+  updateBoard() {
+    if (!this.registerData.name || !this.registerData.description) {
+      this.message = 'Failed process: Incomplete data';
+      this.openSnackBarError();
+    } else {
+      console.log(this.registerData);      
+      this._boardService.updateBoard(this.registerData).subscribe(
+        (res) => {
+          this._router.navigate(['/listBoard']);
+          this.message = 'Successfull edit board';
           this.openSnackBarSuccesfull();
           this.registerData = {};
         },

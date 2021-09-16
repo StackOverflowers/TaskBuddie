@@ -42,6 +42,7 @@ export class UserService {
     localStorage.removeItem('token');
     localStorage.removeItem('role');
     localStorage.removeItem('name');
+    localStorage.removeItem('_id');
     this._router.navigate(['/login']);
   }
 
@@ -87,5 +88,9 @@ export class UserService {
 
   getProfile(){
     return this._http.get<any>(this.env + 'user/getProfile');
+  }
+  
+  findUserByEmail(user:any){
+    return this._http.post<any>(this.env + 'user/findUserByEmail' , user);
   }
 }

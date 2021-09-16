@@ -13,8 +13,8 @@ import {
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
-  loginData: any;
   registerData: any;
+  loginData: any;
   message: string = '';
   horizontalPosition: MatSnackBarHorizontalPosition = 'end';
   verticalPosition: MatSnackBarVerticalPosition = 'top';
@@ -33,17 +33,18 @@ export class LoginComponent implements OnInit {
 
   login() {
     if (!this.loginData.email || !this.loginData.password) {
-      this.message = 'Failed process: Incomplete data';
+      this.message = 'Failed process: Imcomplete data';
       this.openSnackBarError();
       this.loginData = {};
     } else {
       this._userService.login(this.loginData).subscribe(
         (res) => {
           localStorage.setItem('token', res.jwtToken);
-          this._router.navigate(['/saveBoard']);
+          this._router.navigate(['/welcome']);
           this.getRole(this.loginData.email);
+          this.getNombre(this.loginData.email);
+          this.getId(this.loginData.email);
           this.loginData = {};
-          
         },
         (err) => {
           this.message = err.error;
@@ -52,7 +53,6 @@ export class LoginComponent implements OnInit {
       );
     }
   }
-  
 
   getRole(email: string) {
     this._userService.getRole(email).subscribe(
@@ -65,6 +65,16 @@ export class LoginComponent implements OnInit {
     );
   }
 
+  getNombre(email: string) {
+    this._userService.getNombre(email).subscribe(
+      (res) => {
+        localStorage.setItem('name', res.name);
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+  }
   registerUser() {
     console.log(this.registerData)
     if (
@@ -79,12 +89,14 @@ export class LoginComponent implements OnInit {
       this._userService.registerUser(this.registerData).subscribe(
         (res) => {
           localStorage.setItem('token', res.jwtToken);
-          this._router.navigate(['/saveBoard']);
+          this._router.navigate(['/welcome']);
           this.message = 'Successfull user registration';
           this.openSnackBarSuccesfull();
           this.getRole(this.loginData.email);
+          this.getNombre(this.loginData.email);
+          this.getId(this.loginData.email);
           this.registerData = {};
-          location.reload();
+          //location.reload();
         },
         (err) => {
           this.message = err.error;
@@ -94,13 +106,15 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  openSnackBarSuccesfull() {
-    this._snackBar.open(this.message, 'X', {
-      horizontalPosition: this.horizontalPosition,
-      verticalPosition: this.verticalPosition,
-      duration: this.durationInSeconds * 1000,
-      panelClass: ['style-snackBarTrue'],
-    });
+  getId(email: string) {
+    this._userService.getId(email).subscribe(
+      (res) => {
+        localStorage.setItem('_id', res._id);
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
   }
 
   openSnackBarError() {
@@ -109,6 +123,15 @@ export class LoginComponent implements OnInit {
       verticalPosition: this.verticalPosition,
       duration: this.durationInSeconds * 1000,
       panelClass: ['style-snackBarFalse'],
+    });
+  }
+
+  openSnackBarSuccesfull() {
+    this._snackBar.open(this.message, 'X', {
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition,
+      duration: this.durationInSeconds * 1000,
+      panelClass: ['style-snackBarTrue'],
     });
   }
 }

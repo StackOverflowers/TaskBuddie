@@ -38,8 +38,9 @@ export class UpdateRoleComponent implements OnInit {
     this._Arouter.params.subscribe((params) => {
       this._id = params['_id'];
       this._roleService.findRole(this._id).subscribe(
-        (res) => {
+        (res) => {          
           this.registerData = res.role;
+          console.log(this.registerData )
         },
         (err) => {
           this.message = err.error;

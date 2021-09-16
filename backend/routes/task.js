@@ -17,5 +17,7 @@ router.get("/listAssignedTasks",Auth, ValidateUser, taskController.listAsignedTa
 router.get("/listRanking",taskController.listRankingPoints);
 router.get("/listAllTask",taskController.getAlltask);
 router.post("/listAllAsigned",taskController.listAsignedTaskForPerson)
+router.post("/listBoardTasK",taskController.getTaskBoard)
+router.post("/listmemberstasks",taskController.getMembers)
 
 module.exports = router;
