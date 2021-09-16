@@ -39,6 +39,7 @@
 
 a{
     text-decoration: none;
+    text-transform: uppercase;
     
 }
 
@@ -52,12 +53,14 @@ a{
     font-size: 0.6rem;
     font-weight: 100;
     letter-spacing: 1px;
-    text-decoration: none
+    text-decoration: none;
+    
 }
 
 h2 {
     
     padding-left: 30px;
+    text-transform: uppercase;
     
 }
 
