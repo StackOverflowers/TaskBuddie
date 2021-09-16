@@ -1,85 +1,95 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from "../../services/user.service";
-import { TaskService } from "../../services/task.service";
+import { UserService } from '../../services/user.service';
+import { TaskService } from '../../services/task.service';
+import { BoardService } from '../../services/board.service';
 import {
   MatSnackBar,
   MatSnackBarHorizontalPosition,
   MatSnackBarVerticalPosition,
 } from '@angular/material/snack-bar';
-
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'app-asign',
   templateUrl: './asign.component.html',
-  styleUrls: ['./asign.component.css']
+  styleUrls: ['./asign.component.css'],
 })
 export class AsignComponent implements OnInit {
-  public userData:any;
-  public taskData:any;
-  public array2:any;
-  public name:any;
-  public registerData:any;
+  public search: any;
+  public userData: any;
+  public boardData: any;
+  public taskData: any;
+  public array2: any;
+  public name: any;
+  public registerData: any;
   message: string;
   horizontalPosition: MatSnackBarHorizontalPosition = 'end';
   verticalPosition: MatSnackBarVerticalPosition = 'top';
   durationInSeconds: number = 2;
-  
-  constructor(private _userService: UserService , private _taskService: TaskService , private _snackBar: MatSnackBar) { 
-    this.userData ={};
-    this.taskData ={};
-    this.array2=[];
-    this.name={};
-    this.message="";
-    this.registerData={};
-    
+
+  constructor(
+    private _userService: UserService,
+    private _taskService: TaskService,
+    private _snackBar: MatSnackBar,
+    private _boardService: BoardService
+  ) {
+    this.userData = {};
+    this.boardData = {};
+    this.taskData = {};
+    this.array2 = [];
+    this.name = [];
+    this.message = '';
+    this.registerData = {};
+    this.search = {};
   }
 
   ngOnInit(): void {
-    this.getUserData();
-    this.getTaskData();
+    this.getBoards();
   }
 
-
-  getUserData(){
-      this._userService.listUserAll().subscribe(
-        (res)=>{
-          this.userData = res.users;
-          
-          
-        }
-      )
-  }
-
-
-  getTaskData(){
-    this._taskService.getTasks().subscribe(
-        (res)=>{
-          this.taskData= res.filtro;
-          
-          
-        }
-    )
-  }
-
-  assingTask(){
-    
-    console.log(this.registerData),
-    
-    this._taskService.AssignTask(this.registerData).subscribe(
-      
-      (res)=>{
-        console.log(res);
-        this.message = "Task asign";
-        this.openSnackBarSuccesfull();
-        this.getTaskData()
+  listme() {
+    this._taskService.getTaskForBoard(this.search).subscribe(
+      (res) => {
+        this.taskData = res.filter;
+        console.log(this.taskData);
       },
-      (err)=>{
+      (err) => {
+        console.log(err.error);
+      }
+    );
+
+    this._taskService.getTaskMemeber(this.search).subscribe((res) => {
+      this.userData = res;
+      console.log(this.userData);
+    });
+  }
+
+  getBoards() {
+    this._boardService.listBoard().subscribe(
+      (res) => {
+        this.boardData = res.board;
+      },
+      (err) => {
         this.message = err.error;
         this.openSnackBarError();
       }
-    )
-   
-    
+    );
+  }
+
+  assingTask() {
+    console.log(this.registerData),
+      this._taskService.AssignTask(this.registerData).subscribe(
+        (res) => {
+          console.log(res);
+          this.message = 'Task asign';
+          this.openSnackBarSuccesfull();
+          this.listme();
+        },
+        (err) => {
+          this.message = err.error;
+          this.openSnackBarError();
+        }
+      );
   }
 
   openSnackBarSuccesfull() {
