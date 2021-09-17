@@ -96,7 +96,7 @@ export class LoginComponent implements OnInit {
           this.getNombre(this.loginData.email);
           this.getId(this.loginData.email);
           this.registerData = {};
-          //location.reload();
+          location.reload();
         },
         (err) => {
           this.message = err.error;
