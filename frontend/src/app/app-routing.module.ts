@@ -20,6 +20,7 @@ import { AddMemberComponent } from './team/add-member/add-member.component';
 import { WelcomeComponent } from './home/welcome/welcome.component';
 import { RevokeassignmentComponent } from './task/revokeassignment/revokeassignment.component';
 import { UpdateBoardComponent } from './board/update-board/update-board.component';
+import { SharedBoardsComponent } from './board/shared-boards/shared-boards.component';
 
 const routes: Routes = [
   { path: '', component: WelcomeComponent, pathMatch: 'full' },
@@ -52,11 +53,13 @@ const routes: Routes = [
   { path: 'listBoard', component : ListBoardComponent},
   {path: 'asign', component : AsignComponent},
   {path: 'listBoard/listboardtasks/:_id', component : ListboardtasksComponent},
+  {path: 'SharedBoards/listboardtasks/:_id', component : ListboardtasksComponent},
   {path:'unassign',component:UnassignComponent},
   { path: 'profile', component : ProfileComponent},
   { path: 'welcome', component : WelcomeComponent},
   { path: 'updateBoard/:_id', component : UpdateBoardComponent},
-  {path:'revoke',component:RevokeassignmentComponent}
+  {path:'revoke',component:RevokeassignmentComponent},
+  {path:'SharedBoards',component:SharedBoardsComponent},
 ];
 
 @NgModule({

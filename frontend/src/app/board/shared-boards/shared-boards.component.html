@@ -1,0 +1,30 @@
+<div class="bgComponent">
+    <owl-carousel-o [options]="customOptions">
+      <ng-template carouselSlide *ngFor="let board of boardData">
+        <div class="bodyx">
+          <div class="card" >
+            <div class="card-image">
+              <img src="{{board.imageUrl}}" alt="">
+            </div>
+            <div class="card-text">
+              <span class="date">{{board.date |date}}</span>
+              
+              <h2>{{board.name }}</h2>
+              <p>{{board.description}}</p><br>
+              
+            </div>
+            <div class="card-stats">
+              
+              <div class="stat" [routerLink]="['listboardtasks/', board._id]">
+                <mat-icon>task</mat-icon>
+              </div>
+            </div>
+         
+            </div>
+        </div>
+      </ng-template>  
+       
+    </owl-carousel-o>
+  </div>
+  
+  
