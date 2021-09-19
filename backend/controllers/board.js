@@ -120,7 +120,7 @@ const deleteMember = async (req, res) => {
 const listBoard = async (req, res) => {
   let board = await Board.find({ userId: req.user._id });
   if (!board || board.length === 0)
-    return res.status(400).send("You have no assigned tasks");
+    return res.status(400).send("You have no boards created please create a new one");
   return res.status(200).send({ board });
 };
 

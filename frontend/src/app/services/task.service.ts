@@ -29,11 +29,11 @@ export class TaskService {
    }
 
    Unasign(user: Object){
-     console.log(user)
+     
      return this.http.post<any>(this.env + 'task/listAllAsigned',user)
    }
 
-   UnassignTask(task: Object){
+   UnassignTask(task: any){
      return this.http.put<any>(this.env + 'task/unassingTask',task);
    }
 
@@ -46,4 +46,14 @@ export class TaskService {
    getTaskMemeber(board: Object){
     return this.http.post<any>(this.env + 'task/listmemberstasks', board)
    }
+
+   updateTask(task:any){
+    return this.http.put<any>(this.env + 'task/updateTask', task)
+   }
+
+   deleteTask(task: any){
+     return this.http.delete<any>(this.env + 'task/deleteTask/' + task._id);
+   }
+
+   
 }

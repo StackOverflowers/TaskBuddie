@@ -18,6 +18,7 @@ import { RegisterComponent } from './home/register/register.component';
 import { ListTeamComponent } from './team/list-team/list-team.component';
 import { AddMemberComponent } from './team/add-member/add-member.component';
 import { WelcomeComponent } from './home/welcome/welcome.component';
+import { RevokeassignmentComponent } from './task/revokeassignment/revokeassignment.component';
 import { UpdateBoardComponent } from './board/update-board/update-board.component';
 
 const routes: Routes = [
@@ -55,7 +56,7 @@ const routes: Routes = [
   { path: 'profile', component : ProfileComponent},
   { path: 'welcome', component : WelcomeComponent},
   { path: 'updateBoard/:_id', component : UpdateBoardComponent},
-   
+  {path:'revoke',component:RevokeassignmentComponent}
 ];
 
 @NgModule({
