@@ -43,7 +43,7 @@ export class UserService {
     localStorage.removeItem('role');
     localStorage.removeItem('name');
     localStorage.removeItem('_id');
-    this._router.navigate(['/login']);
+    this._router.navigate(['']);
   }
 
   getRole(email: string) {
