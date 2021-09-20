@@ -8,13 +8,13 @@ const User = require("../models/user");
 
 const saveTask = async (req, res) => {
   let validId = mongoose.Types.ObjectId.isValid(req.user._id);
-  console.log(req.files.image);
+  
   if (!validId) return res.status(400).send("Invalid id");
 
   if (
     !req.body.name ||
     !req.body.description ||
-    !req.body.boardName ||
+    !req.body.boardId||
     !req.body.score
   )
     return res.status(400).send("Incomplete Data Please Try Again");
@@ -24,7 +24,8 @@ const saveTask = async (req, res) => {
       .status(400)
       .send("Sorry you cant just use a number between 1 and 5");
   }
-  const existTask = await Task.find({ boardName: req.body.boardName });
+  const existTask = await Task.find({ boardId: req.body.boardId });
+  
 
   let existantInBoard = existTask.some(
     (element) => element.name == req.body.name
@@ -33,8 +34,8 @@ const saveTask = async (req, res) => {
   if (existantInBoard)
     return res.status(400).send("Take Another Board that task already exist");
 
-  console.log(req.body.boardName);
-  const board = await Board.findOne({ name: req.body.boardName });
+ 
+  const board = await Board.findOne({ _id: req.body.boardId});
 
   if (!board)
     return res
@@ -93,6 +94,8 @@ const updateTask = async (req, res) => {
 
   const inactiveTask = await Task.findById({ _id: req.body._id });
   const user = await User.findById(inactiveTask.assignedTo);
+  
+  if(inactiveTask.assigned== false) return res.status(400).send("Sorry please Asign this task to a member please")
 
   if (req.body.taskStatus == "done") {
     scoreUser = 1;
@@ -121,9 +124,9 @@ const updateTask = async (req, res) => {
       if (tasks.name == inactiveTask.name) {
         
         if (tasks.completed == true) {
-          console.log("me estoy ejecutando")
+          
            board2.members.forEach((board) => {
-            if (board.id == req.user._id) {
+            if (board.id == req.user._id && board.ranking > 0) {
               board.ranking --;
               return board;
             } else {
@@ -276,11 +279,35 @@ const deleteTask = async (req, res) => {
   if (!validId) return res.status(400).send("Invalid id");
 
   let taskImg = await Task.findById(req.params._id);
+  console.log(taskImg)
 
   if (taskImg.taskStatus === "done")
     return res
       .status(400)
       .send("Sorry cant Erase that Task its Already Completed");
+
+  
+
+  if(taskImg.assigned=="true") return res.status(400).send("Sorry Please Revoke the task first ")
+
+  const board = await Board.find({ _id:taskImg.boardId})
+
+  let array = {}
+
+  if(board){
+    board.forEach(element=>{
+      let filter = element.members.filter(element=>element.name === req.user.name);
+      filter.map(element=>{
+        array = element.role
+      })
+    })
+    
+  }
+
+  console.log(array)
+  
+  if(array!="Owner") return res.status(400).send("Sorry you are not the owner of the board please check")
+
 
   taskImg = taskImg.imageUrl;
   taskImg = taskImg.split("/")[4];

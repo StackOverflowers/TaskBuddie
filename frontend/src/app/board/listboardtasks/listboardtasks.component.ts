@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { TaskService } from '../../services/task.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { DeleteTasksComponent } from "../../dialogs/delete-tasks/delete-tasks.component";
-import { UserService } from "../../services/user.service";
-import Swal from 'sweetalert2'
+import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
 import {
   MatSnackBar,
   MatSnackBarHorizontalPosition,
@@ -24,6 +23,7 @@ export class ListboardtasksComponent implements OnInit {
   durationInSeconds: number = 2;
   _id: String;
   board: Array<string>;
+  public reload: any;
   constructor(
     private _taskService: TaskService,
     private _snackBar: MatSnackBar,
@@ -33,6 +33,7 @@ export class ListboardtasksComponent implements OnInit {
     this._id = '';
     this.taskData = [];
     this.board = ['to-do', 'in-progress', 'done'];
+    
   }
 
   ngOnInit(): void {
@@ -49,7 +50,7 @@ export class ListboardtasksComponent implements OnInit {
       this._taskService.getBoardTask(this._id).subscribe(
         (res) => {
           this.taskData = res.task;
-          
+          console.log(this.taskData)
         },
         (err) => {
           this.message = err.error;
@@ -61,6 +62,7 @@ export class ListboardtasksComponent implements OnInit {
 
   updateTask(task: any, status: string) {
     let tempstatus = task.taskStatus;
+    
     task.taskStatus = status;
     this._taskService.updateTask(task).subscribe(
       (res) => {
@@ -71,12 +73,18 @@ export class ListboardtasksComponent implements OnInit {
         task.status=tempstatus;
         this.message = err.error;
         this.openSnackBarError();
-        location.reload();
+        setTimeout(function(){
+          location.reload()
+        },2500)
+        
       }
     )
   }
 
-  
+  drop(event: CdkDragDrop<string[]>) {
+    moveItemInArray(this.taskData, event.previousIndex, event.currentIndex);
+    console.log(moveItemInArray)
+  }
 
   deleteTask(task:any){
     this._dialog.open(DeleteTasksComponent,{data:task,width:'500px'})

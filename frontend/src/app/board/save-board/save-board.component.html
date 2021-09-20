@@ -1,36 +1,49 @@
 <div class="bgComponent">
+  <div class="container">
+    <span class="big-circle"></span>
+    <img src="img/shape.png" class="square" alt="" />
     <div class="form">
-      <mat-card class="card">
-        <mat-card-title>Please complete all information:</mat-card-title>
-        <br>
-        <mat-card-content>
-          <div class="container">
-            <mat-form-field>
-              <input
-                [(ngModel)]="registerData.name"
-                matInput
-                placeholder="Name Board"
-                required
-              />
-            </mat-form-field>
-            <mat-form-field>
-              <input
-                [(ngModel)]="registerData.description"
-                matInput
-                placeholder="Description"
-                required
-              />
-            </mat-form-field>       
-            <input type="file" (change)="uploadImg($event)" />     
+      <div class="contact-info">
+        <h3 class="title">Create Your Board</h3>
+        <p class="text">
+          Welcome to the creation of your board, in this module you can generate as many boards as you want and then share them with other users.
+        </p>
+
+        <div class="info">
+          <div class="information">
+            <img src="../../../assets/img/logo.png" class="icon" alt="" />
+            
           </div>
-        </mat-card-content>
-        <mat-card-actions>
-          <button
-            (click)="saveBoard()"
-            class="button colorButton"  mat-raised-button >
-            Register
-          </button>
-        </mat-card-actions>
-      </mat-card>
+          
+        </div>
+      </div>
+
+      <div class="contact-form">
+        <span class="circle one"></span>
+        <span class="circle two"></span>
+
+        <form action="index.html" autocomplete="off">
+          <h3 class="title">Register Your Board!</h3>
+          <div class="input-container">
+            <P>Board Name</P>
+            <input 
+            [(ngModel)]="registerData.name"
+            type="text" name="name" class="input" />
+          </div>
+          <div class="input-container textarea">
+            <P>Board Description</P>
+            <textarea name="message" class="input" [(ngModel)]="registerData.description"></textarea>
+          </div>
+
+          <input
+            type="file"
+            (change)="uploadImg($event)"
+            class="btn izquierda"
+          />
+
+          <input (click)="saveBoard()" type="submit" value="Register My Board" class="btn text" />
+        </form>
+      </div>
     </div>
   </div>
+</div>
