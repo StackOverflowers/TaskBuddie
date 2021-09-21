@@ -7,7 +7,7 @@ import { SaveTaskComponent } from './task/save-task/save-task.component';
 import { AsignComponent } from './task/asign/asign.component';
 import { ListboardtasksComponent } from '../app/board/listboardtasks/listboardtasks.component';
 import { UnassignComponent } from './task/unassign/unassign.component';
-import { ProfileComponent } from './home/profile/list-profile/profile.component';
+import { ProfileComponent } from './home/profile/profile.component';
 import { ListRoleComponent } from './admin/list-role/list-role.component';
 import { ListUserComponent } from './admin/list-user/list-user.component';
 import { RegisterRoleComponent } from './admin/register-role/register-role.component';
@@ -27,7 +27,6 @@ import { SharedprofileComponent } from "./user/sharedprofile/sharedprofile.compo
 //guard.
 
 import { AuthGuard } from "../app/guard/auth.guard";
-import { UpdateProfileComponent } from './home/profile/update-profile/update-profile.component';
 
 const routes: Routes = [
   { path: '', component: WelcomeComponent, pathMatch: 'full' },
@@ -47,7 +46,6 @@ const routes: Routes = [
   { path: 'listBoard/listboardtasks/:_id', component: ListboardtasksComponent , canActivate: [AuthGuard]},
   { path: 'unassign', component: UnassignComponent , canActivate: [AuthGuard]},
   { path: 'profile', component: ProfileComponent , canActivate: [AuthGuard]},
-  { path: 'updateProfile/:_id', component: UpdateProfileComponent , canActivate: [AuthGuard]},
   { path: 'listBoard/listMembers/:_id', component: ListTeamComponent , canActivate: [AuthGuard]},
   { path: 'addMember/:_id', component: AddMemberComponent , canActivate: [AuthGuard]},
   { path: 'listUser', component : ListUserComponent , canActivate: [AuthGuard]},

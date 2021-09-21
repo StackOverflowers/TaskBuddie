@@ -52,7 +52,7 @@ import {MatListModule} from '@angular/material/list';
 import { CarouselModule } from 'ngx-owl-carousel-o';
 import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
-import { ProfileComponent } from './home/profile/list-profile/profile.component';
+import { ProfileComponent } from './home/profile/profile.component';
 import { WelcomeComponent } from './home/welcome/welcome.component';
 import { UpdateBoardComponent } from './board/update-board/update-board.component';
 import { DeleteTasksComponent } from './dialogs/delete-tasks/delete-tasks.component';
@@ -60,7 +60,6 @@ import { RevokeassignmentComponent } from './task/revokeassignment/revokeassignm
 import { SharedBoardsComponent } from './board/shared-boards/shared-boards.component';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import { SharedprofileComponent } from './user/sharedprofile/sharedprofile.component'
-import { UpdateProfileComponent } from './home/profile/update-profile/update-profile.component'
 
 @NgModule({
   declarations: [
@@ -92,7 +91,6 @@ import { UpdateProfileComponent } from './home/profile/update-profile/update-pro
     RevokeassignmentComponent,
     SharedBoardsComponent,
     SharedprofileComponent,
-    UpdateProfileComponent,
   ],
   imports: [
     BrowserModule,

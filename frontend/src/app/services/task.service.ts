@@ -4,51 +4,56 @@ import { environment } from '../../environments/environment';
 import { Router } from '@angular/router';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class TaskService {
-  public env = '';
+  public env ="";
   constructor(public http: HttpClient) {
     this.env = environment.APP_URL;
-  }
+   }
 
-  getTasks() {
-    return this.http.get<any>(this.env + 'task/listAllTask');
-  }
+   getTasks(){
+      return this.http.get<any>(this.env + 'task/listAllTask')
+   }
 
-  saveTask(task: any) {
-    return this.http.post<any>(this.env + 'task/saveTask', task);
-  }
 
-  AssignTask(task: Object) {
-    return this.http.put<any>(this.env + 'task/assignTask', task);
-  }
+   AssignTask(task: Object){
+     
+     
 
-  getBoardTask(task: Object) {
-    return this.http.get<any>(this.env + 'task/listTask/' + task);
-  }
+     return this.http.put<any>(this.env + 'task/assignTask', task );
+   }
 
-  Unasign(user: Object) {
-    return this.http.post<any>(this.env + 'task/listAllAsigned', user);
-  }
+   getBoardTask(task: Object){
+     return this.http.get<any>(this.env + 'task/listTask/'+ task);
+   }
 
-  UnassignTask(task: any) {
-    return this.http.put<any>(this.env + 'task/unassingTask', task);
-  }
+   Unasign(user: Object){
+     
+     return this.http.post<any>(this.env + 'task/listAllAsigned',user)
+   }
 
-  getTaskForBoard(board: Object) {
-    return this.http.post<any>(this.env + 'task/listBoardTasK', board);
-  }
+   UnassignTask(task: any){
+     return this.http.put<any>(this.env + 'task/unassingTask',task);
+   }
 
-  getTaskMemeber(board: Object) {
-    return this.http.post<any>(this.env + 'task/listmemberstasks', board);
-  }
 
-  updateTask(task: any) {
-    return this.http.put<any>(this.env + 'task/updateTask', task);
-  }
+   getTaskForBoard(board: Object){
+     
+     return this.http.post<any>(this.env + 'task/listBoardTasK', board )
+   }
 
-  deleteTask(task: any) {
-    return this.http.delete<any>(this.env + 'task/deleteTask/' + task._id);
-  }
+   getTaskMemeber(board: Object){
+    return this.http.post<any>(this.env + 'task/listmemberstasks', board)
+   }
+
+   updateTask(task:any){
+    return this.http.put<any>(this.env + 'task/updateTask', task)
+   }
+
+   deleteTask(task: any){
+     return this.http.delete<any>(this.env + 'task/deleteTask/' + task._id);
+   }
+
+   
 }
