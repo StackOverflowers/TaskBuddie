@@ -99,6 +99,29 @@ const updateUser = async (req, res) => {
   return res.status(200).send({ user });
 };
 
+// Actualizar nombre o password por parte de un usuario normal de la app
+const updateProfile = async (req, res) => {
+  if (!req.body._id || !req.body.name )
+    return res.status(400).send("Incomplete data");
+
+  let pass = "";
+
+  if (req.body.password) {
+    pass = await bcrypt.hash(req.body.password, 10);
+  } else {
+    const userFind = await User.findOne({ email: req.body.email });
+    pass = userFind.password;
+  }
+
+  const user = await User.findByIdAndUpdate(req.body._id, {
+    name: req.body.name,
+    password: pass,
+  });
+
+  if (!user) return res.status(400).send("Error editing user");
+  return res.status(200).send({ user });
+};
+
 // Actualizar foto de perfil del usuario
 const updatePhoto = async (req, res) => {
 
@@ -264,4 +287,5 @@ module.exports = {
   updatePhoto,
   getId,
   findUserByEmail,
+  updateProfile
 };

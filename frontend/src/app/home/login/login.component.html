@@ -2,6 +2,30 @@
   <div class="main">
     <input type="checkbox" id="chk" aria-hidden="true" />
 
+    <div class="login">
+      <form>
+        <label for="chk" aria-hidden="true">Login</label>
+
+        <input
+          type="email"
+          name="email"
+          placeholder="Email"
+          required=""
+          [(ngModel)]="loginData.email"
+        />
+        <input
+          type="password"
+          name="pswd"
+          placeholder="Password"
+          required=""
+          [(ngModel)]="loginData.password"
+        />
+
+        <button (click)="login()">Login</button>
+        
+      </form>
+    </div>
+
     <div class="signup">
       <form>
         <label for="chk" aria-hidden="true">Sign up</label>
@@ -27,27 +51,6 @@
           [(ngModel)]="registerData.password"
         />
         <button (click)="registerUser()">Sign up</button>
-      </form>
-    </div>
-
-    <div class="login">
-      <form>
-        <label for="chk" aria-hidden="true">Login</label>
-        <input
-          type="email"
-          name="email"
-          placeholder="Email"
-          required=""
-          [(ngModel)]="loginData.email"
-        />
-        <input
-          type="password"
-          name="pswd"
-          placeholder="Password"
-          required=""
-          [(ngModel)]="loginData.password"
-        />
-        <button (click)="login()">Login</button>
       </form>
     </div>
   </div>
