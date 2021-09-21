@@ -18,7 +18,7 @@
 	  background: red;
 	  overflow: hidden;
 	  object-fit:cover;
-	  background: url("../../../assets/img/logo.png") no-repeat center/ cover;
+	  background: url("../../../assets/img/Naranja.jpg") no-repeat center/ cover;
 	  border-radius: 10px;
 	  box-shadow: 5px 20px 50px #000;
   }
@@ -59,7 +59,7 @@
 	  justify-content: center;
 	  display: block;
 	  color: #fff;
-	  background: #573b8a;
+	  background: #2b475e;
 	  font-size: 1em;
 	  font-weight: bold;
 	  margin-top: 20px;
@@ -70,7 +70,7 @@
 	  cursor: pointer;
   }
   button:hover{
-	  background: #6d44b8;
+	  background: #2b475e;
   }
   .login{
 	  height: 460px;
@@ -80,7 +80,7 @@
 	  transition: .8s ease-in-out;
   }
   .login label{
-	  color: #573b8a;
+	  color: #2b475e;
 	  transform: scale(.6);
   }
   
