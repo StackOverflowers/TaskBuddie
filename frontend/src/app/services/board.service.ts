@@ -51,4 +51,8 @@ export class BoardService {
   listMember(board: any){
     return this._http.get<any>(this.env + 'board/listMember/' , board._id)
   }
+
+  listMyShared(){
+    return this._http.get<any>(this.env + 'board/listShared/')
+  }
 }
