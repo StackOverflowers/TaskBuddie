@@ -93,4 +93,8 @@ export class UserService {
   findUserByEmail(user:any){
     return this._http.post<any>(this.env + 'user/findUserByEmail' , user);
   }
+
+  updateProfile(user: any) {
+    return this._http.put<any>(this.env + 'user/updateProfile', user);
+  }
 }

@@ -10,7 +10,7 @@ import {
 @Component({
   selector: 'app-update-profile',
   templateUrl: './update-profile.component.html',
-  styleUrls: ['./update-profile.component.css']
+  styleUrls: ['./update-profile.component.css'],
 })
 export class UpdateProfileComponent implements OnInit {
   userData: any;
@@ -26,24 +26,37 @@ export class UpdateProfileComponent implements OnInit {
     private _router: Router,
     private _Arouter: ActivatedRoute,
     private _snackBar: MatSnackBar
-  ) { 
+  ) {
     this.userData = {};
     this._id = '';
     this.newPass = '';
   }
 
   ngOnInit(): void {
+    this._Arouter.params.subscribe((params) => {
+      this._id = params['_id'];
+      this._userService.findUser(this._id).subscribe(
+        (res) => {
+          this.userData = res.user;
+          this.userData.password = this.newPass;
+          //console.log(this.userData);
+        },
+        (err) => {
+          this.message = err.error;
+          this.openSnackBarError();
+        }
+      );
+    });
   }
 
-
-  updateUser() {
-    if (!this.userData.name || !this.userData.email) {
+  updateProfile() {
+    if (!this.userData.name) {
       this.message = 'Failed process: Incomplete data';
       this.openSnackBarError();
     } else {
-      this._userService.updateUser(this.userData).subscribe(
+      this._userService.updateProfile(this.userData).subscribe(
         (res) => {
-          this._router.navigate(['/listUser']);
+          this._router.navigate(['/profile']);
           this.message = 'Successfull edit user';
           this.openSnackBarSuccesfull();
           this.userData = {};
@@ -56,7 +69,6 @@ export class UpdateProfileComponent implements OnInit {
     }
   }
 
-  
   openSnackBarSuccesfull() {
     this._snackBar.open(this.message, 'X', {
       horizontalPosition: this.horizontalPosition,
@@ -74,5 +86,4 @@ export class UpdateProfileComponent implements OnInit {
       panelClass: ['style-snackBarFalse'],
     });
   }
-
 }
