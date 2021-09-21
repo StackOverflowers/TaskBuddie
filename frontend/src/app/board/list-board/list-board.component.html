@@ -7,7 +7,7 @@
             <img src="{{board.imageUrl}}" alt="">
           </div>
           <div class="card-text">
-            <span class="date">{{board.date}}</span>
+            <span class="date">{{board.date |date}}</span>
             
             <h2>{{board.name }}</h2>
             <p>{{board.description}}</p><br>
@@ -15,10 +15,11 @@
           </div>
           <div class="card-stats">
             <div class="stat">
-              <mat-icon> person_pin</mat-icon>
+              <mat-icon [routerLink]="['listMembers/', board._id]"> person_pin</mat-icon>
             </div>
             <div class="stat border">
-              <mat-icon>update</mat-icon>
+              <mat-icon class="colorUpdate updateIcon"
+              [routerLink]="['/updateBoard/', board._id]" >update</mat-icon>
             </div>
             <div class="stat">
               <mat-icon (click)="deleteBoard(board)"> delete_sweep</mat-icon>

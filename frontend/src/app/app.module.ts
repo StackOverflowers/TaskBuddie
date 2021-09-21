@@ -37,6 +37,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSidenavModule } from "@angular/material/sidenav";
 import { MatMenuModule } from "@angular/material/menu";
 import {  MatDividerModule} from "@angular/material/divider";
+import {MatDialogModule} from '@angular/material/dialog'; 
 
 //servicios
 
@@ -52,6 +53,12 @@ import { CarouselModule } from 'ngx-owl-carousel-o';
 import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
 import { ProfileComponent } from './home/profile/profile.component';
+import { WelcomeComponent } from './home/welcome/welcome.component';
+import { UpdateBoardComponent } from './board/update-board/update-board.component';
+import { DeleteTasksComponent } from './dialogs/delete-tasks/delete-tasks.component';
+import { RevokeassignmentComponent } from './task/revokeassignment/revokeassignment.component';
+import { SharedBoardsComponent } from './board/shared-boards/shared-boards.component';
+import {DragDropModule} from '@angular/cdk/drag-drop'
 
 @NgModule({
   declarations: [
@@ -77,6 +84,11 @@ import { ProfileComponent } from './home/profile/profile.component';
     UnassignComponent,
     SidenavComponent,
     ProfileComponent,
+    WelcomeComponent,
+    UpdateBoardComponent,
+    DeleteTasksComponent,
+    RevokeassignmentComponent,
+    SharedBoardsComponent,
   ],
   imports: [
     BrowserModule,
@@ -103,6 +115,8 @@ import { ProfileComponent } from './home/profile/profile.component';
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
+    MatDialogModule,
+    DragDropModule
   ],
   providers: [
     UserService,

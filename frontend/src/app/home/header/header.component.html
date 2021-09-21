@@ -4,20 +4,6 @@
       <mat-icon class="menu">menu</mat-icon>
     </button>
 
-
-    <ul>
-      <mat-form-field
-        *ngIf="_userService.loggedIn() && _userService.isAdmin()"
-        appearance="fill"
-      >
-        <mat-label>Choose an admin option</mat-label>
-        <mat-select>
-          <mat-option value="option1" routerLink="listUser">Users</mat-option>
-          <mat-option value="option2" routerLink="listRole">Role</mat-option>
-        </mat-select>
-      </mat-form-field>
-    </ul>
-
     <div class="row mr-2 ml-auto" *ngIf="_userService.loggedIn()">
       
 
