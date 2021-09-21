@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
-import { UserService } from '../../services/user.service';
+import { UserService } from '../../../services/user.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import {
   MatSnackBar,
   MatSnackBarHorizontalPosition,
   MatSnackBarVerticalPosition,
 } from '@angular/material/snack-bar';
-import { BoardService } from '../../services/board.service';
+import { BoardService } from '../../../services/board.service';
 
 @Component({
   selector: 'app-profile',

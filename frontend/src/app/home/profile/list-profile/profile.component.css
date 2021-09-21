@@ -1,5 +1,5 @@
 .bgComponent {
-  background-image: url("../../../assets/img/bg2.png");
+  background-image: url("../../../../assets/img/bg2.png");
   background-repeat: no-repeat;
   background-size: cover;
   width: 100%;
@@ -73,11 +73,11 @@ th {
 }
 
 .mat-icon {
-  padding: 15px;
+  margin-left: 12px;
 }
 
 .colorUpdate {
-  color: #0938d3;
+  color: #060c22;
   cursor: pointer;
   padding-right: 15px;
 }
@@ -95,7 +95,7 @@ th {
 }
 
 .updateIcon:hover {
-  color: #20cbff;
+  color: #a86909;
   cursor: pointer;
   padding-right: 15px;
 }
