@@ -4,56 +4,51 @@ import { environment } from '../../environments/environment';
 import { Router } from '@angular/router';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class TaskService {
-  public env ="";
+  public env = '';
   constructor(public http: HttpClient) {
     this.env = environment.APP_URL;
-   }
+  }
 
-   getTasks(){
-      return this.http.get<any>(this.env + 'task/listAllTask')
-   }
+  getTasks() {
+    return this.http.get<any>(this.env + 'task/listAllTask');
+  }
 
+  saveTask(task: any) {
+    return this.http.post<any>(this.env + 'task/saveTask', task);
+  }
 
-   AssignTask(task: Object){
-     
-     
+  AssignTask(task: Object) {
+    return this.http.put<any>(this.env + 'task/assignTask', task);
+  }
 
-     return this.http.put<any>(this.env + 'task/assignTask', task );
-   }
+  getBoardTask(task: Object) {
+    return this.http.get<any>(this.env + 'task/listTask/' + task);
+  }
 
-   getBoardTask(task: Object){
-     return this.http.get<any>(this.env + 'task/listTask/'+ task);
-   }
+  Unasign(user: Object) {
+    return this.http.post<any>(this.env + 'task/listAllAsigned', user);
+  }
 
-   Unasign(user: Object){
-     
-     return this.http.post<any>(this.env + 'task/listAllAsigned',user)
-   }
+  UnassignTask(task: any) {
+    return this.http.put<any>(this.env + 'task/unassingTask', task);
+  }
 
-   UnassignTask(task: any){
-     return this.http.put<any>(this.env + 'task/unassingTask',task);
-   }
+  getTaskForBoard(board: Object) {
+    return this.http.post<any>(this.env + 'task/listBoardTasK', board);
+  }
 
+  getTaskMemeber(board: Object) {
+    return this.http.post<any>(this.env + 'task/listmemberstasks', board);
+  }
 
-   getTaskForBoard(board: Object){
-     
-     return this.http.post<any>(this.env + 'task/listBoardTasK', board )
-   }
+  updateTask(task: any) {
+    return this.http.put<any>(this.env + 'task/updateTask', task);
+  }
 
-   getTaskMemeber(board: Object){
-    return this.http.post<any>(this.env + 'task/listmemberstasks', board)
-   }
-
-   updateTask(task:any){
-    return this.http.put<any>(this.env + 'task/updateTask', task)
-   }
-
-   deleteTask(task: any){
-     return this.http.delete<any>(this.env + 'task/deleteTask/' + task._id);
-   }
-
-   
+  deleteTask(task: any) {
+    return this.http.delete<any>(this.env + 'task/deleteTask/' + task._id);
+  }
 }
