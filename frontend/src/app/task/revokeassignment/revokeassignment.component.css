@@ -7,7 +7,7 @@
 .bgComponent {
   -webkit-box-align: center;
           align-items: center;
-  background-color:  #eb9240; 
+  background-image: url("../../../assets/img/bg2.png");
   display: -webkit-box;
   display: flex;
   font-family: "Rajdhani", sans-serif;
