@@ -13,6 +13,7 @@ import { BoardService } from '../../services/board.service';
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.css'],
 })
+
 export class ProfileComponent {
   boardData: any;
   userData: any;
