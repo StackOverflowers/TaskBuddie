@@ -1,8 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-<<<<<<< HEAD
-=======
 import { UserService } from "../../services/user.service";
->>>>>>> dev
 
 @Component({
   selector: 'app-sidenav',
@@ -10,14 +7,6 @@ import { UserService } from "../../services/user.service";
   styleUrls: ['./sidenav.component.css']
 })
 export class SidenavComponent implements OnInit {
-<<<<<<< HEAD
-
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
-=======
   public userData:any;
   constructor(public _userService: UserService) {
     this.userData = {}
@@ -37,5 +26,4 @@ export class SidenavComponent implements OnInit {
 
 
 
->>>>>>> dev
 }

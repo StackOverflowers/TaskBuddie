@@ -3,8 +3,11 @@
     <ng-template carouselSlide *ngFor="let board of boardData">
       <div class="bodyx">
         <div class="card" >
-          <div class="card-image">
+          <div class="card-image" *ngIf='board.imageUrl!= ""'>
             <img src="{{board.imageUrl}}" alt="">
+          </div>
+          <div class="card-image" *ngIf='board.imageUrl == ""'>
+            <img src="../../../assets/img/logo.png" alt="">
           </div>
           <div class="card-text">
             <span class="date">{{board.date |date}}</span>

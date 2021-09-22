@@ -1,35 +1,8 @@
-<<<<<<< HEAD
-<mat-nav-list>
-=======
 <mat-nav-list class="prueba">
->>>>>>> dev
     <div class="logo">
         <img src="../../../assets/img/logo.png" alt="Company Logo">
     </div>
     <mat-divider></mat-divider>
-<<<<<<< HEAD
-    <h2 matSubheader class="mt-2">Welcome Again!</h2>
-    <a mat-list-item routerLink="" routerLinkActive="list-item-active">
-        <mat-icon>home</mat-icon>Home
-    </a>
-    <a mat-list-item routerLink="" routerLinkActive="list-item-active">
-        <mat-icon>dashboard</mat-icon>list tasks
-    </a>
-    <a mat-list-item routerLink="" routerLinkActive="list-item-active">
-        <mat-icon>edit</mat-icon>Update Profile
-    </a>
-    <a mat-list-item routerLink="" routerLinkActive="list-item-active">
-        <mat-icon>edit</mat-icon>edit
-    </a>
-    <a mat-list-item routerLink="" routerLinkActive="list-item-active">
-        <mat-icon>edit</mat-icon>edit
-    </a>
-    <a mat-list-item routerLink="" routerLinkActive="list-item-active">
-        <mat-icon>edit</mat-icon>edit
-    </a>
-    
-</mat-nav-list>
-=======
     <h2 matSubheader *ngIf="_userService.loggedIn()" class="mt-2" class="user">Welcome {{userData.name}}</h2>
     <h2 matSubheader *ngIf="!_userService.loggedIn()" class="mt-2">Welcome Visitor</h2>
     <a *ngIf="!_userService.loggedIn()" mat-list-item routerLink="" routerLinkActive="list-item-active">
@@ -73,4 +46,3 @@
 
     
 </mat-nav-list> 
->>>>>>> dev

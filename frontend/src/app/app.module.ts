@@ -37,10 +37,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSidenavModule } from "@angular/material/sidenav";
 import { MatMenuModule } from "@angular/material/menu";
 import {  MatDividerModule} from "@angular/material/divider";
-<<<<<<< HEAD
-=======
 import {MatDialogModule} from '@angular/material/dialog'; 
->>>>>>> dev
 
 //servicios
 
@@ -48,10 +45,6 @@ import { BoardService } from '../app/services/board.service';
 import { UserService } from '../app/services/user.service';
 import { TokenInterceptorService } from '../app/services/token-interceptor.service';
 import { AsignComponent } from './task/asign/asign.component';
-<<<<<<< HEAD
-import { SidenavComponent } from './home/sidenav/sidenav.component';
-import {MatListModule} from '@angular/material/list'; 
-=======
 import { ListboardtasksComponent } from './board/listboardtasks/listboardtasks.component';
 import { UnassignComponent } from './task/unassign/unassign.component';
 import { SidenavComponent } from './home/sidenav/sidenav.component';
@@ -68,7 +61,6 @@ import { SharedBoardsComponent } from './board/shared-boards/shared-boards.compo
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import { SharedprofileComponent } from './user/sharedprofile/sharedprofile.component';
 import { UpdateTaskComponent } from './dialogs/update-task/update-task.component'
->>>>>>> dev
 
 @NgModule({
   declarations: [
@@ -90,9 +82,6 @@ import { UpdateTaskComponent } from './dialogs/update-task/update-task.component
     ListTeamComponent,
     AddMemberComponent,
     AsignComponent,
-<<<<<<< HEAD
-    SidenavComponent,
-=======
     ListboardtasksComponent,
     UnassignComponent,
     SidenavComponent,
@@ -104,7 +93,6 @@ import { UpdateTaskComponent } from './dialogs/update-task/update-task.component
     SharedBoardsComponent,
     SharedprofileComponent,
     UpdateTaskComponent,
->>>>>>> dev
   ],
   imports: [
     BrowserModule,
@@ -126,9 +114,6 @@ import { UpdateTaskComponent } from './dialogs/update-task/update-task.component
     MatSidenavModule,
     MatMenuModule,
     MatDividerModule,
-<<<<<<< HEAD
-    MatListModule
-=======
     MatListModule,
     CarouselModule,
     MatTableModule,
@@ -136,7 +121,6 @@ import { UpdateTaskComponent } from './dialogs/update-task/update-task.component
     MatSortModule,
     MatDialogModule,
     DragDropModule
->>>>>>> dev
   ],
   providers: [
     UserService,

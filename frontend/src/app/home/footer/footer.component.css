@@ -1,8 +1,9 @@
 .bgFooter {
-    background-color: #343338;
+  position:fixed;
+   left:0px;
+   bottom:0px;
+   width:100%;
+   background-color: #343338;
     color: #e1dcdc;
-    position: fixed;
-    width: 100%;
-    bottom: 0;
-    height:auto;
+    padding-left: 150px;
   }

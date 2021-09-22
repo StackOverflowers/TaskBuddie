@@ -1,4 +1,5 @@
-<div class="bgComponent">
+  <div class="bgComponent">
+    
   <div class="boards">
     <div class="board" cdkDropList  (cdkDropListDropped)="drop($event)">
       <h3>To-do</h3>
@@ -10,8 +11,11 @@
             >delete</mat-icon
           >
                 </div>
-              <div class="image">
+              <div class="image" *ngIf='task.imageUrl != ""'>
                   <img src="{{task.imageUrl}}" alt="">
+                </div>
+                <div class="image" *ngIf='task.imageUrl === ""'>
+                  <img src="../../../assets/img/1.jpg" alt="">
                 </div>
                 <div class="name_job">{{task.name}}</div>
                 <div class="rating" *ngIf="task.score == 5 ">
@@ -74,8 +78,11 @@
         >delete</mat-icon
       >
             </div>
-          <div class="image">
+            <div class="image" *ngIf='task.imageUrl != ""'>
               <img src="{{task.imageUrl}}" alt="">
+            </div>
+            <div class="image" *ngIf='task.imageUrl === ""'>
+              <img src="../../../assets/img/1.jpg" alt="">
             </div>
             <div class="name_job">{{task.name}}</div>
             <div class="rating" *ngIf="task.score == 5 ">
@@ -137,8 +144,11 @@
         >delete</mat-icon
       >
             </div>
-          <div class="image">
+            <div class="image" *ngIf='task.imageUrl != ""'>
               <img src="{{task.imageUrl}}" alt="">
+            </div>
+            <div class="image" *ngIf='task.imageUrl === ""'>
+              <img src="../../../assets/img/1.jpg" alt="">
             </div>
             <div class="name_job">{{task.name}}</div>
             <div class="rating" *ngIf="task.score == 5 ">
@@ -189,7 +199,4 @@
       </div>
     
   </div>
-  
-  
-  
-</div>
+  </div>

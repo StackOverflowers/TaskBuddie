@@ -1,17 +1,9 @@
-<mat-drawer-container>
-<<<<<<< HEAD
-    <mat-drawer mode="side" opened="true">
-        <app-sidenav></app-sidenav>
-    </mat-drawer>
-    <mat-drawer-content>
-        <app-header></app-header>
-=======
+<mat-drawer-container class="testing">
     <mat-drawer mode="side" [opened]="sideBarOpen">
         <app-sidenav></app-sidenav>
     </mat-drawer>
     <mat-drawer-content class="content">
         <app-header (toggleSidebarForMe)="sideBarToggler()"></app-header>
->>>>>>> dev
         <router-outlet></router-outlet>
         <app-footer></app-footer> 
     </mat-drawer-content>

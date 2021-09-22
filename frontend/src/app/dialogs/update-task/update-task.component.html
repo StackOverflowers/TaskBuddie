@@ -1,6 +1,11 @@
-This task {{data.name}} its not asigned please clic in the go Button to navigate to asign this task.
-
-<mat-dialog-actions align="end">
-  <button mat-button [mat-dialog-close]="false">Cancel</button>
-  <button cdkFocusInitial mat-button [mat-dialog-close]="true">Go</button>
-</mat-dialog-actions>
+<h1>Sorry the task {{data.name}} should be asigned to a member</h1>
+    <b>Press in the Go Button please to asign this task</b>
+    <br><br>
+    <div class="container">
+    
+            
+    </div>
+    <mat-dialog-actions align="end">
+        <button mat-button class="no"[mat-dialog-close]="false">Cancel</button>
+        <button cdkFocusInitial class="yes" mat-button [mat-dialog-close]="true">Go</button>
+      </mat-dialog-actions>

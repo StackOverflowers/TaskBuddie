@@ -1,25 +1,11 @@
 mat-toolbar {
   position: sticky;
+  width: 100%;
   top: 0;
   z-index: 100;
   
 }
 
-<<<<<<< HEAD
-ul , li {
-   
-    list-style: none;
-    
-}
-button {
-  outline: none;
-  border: 0;
-  background: transparent;
-}
-.user {
-  font-size: 14px;
-}
-=======
 .menu{
   color: white;
 }
@@ -39,7 +25,6 @@ button {
   font-size: 19px;
   text-transform: uppercase;
 }
->>>>>>> dev
 mat-toolbar {
   background-color: #2b475e;
 }
@@ -54,9 +39,5 @@ mat-toolbar {
  
     width: 160px;
   
-<<<<<<< HEAD
-}
-=======
 }
 
->>>>>>> dev
