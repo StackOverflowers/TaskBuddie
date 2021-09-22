@@ -89,7 +89,6 @@ export class LoginComponent implements OnInit {
           this.message = 'Successfull user registration';
           this.openSnackBarSuccesfull();
           this.registerData = {};
-          location.reload();
         },
         (err) => {
           this.message = err.error;

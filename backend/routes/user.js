@@ -21,6 +21,5 @@ router.get("/getProfile", Auth, ValidateUser, UserController.profile);
 router.get("/findUser/:_id", Auth, ValidateUser, UserController.findUser);
 router.get("/getId/:email", UserController.getId);
 router.post("/findUserByEmail", Auth, ValidateUser, UserController.findUserByEmail)
-router.put("/updateProfile", Auth, ValidateUser, UserController.updateProfile);
 
 module.exports = router;

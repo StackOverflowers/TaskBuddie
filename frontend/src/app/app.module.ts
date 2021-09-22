@@ -45,21 +45,23 @@ import { BoardService } from '../app/services/board.service';
 import { UserService } from '../app/services/user.service';
 import { TokenInterceptorService } from '../app/services/token-interceptor.service';
 import { AsignComponent } from './task/asign/asign.component';
-import { ListboardtasksComponent } from './board/listboardtasks/listboardtasks.component';
-import { UnassignComponent } from './task/unassign/unassign.component';
 import { SidenavComponent } from './home/sidenav/sidenav.component';
 import {MatListModule} from '@angular/material/list'; 
+import { ListboardtasksComponent } from './board/listboardtasks/listboardtasks.component';
+import { UnassignComponent } from './task/unassign/unassign.component';
 import { CarouselModule } from 'ngx-owl-carousel-o';
 import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
-import { ProfileComponent } from './home/profile/list-profile/profile.component';
+import { ProfileComponent } from './home/profile/profile.component';
 import { WelcomeComponent } from './home/welcome/welcome.component';
 import { UpdateBoardComponent } from './board/update-board/update-board.component';
 import { DeleteTasksComponent } from './dialogs/delete-tasks/delete-tasks.component';
 import { RevokeassignmentComponent } from './task/revokeassignment/revokeassignment.component';
 import { SharedBoardsComponent } from './board/shared-boards/shared-boards.component';
 import {DragDropModule} from '@angular/cdk/drag-drop';
-import { UpdateProfileComponent } from './home/profile/update-profile/update-profile.component'
+import { SharedprofileComponent } from './user/sharedprofile/sharedprofile.component';
+import { UpdateTaskComponent } from './dialogs/update-task/update-task.component'
+
 
 @NgModule({
   declarations: [
@@ -81,6 +83,7 @@ import { UpdateProfileComponent } from './home/profile/update-profile/update-pro
     ListTeamComponent,
     AddMemberComponent,
     AsignComponent,
+    SidenavComponent,
     ListboardtasksComponent,
     UnassignComponent,
     SidenavComponent,
@@ -90,7 +93,8 @@ import { UpdateProfileComponent } from './home/profile/update-profile/update-pro
     DeleteTasksComponent,
     RevokeassignmentComponent,
     SharedBoardsComponent,
-    UpdateProfileComponent,
+    SharedprofileComponent,
+    UpdateTaskComponent,
   ],
   imports: [
     BrowserModule,

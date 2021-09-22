@@ -1,10 +1,8 @@
 .bgFooter {
-    background-color: #34333881;
+    background-color: #343338;
     color: #e1dcdc;
-    position: static;
+    position: fixed;
     width: 100%;
     bottom: 0;
-    right: 0;
-    overflow: hidden;
-    
+    height:auto;
   }
