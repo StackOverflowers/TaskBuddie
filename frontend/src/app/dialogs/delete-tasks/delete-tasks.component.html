@@ -1,6 +1,12 @@
-Are you sure that you want to delete  {{data.name}}?
+<h1>Are you sure you want to delete the task {{data.name}} ?</h1>
+    <b>clic in the confirm button to continue</b>
+    <br><br>
+    
+    <mat-dialog-actions align="end">
+        <button mat-button class="no"[mat-dialog-close]="false">Cancel</button>
+        <button cdkFocusInitial class="yes" mat-button [mat-dialog-close]="true">Confirm</button>
+      </mat-dialog-actions>
 
-<mat-dialog-actions align="end">
-  <button mat-button [mat-dialog-close]="false">Cancel</button>
-  <button cdkFocusInitial mat-button [mat-dialog-close]="true">Delete</button>
-</mat-dialog-actions>
+      <div class="container">
+        
+      </div>
