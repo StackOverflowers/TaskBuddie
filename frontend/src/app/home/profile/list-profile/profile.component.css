@@ -21,8 +21,8 @@
 }
 
 .imagenProfile{
-width: 279px;
-height: 279px;
+width: 40dpi;
+height: 40dpi;
 border: #2b475e;
 border-style: double;
 }
@@ -44,7 +44,7 @@ margin-top: 10px;
 line-height: normal;
 padding: 10px;
 position: relative;
-width: 280px;
+width: 20dpi;
 }
 
 .card{
@@ -73,11 +73,11 @@ th {
 }
 
 .mat-icon {
-  margin-left: 12px;
+  padding: 15px;
 }
 
 .colorUpdate {
-  color: #060c22;
+  color: #0938d3;
   cursor: pointer;
   padding-right: 15px;
 }
@@ -95,7 +95,7 @@ th {
 }
 
 .updateIcon:hover {
-  color: #a86909;
+  color: #20cbff;
   cursor: pointer;
   padding-right: 15px;
 }
@@ -107,6 +107,13 @@ th {
   margin-top: 10px;
   background-color: #e0982b;
   color: #e1dcdc;
-  width: 5%;
-  height: 5%;
+  width: 5dpi;
+  height: 5dpi;
+  font-size: 2dpi;
+}
+.imageCard{
+  width: 41dpi;
+}
+.pruebita{
+font-size: large;
 }
