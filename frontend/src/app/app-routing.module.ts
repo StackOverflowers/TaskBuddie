@@ -27,6 +27,7 @@ import { SharedBoardsComponent } from './board/shared-boards/shared-boards.compo
 import { AuthGuard } from "../app/guard/auth.guard";
 import { UpdateProfileComponent } from './home/profile/update-profile/update-profile.component';
 import { AboutComponent } from './home/about/about.component';
+import { SharedprofileComponent } from './user/sharedprofile/sharedprofile.component';
 
 const routes: Routes = [
   { path: '', component: WelcomeComponent, pathMatch: 'full' },
@@ -68,6 +69,7 @@ const routes: Routes = [
   {path:'revoke',component:RevokeassignmentComponent, canActivate: [AuthGuard]},
   {path:'SharedBoards',component:SharedBoardsComponent , canActivate: [AuthGuard]},
   {path:'about',component: AboutComponent},
+  {path:"SharedProfile/:_id" , component:SharedprofileComponent  , canActivate: [AuthGuard]}
 ];
 
 @NgModule({

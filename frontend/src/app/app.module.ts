@@ -61,7 +61,8 @@ import { SharedBoardsComponent } from './board/shared-boards/shared-boards.compo
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import { UpdateProfileComponent } from './home/profile/update-profile/update-profile.component';
 import { AboutComponent } from './home/about/about.component';
-import { UpdateTaskComponent } from './dialogs/update-task/update-task.component'
+import { UpdateTaskComponent } from './dialogs/update-task/update-task.component';
+import { SharedprofileComponent } from './user/sharedprofile/sharedprofile.component'
 
 @NgModule({
   declarations: [
@@ -95,6 +96,7 @@ import { UpdateTaskComponent } from './dialogs/update-task/update-task.component
     UpdateProfileComponent,
     AboutComponent,
     UpdateTaskComponent,
+    SharedprofileComponent,
   ],
   imports: [
     BrowserModule,

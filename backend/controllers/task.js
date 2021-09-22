@@ -10,11 +10,11 @@ const saveTask = async (req, res) => {
   let validId = mongoose.Types.ObjectId.isValid(req.user._id);
 
   if (!validId) return res.status(400).send("Invalid id");
-
+console.log(req.body)
   if (
     !req.body.name ||
     !req.body.description ||
-    !req.body.boardId ||
+    !req.body.boardID ||
     !req.body.score
   )
     return res.status(400).send("Incomplete Data Please Try Again");
@@ -24,7 +24,7 @@ const saveTask = async (req, res) => {
       .status(400)
       .send("Sorry you cant just use a number between 1 and 5");
   }
-  const existTask = await Task.find({ boardId: req.body.boardId });
+  const existTask = await Task.find({ boardId: req.body.boardID });
 
   let existantInBoard = existTask.some(
     (element) => element.name == req.body.name
@@ -33,7 +33,7 @@ const saveTask = async (req, res) => {
   if (existantInBoard)
     return res.status(400).send("Take Another Board that task already exist");
 
-  const board = await Board.findOne({ _id: req.body.boardId });
+  const board = await Board.findOne({ _id: req.body.boardID });
 
   if (!board)
     return res
@@ -176,7 +176,7 @@ const updateTask = async (req, res) => {
   const board = await Board.findById(task.boardId);
 
   const filter = board.members.some(
-    (element) => element.name === req.user.name
+    (element) => element.id.toString() === req.user._id.toString()
   );
 
   if (!filter)
@@ -298,7 +298,7 @@ const deleteTask = async (req, res) => {
   if (board) {
     board.forEach((element) => {
       let filter = element.members.filter(
-        (element) => element.name === req.user.name
+        (element) => element.id.toString() === req.user._id.toString()
       );
       filter.map((element) => {
         array = element.role;
@@ -438,10 +438,10 @@ const unassingTask = async (req, res) => {
     return res.status(400).send("Sorry The Task its Already Completed");
   }
 
-  console.log(board);
+  //console.log(board);
 
   let usuario_actual = board.members.find(
-    (element) => element.name === req.user.name
+    (element) => element.id.toString() === req.user._id.toString()
   );
 
   let usuario = usuario_actual.role;

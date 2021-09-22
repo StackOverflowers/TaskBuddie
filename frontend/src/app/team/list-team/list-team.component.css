@@ -100,3 +100,7 @@ th {
   color: #ffffff;
   opacity: 1; /* Firefox */
 }
+
+.member:hover{
+  cursor: pointer;
+}
