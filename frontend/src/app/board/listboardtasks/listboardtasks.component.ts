@@ -39,24 +39,6 @@ export class ListboardtasksComponent implements OnInit {
   }
 
   ngOnInit(): void {
-<<<<<<< HEAD
-    this.ruta = this.route.params;
-    console.log(this.ruta)
-    this.id=this.ruta._value;
-    console.log(this.id._id)
-    this.ids=this.id._id
-    console.log(this.ids);
-    this._boardService.getBoardTask(this.ids).subscribe(
-      (res)=>{
-        this.taskData = res.task
-        console.log(this.taskData)
-      },
-      (err)=>{
-        this.message = err.error;
-        this.openSnackBarError();
-      }
-    )  
-=======
     this.gettasks();
   }
 
@@ -135,7 +117,6 @@ export class ListboardtasksComponent implements OnInit {
           );
         }
       });
->>>>>>> dev
   }
 
   openSnackBarSuccesfull() {
