@@ -1,3 +1,7 @@
+.bgComponent {
+ background-image: url("../../../assets/img/bg2.png");
+} 
+
 .container {
     display: flex;
     flex-direction: column;

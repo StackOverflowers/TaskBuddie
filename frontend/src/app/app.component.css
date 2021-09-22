@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Lilita+One&family=Open+Sans&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Lilita+One&family=Open+Sans&display=swap%22");
 
 html {
   font-family: "Lilita One";
@@ -8,7 +8,7 @@ html {
   display: flex;
   flex-direction: column;
   height: 100%;
-  
+
 }
 
 mat-drawer{
@@ -17,13 +17,24 @@ mat-drawer{
  
 }
 
+
 mat-drawer-container{
   height: 100%;
-  
+  background-image: url("../../src/assets/img/bg2.png");
+  overflow: auto;
+
+}
+
+.testing{
+  position:fixed;
+  left:0px;
+  bottom:0px;
+  width:100%;
 }
 
 .content{
   margin: 0;
+
 }
 
 
@@ -35,4 +46,3 @@ mat-drawer-container{
   background-color: #810505;
   color: #ffffff;
 }
-
