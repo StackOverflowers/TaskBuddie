@@ -18,7 +18,7 @@ const registerBoard = async (req, res) => {
     id: user._id,
     name: user.name,
     role: "Owner",
-    ranking: "0",
+    ranking: 0,
   });
 
   let imageUrl = "";

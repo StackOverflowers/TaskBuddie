@@ -10,7 +10,7 @@ const saveTask = async (req, res) => {
   let validId = mongoose.Types.ObjectId.isValid(req.user._id);
 
   if (!validId) return res.status(400).send("Invalid id");
-console.log(req.body)
+  
   if (
     !req.body.name ||
     !req.body.description ||
@@ -58,7 +58,7 @@ console.log(req.body)
 
   //falta campo boardId:board._id
 
-  console.log(req.user);
+  
 
   let task = new Task({
     boardId: board._id,
@@ -116,21 +116,49 @@ const updateTask = async (req, res) => {
     });
     if (!taskChange)
       return res.status(400).send("Sorry cant update please search again");
-  } else if (
-    req.body.taskStatus === "in-progress" ||
-    req.body.taskStatus === "to-do"
-  ) {
+  } else if (req.body.taskStatus === "in-progress" || req.body.taskStatus === "to-do") {
     scoreUser = 0;
     status = false;
     let taskCompleted = user.AssignedTasks;
     const board2 = await Board.findById(inactiveTask.boardId);
-    taskCompleted.forEach((tasks) => {
+    taskCompleted.map((tasks) => {
       if (tasks.name == inactiveTask.name) {
+        let acum = 0;
         if (tasks.completed == true) {
           board2.members.map((board) => {
-            if (board.id == req.user._id && board.ranking > 0) {
-              board.ranking--;
-              return board;
+            
+            if (board.id.toString() == req.user._id.toString() && board.ranking > 0) {
+              if(inactiveTask.score === 5){
+                
+                acum += board.ranking - 5 
+                board.ranking = acum
+                console.log(acum)
+                return board;
+              }
+              else if(inactiveTask.score === 4 && board.ranking > 0){
+                acum += board.ranking - 4
+                board.ranking = acum
+                console.log(acum)
+                return board;
+              }
+              else if(inactiveTask.score === 3 && board.ranking > 0){
+                acum += board.ranking - 3 
+                board.ranking = acum
+                console.log(acum)
+                return board;
+              }
+              else if(inactiveTask.score === 2 && board.ranking > 0){
+                acum += board.ranking - 2
+                board.ranking = acum
+                console.log(acum)
+                return board;
+              }
+              else if(inactiveTask.score === 1 && board.ranking > 0){
+                acum += board.ranking - 1
+                board.ranking = acum
+                console.log(acum)
+                return board;
+              }
             } else {
               return board;
             }
@@ -141,19 +169,21 @@ const updateTask = async (req, res) => {
         return tasks;
       }
     });
-    console.log(taskCompleted);
+
     const updateBoard = await Board.findByIdAndUpdate(inactiveTask.boardId, {
       members: board2.members,
     });
 
+    if (!updateBoard)
+      return res.status(400).send("Sorry cant update please try again");
+      
     const updateTask = await User.findByIdAndUpdate(req.user._id, {
       AssignedTasks: taskCompleted,
     });
 
     if (!updateTask) return res.status(400).send("Sorry cant update");
 
-    if (!updateBoard)
-      return res.status(400).send("Sorry cant update please try again");
+    
   }
 
   if (req.user._id != inactiveTask.assignedTo)
@@ -217,15 +247,43 @@ const updateTask = async (req, res) => {
       );
 
       let existe2 = board.members.some(
-        (element) => element.name == req.user.name
+        (element) => element.id.toString() === req.user._id.toString()
       );
 
       if (existe2) {
+        let acum = 0;
         board.members.map((element) => {
-          if (element.id == req.user._id) {
-            element.ranking++;
+          if (element.id.toString() === req.user._id.toString() && inactiveTask.score === 5) {
+            acum += element.ranking += 5
+            element.ranking = acum
+            console.log(acum)
             return element;
-          } else {
+          } 
+          else if(element.id.toString() === req.user._id.toString() && inactiveTask.score === 4){
+            acum += element.ranking += 4
+            element.ranking = acum
+            console.log(acum)
+            return element;
+          }
+          else if(element.id.toString() === req.user._id.toString() && inactiveTask.score === 3){
+            acum += element.ranking += 3
+            element.ranking = acum
+            console.log(acum)
+            return element;
+          }
+          else if(element.id.toString() === req.user._id.toString() && inactiveTask.score === 2){
+            acum += element.ranking += 2
+            element.ranking = acum
+            console.log(acum)
+            return element;
+          }
+          else if(element.id.toString() === req.user._id.toString() && inactiveTask.score === 1){
+            acum += element.ranking += 1
+            element.ranking = acum
+            console.log(acum)
+            return element;
+          }
+          else {
             return element;
           }
         });
@@ -237,7 +295,7 @@ const updateTask = async (req, res) => {
           return res
             .status(400)
             .send("Cant save or the user dont corresponds into this board");
-      }
+      } 
 
       if (existe) {
         const nuevopuntaje = user.EarnedPoints.map((element) => {
@@ -279,14 +337,13 @@ const deleteTask = async (req, res) => {
   if (!validId) return res.status(400).send("Invalid id");
 
   let taskImg = await Task.findById(req.params._id);
-  
 
   if (taskImg.taskStatus === "done")
     return res
       .status(400)
-      .send("Sorry cant Erase that Task its Already Completed");
-
-      
+      .send(
+        "Sorry cant Erase that Task its Already Completedb please changeb the statusb and revoke the task"
+      );
 
   if (taskImg.assigned === true)
     return res.status(400).send("Sorry Please Revoke the task first ");
@@ -306,35 +363,31 @@ const deleteTask = async (req, res) => {
     });
   }
 
-   const user = await User.findById(taskImg.assignedTo);
+  const user = await User.findById(taskImg.assignedTo);
 
-   if(user){
-    if(!user) return res.status(400).send("Sorry")
-   
+  if (user) {
+    if (!user) return res.status(400).send("Sorry");
+
     const indice = user.AssignedTasks.findIndex(
       (element) => element.name == taskImg.name
     );
-  
-    
-  
+
     const arreglo = user.AssignedTasks;
-  
+
     arreglo.splice(indice, 1);
-  
+
     const user2 = await User.findByIdAndUpdate(taskImg.assignedTo, {
       AssignedTasks: arreglo,
     });
-  
+
     if (!user2)
       return res.status(400).send("Sorry the user dont exist please check");
-  
-    
-   }
+  }
 
-   if (array != "Owner")
-      return res
-        .status(400)
-        .send("Sorry you are not the owner of the board please check");
+  if (array != "Owner")
+    return res
+      .status(400)
+      .send("Sorry you are not the owner of the board please check");
 
   taskImg = taskImg.imageUrl;
   taskImg = taskImg.split("/")[4];
@@ -428,7 +481,7 @@ const unassingTask = async (req, res) => {
   if (!task)
     return res.status(400).send("Sorry the task dont exist please check");
 
-  console.log(task);
+  
   if (task.assigned !== true)
     return res.status(400).send(" Sorry the task its not asigned please Check");
 
