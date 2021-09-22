@@ -37,17 +37,38 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSidenavModule } from "@angular/material/sidenav";
 import { MatMenuModule } from "@angular/material/menu";
 import {  MatDividerModule} from "@angular/material/divider";
+<<<<<<< HEAD
+=======
+import {MatDialogModule} from '@angular/material/dialog'; 
+>>>>>>> dev
 
 //servicios
 
 import { BoardService } from '../app/services/board.service';
 import { UserService } from '../app/services/user.service';
 import { TokenInterceptorService } from '../app/services/token-interceptor.service';
-import { TaskService } from "../app/services/task.service";
-import { ListboardtasksComponent } from './board/listboardtasks/listboardtasks.component';
 import { AsignComponent } from './task/asign/asign.component';
+<<<<<<< HEAD
 import { SidenavComponent } from './home/sidenav/sidenav.component';
 import {MatListModule} from '@angular/material/list'; 
+=======
+import { ListboardtasksComponent } from './board/listboardtasks/listboardtasks.component';
+import { UnassignComponent } from './task/unassign/unassign.component';
+import { SidenavComponent } from './home/sidenav/sidenav.component';
+import {MatListModule} from '@angular/material/list'; 
+import { CarouselModule } from 'ngx-owl-carousel-o';
+import { MatTableModule } from '@angular/material/table';
+import { MatSortModule } from '@angular/material/sort';
+import { ProfileComponent } from './home/profile/profile.component';
+import { WelcomeComponent } from './home/welcome/welcome.component';
+import { UpdateBoardComponent } from './board/update-board/update-board.component';
+import { DeleteTasksComponent } from './dialogs/delete-tasks/delete-tasks.component';
+import { RevokeassignmentComponent } from './task/revokeassignment/revokeassignment.component';
+import { SharedBoardsComponent } from './board/shared-boards/shared-boards.component';
+import {DragDropModule} from '@angular/cdk/drag-drop';
+import { SharedprofileComponent } from './user/sharedprofile/sharedprofile.component';
+import { UpdateTaskComponent } from './dialogs/update-task/update-task.component'
+>>>>>>> dev
 
 @NgModule({
   declarations: [
@@ -68,9 +89,22 @@ import {MatListModule} from '@angular/material/list';
     SaveTaskComponent,
     ListTeamComponent,
     AddMemberComponent,
-    ListboardtasksComponent,
     AsignComponent,
+<<<<<<< HEAD
     SidenavComponent,
+=======
+    ListboardtasksComponent,
+    UnassignComponent,
+    SidenavComponent,
+    ProfileComponent,
+    WelcomeComponent,
+    UpdateBoardComponent,
+    DeleteTasksComponent,
+    RevokeassignmentComponent,
+    SharedBoardsComponent,
+    SharedprofileComponent,
+    UpdateTaskComponent,
+>>>>>>> dev
   ],
   imports: [
     BrowserModule,
@@ -92,7 +126,17 @@ import {MatListModule} from '@angular/material/list';
     MatSidenavModule,
     MatMenuModule,
     MatDividerModule,
+<<<<<<< HEAD
     MatListModule
+=======
+    MatListModule,
+    CarouselModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatDialogModule,
+    DragDropModule
+>>>>>>> dev
   ],
   providers: [
     UserService,
@@ -102,7 +146,6 @@ import {MatListModule} from '@angular/material/list';
       useClass: TokenInterceptorService,
       multi: true,
     },
-    TaskService
   ],
   bootstrap: [AppComponent],
 })

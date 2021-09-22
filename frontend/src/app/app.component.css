@@ -3,3 +3,36 @@
 html {
   font-family: "Lilita One";
 }
+
+:host{
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  
+}
+
+mat-drawer{
+  width:190px;
+  background-color: #2b475e;
+ 
+}
+
+mat-drawer-container{
+  height: 100%;
+  
+}
+
+.content{
+  margin: 0;
+}
+
+
+.style-snackBarTrue {
+  background-color: #568003;
+  color: #ffffff;
+}
+.style-snackBarFalse {
+  background-color: #810505;
+  color: #ffffff;
+}
+

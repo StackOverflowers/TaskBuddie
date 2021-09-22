@@ -58,6 +58,9 @@ const addMember = async (req, res) => {
   let member = await Board.findById(req.body.boardId);
   if (!member) return res.status(400).send("Board doesn't exist");
 
+  if (member.userId.toString() !== req.user._id.toString())
+    return res.status(400).send("You have no permission");
+
   let newMember = member.members;
   let data = {
     id: user._id,
@@ -93,6 +96,9 @@ const deleteMember = async (req, res) => {
   let member = await Board.findById(req.body.boardId);
   if (!member) return res.status(400).send("Board doesn't exist");
 
+  if (member.userId.toString() !== req.user._id.toString())
+    return res.status(400).send("You have no permission");
+
   let delMember = member.members;
 
   for (var i = 0; i < delMember.length; i++) {
@@ -108,29 +114,82 @@ const deleteMember = async (req, res) => {
   });
 
   if (!board) return res.status(400).send("Board not found");
-  return res.status(200).send("Member remove");
+  return res.status(200).send({board});
 };
 
 const listBoard = async (req, res) => {
-  let board = await Board.find();
+  let board = await Board.find({ userId: req.user._id });
   if (!board || board.length === 0)
-    return res.status(400).send("You have no assigned tasks");
+    return res.status(400).send("You have no boards created please create a new one");
   return res.status(200).send({ board });
 };
 
 const listBoardMember = async (req, res) => {
-  let board = await Board.find({ members: userId });
+  let user = await User.findById(req.user._id);
+  if (!user) return res.status(400).send("User not found");
 
+
+  let board = await Board.find({ "members.id": user._id });
+
+  let array = [];
+
+  
+
+  let test = board.map(element=>{
+    if(element.userId!=req.user._id){
+      array.push(element);
+    }
+  })
+
+  if(array.length==0) return res.status(400).send("Sorry you No one have shared board with you")
+  
+  
   if (!board || board.length === 0)
     return res.status(400).send("You have no assigned tasks");
-  return res.status(200).send({ board });
+  return res.status(200).send({ array });
 };
+
+const listBoardShared = async (req, res) => {
+  console.log(req.params._id)
+  if(!req.params._id) return res.status(400).send("Sorry please send the fucking id")
+  let user = await User.findById(req.params._id);
+  console.log(user)
+  if (!user) return res.status(400).send("User not found");
+
+  
+
+  let board = await Board.find({ "members.id": user._id });
+
+  console.log(board)
+
+  let array = [];
+
+  
+
+  let test = board.map(element=>{
+    if(element.userId != req.params._id ){
+      array.push(element);
+    }
+  })
+
+  
+  if(array.length==0) return res.status(400).send("Sorry you No one have shared board with you")
+  
+  
+  if (!board || board.length === 0)
+    return res.status(400).send("You have no assigned tasks");
+  return res.status(200).send({ array });
+}
 
 const deleteBoard = async (req, res) => {
   let validId = mongoose.Types.ObjectId.isValid(req.params._id);
   if (!validId) return res.status(400).send("Invalid id");
 
   let taskImg = await Board.findById(req.params._id);
+
+  if (taskImg.userId.toString() !== req.user._id.toString())
+    return res.status(400).send("You have no permission");
+
   taskImg = taskImg.imageUrl;
   taskImg = taskImg.split("/")[4];
   let serverImg = "./uploads/" + taskImg;
@@ -144,8 +203,44 @@ const deleteBoard = async (req, res) => {
   }
 
   return res.status(200).send({ message: "deleted board" });
+};
 
-  return res.status(200).send({ message: "RDdeleted" });
+//Actualiza un board
+const updateBoard = async (req, res) => {
+  let validId = mongoose.Types.ObjectId.isValid(req.body._id);
+  if (!validId) return res.status(400).send("Invalid id");
+
+  if (!req.body.name || !req.body.description)
+    return res.status(400).send("Incomplete data");
+
+  const memberInfo = await Board.findById(req.body._id);
+  if (!memberInfo) return res.status(400).send("Board not found");
+
+  if (memberInfo.userId.toString() !== req.user._id.toString())
+    return res.status(400).send("You have no permission");
+
+  const board = await Board.findByIdAndUpdate(req.body._id, {
+    name: req.body.name,
+    description: req.body.description,
+  });
+  if (!board) return res.status(400).send("Board not found");
+  return res.status(200).send({ board });
+};
+
+
+
+//Lista los miembrios de un board
+const listMember = async (req, res) => {
+  let board = await Board.findById(req.body.boardId);
+  if (!board) return res.status(400).send("Board doesn't exist");
+  let members = board.members;
+  return res.status(200).send({ members });
+};
+
+const getBoard = async (req, res) => {
+  let board = await Board.findById(req.params._id);
+  if (!board) return res.status(400).send("Board doesn't find");
+  return res.status(200).send({ board });
 };
 
 module.exports = {
@@ -155,4 +250,8 @@ module.exports = {
   addMember,
   deleteMember,
   deleteBoard,
+  updateBoard,
+  listMember,
+  getBoard,
+  listBoardShared
 };

@@ -17,13 +17,17 @@ export class UserService {
     return this._http.post<any>(this.env + 'user/registerUser', user);
   }
 
-  
+
   login(user: any) {
     return this._http.post<any>(this.env + 'user/login', user);
   }
 
   loggedIn() {
     return !!localStorage.getItem('token');
+  }
+
+  nameIn() {
+    return localStorage.getItem('name');
   }
 
   getToken() {
@@ -37,19 +41,37 @@ export class UserService {
   logout() {
     localStorage.removeItem('token');
     localStorage.removeItem('role');
-    this._router.navigate(['/login']);
+    localStorage.removeItem('name');
+    localStorage.removeItem('_id');
+    this._router.navigate(['']);
   }
 
   getRole(email: string) {
     return this._http.get<any>(this.env + 'user/getRole/' + email);
   }
 
-  listUser() {
-    return this._http.get<any>(this.env + 'user/listUsers/' );
+  getNombre(email: string) {
+    return this._http.get<any>(this.env + 'user/getNombre/' + email);
+  }
+
+  getId(email: string) {
+    return this._http.get<any>(this.env + 'user/getId/' + email);
+  }
+
+  listUser(name: string) {
+    return this._http.get<any>(this.env + 'user/listUsers/' + name);
+  }
+
+  findUser(_id: string) {
+    return this._http.get<any>(this.env + 'user/findUser/' + _id);
   }
 
   updateUser(user: any) {
     return this._http.put<any>(this.env + 'user/updateUser', user);
+  }
+
+  updatePhoto(user: any) {
+    return this._http.put<any>(this.env + 'user/updatePhoto', user);
   }
 
   deleteUser(user: any) {
@@ -59,7 +81,16 @@ export class UserService {
   registerAdmin(user: any) {
     return this._http.post<any>(this.env + 'user/registerAdmin', user);
   }
-
   
+  listUserAll(){
+    return this._http.get<any>(this.env + 'user/listUsers/');
+  }
 
+  getProfile(){
+    return this._http.get<any>(this.env + 'user/getProfile');
+  }
+  
+  findUserByEmail(user:any){
+    return this._http.post<any>(this.env + 'user/findUserByEmail' , user);
+  }
 }

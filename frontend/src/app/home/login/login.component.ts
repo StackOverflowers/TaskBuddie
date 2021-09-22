@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../services/user.service';
 import { Router } from '@angular/router';
+
 import {
   MatSnackBar,
   MatSnackBarHorizontalPosition,
@@ -14,6 +15,7 @@ import {
 })
 export class LoginComponent implements OnInit {
   loginData: any;
+  registerData: any;
   message: string = '';
   horizontalPosition: MatSnackBarHorizontalPosition = 'end';
   verticalPosition: MatSnackBarVerticalPosition = 'top';
@@ -25,6 +27,7 @@ export class LoginComponent implements OnInit {
     private _snackBar: MatSnackBar
   ) {
     this.loginData = {};
+    this.registerData = {};
   }
 
   ngOnInit(): void {}
@@ -38,8 +41,9 @@ export class LoginComponent implements OnInit {
       this._userService.login(this.loginData).subscribe(
         (res) => {
           localStorage.setItem('token', res.jwtToken);
-          this._router.navigate(['/listBoard']);
+          location.href = '/listBoard';
           this.getRole(this.loginData.email);
+          this.getNomrbe(this.loginData.email);
           this.loginData = {};
         },
         (err) => {
@@ -59,6 +63,48 @@ export class LoginComponent implements OnInit {
         console.log(err);
       }
     );
+  }
+
+  getNomrbe(email: string) {
+    this._userService.getNombre(email).subscribe((res) => {
+      localStorage.setItem('name', res.name);
+    });
+  }
+
+  registerUser() {
+    console.log(this.registerData);
+    if (
+      !this.registerData.name ||
+      !this.registerData.email ||
+      !this.registerData.password
+    ) {
+      this.message = 'Complete all fields before trying to register';
+      this.openSnackBarError();
+      this.registerData = {};
+    } else {
+      this._userService.registerUser(this.registerData).subscribe(
+        (res) => {
+          localStorage.setItem('token', res.jwtToken);
+          location.href = '/saveBoard';
+          this.message = 'Successfull user registration';
+          this.openSnackBarSuccesfull();
+          this.registerData = {};
+        },
+        (err) => {
+          this.message = err.error;
+          this.openSnackBarError();
+        }
+      );
+    }
+  }
+
+  openSnackBarSuccesfull() {
+    this._snackBar.open(this.message, 'X', {
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition,
+      duration: this.durationInSeconds * 1000,
+      panelClass: ['style-snackBarTrue'],
+    });
   }
 
   openSnackBarError() {

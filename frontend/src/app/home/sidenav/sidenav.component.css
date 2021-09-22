@@ -3,21 +3,41 @@
     padding:2.6rem 1rem;
 
 }
+<<<<<<< HEAD
 
 .logo img{
     width:200px;
 
+=======
+.prueba{
+    overflow-x: hidden;
+}
+.logo img{
+    width:150px;
+    
+>>>>>>> dev
 }
 
 .mat-icon{
     vertical-align: center;
     margin-right: 1rem;
+<<<<<<< HEAD
+=======
+    text-decoration: none;
+   
+>>>>>>> dev
 
 }
 
 .mat-divider{
+<<<<<<< HEAD
     border-top-width: 2px;
     border-color: white;
+=======
+    border-top-width: 1px;
+    border-color: white;
+    
+>>>>>>> dev
 }
 
 .mat-list-item {
@@ -26,15 +46,37 @@
     height: 44px !important;
     margin-bottom: 4px;
     margin: 0 8px;
+<<<<<<< HEAD
+=======
+    text-decoration: none;
+    margin-top: 20px;
+    
+>>>>>>> dev
 }
 
 .mat-list-item-content{
     border-radius: 5px;
     margin: 0 8px;
+<<<<<<< HEAD
+=======
+    text-decoration: none;
+   
+}
+
+a{
+    text-decoration: none;
+    text-transform: uppercase;
+    
+    
+>>>>>>> dev
 }
 
 .list-item-active{
     color: #f2f5f7 !important;
+<<<<<<< HEAD
+=======
+    text-decoration: none
+>>>>>>> dev
 }
 
 .mat-subheader{
@@ -42,4 +84,23 @@
     font-size: 0.6rem;
     font-weight: 100;
     letter-spacing: 1px;
+<<<<<<< HEAD
+=======
+    text-decoration: none;
+    
+}
+
+h2 {
+    
+    padding-left: 30px;
+    text-transform: uppercase;
+    
+}
+
+.user{
+    font-size:15px;
+    padding-left: 50px;
+    padding-top: 50px;
+    padding-right: 90px;
+>>>>>>> dev
 }

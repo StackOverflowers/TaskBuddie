@@ -1,26 +1,38 @@
 <div class="bgComponent">
-  <div class="container position-relative">   
-
-    <div  class="row position absolute" >      
-      <div class = "col mt-4" *ngFor="let task of taskData" hideToggle="false" >
-       <a routerLink="listboardtasks/{{task._id}}">{{task.name}}</a>
-        <div class="example-button-container">
-          <button mat-mini-fab class="button" routerLink="/saveTask">
-            New ListTask
-          </button>
-        </div>
-      <mat-card class="example-card" style="width: 20rem;">
-        
-        <mat-card-header>          
-          <mat-card-title>{{ task.name }}</mat-card-title>
-          <mat-card-subtitle> {{ task.description }} </mat-card-subtitle>
-          
-        </mat-card-header>
-        <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
+  <owl-carousel-o [options]="customOptions">
+    <ng-template carouselSlide *ngFor="let board of boardData">
+      <div class="bodyx">
+        <div class="card" >
+          <div class="card-image">
+            <img src="{{board.imageUrl}}" alt="">
+          </div>
+          <div class="card-text">
+            <span class="date">{{board.date |date}}</span>
+            
+            <h2>{{board.name }}</h2>
+            <p>{{board.description}}</p><br>
+            
+          </div>
+          <div class="card-stats">
+            <div class="stat">
+              <mat-icon [routerLink]="['listMembers/', board._id]"> person_pin</mat-icon>
+            </div>
+            <div class="stat border">
+              <mat-icon class="colorUpdate updateIcon"
+              [routerLink]="['/updateBoard/', board._id]" >update</mat-icon>
+            </div>
+            <div class="stat">
+              <mat-icon (click)="deleteBoard(board)"> delete_sweep</mat-icon>
+            </div>
+            <div class="stat border" [routerLink]="['listboardtasks/', board._id]">
+              <mat-icon>task</mat-icon>
+            </div>
+          </div>
        
-      </mat-card>
-    
-      </div>   
-    </div>
-  </div>
+          </div>
+      </div>
+    </ng-template>  
+     
+  </owl-carousel-o>
 </div>
+
