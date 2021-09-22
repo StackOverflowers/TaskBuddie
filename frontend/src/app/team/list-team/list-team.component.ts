@@ -9,6 +9,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { BoardService } from 'src/app/services/board.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-list-team',
@@ -41,7 +42,7 @@ export class ListTeamComponent implements OnInit {
     this._id = '';
     this.memberData = {};
     this.board = {};
-    this.userId=  '';
+    this.userId = '';
     this.member = {};
     this.dataSource = new MatTableDataSource(this.memberData);
   }
@@ -54,7 +55,7 @@ export class ListTeamComponent implements OnInit {
           (res) => {
             this.memberData = res.board.members;
             console.log(this.memberData);
-            
+
             this.dataSource = new MatTableDataSource(this.memberData);
             this.dataSource.paginator = this.paginator;
             this.dataSource.sort = this.sort;
@@ -72,6 +73,7 @@ export class ListTeamComponent implements OnInit {
     );
   }
 
+  /*
   deleteMember(user: any){
     this.userId = user._id;
     this.member = {
@@ -96,6 +98,50 @@ export class ListTeamComponent implements OnInit {
         
       }
     )
+  }
+*/
+
+  deleteMember(user: any) {
+    this.userId = user._id;
+    this.member = {
+      userId: user.id,
+      boardId: this._id,
+    };
+
+    Swal.fire({
+      title: 'Are you sure you want to delete the board?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete!',
+      cancelButtonText: 'No, keep it',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this._boardService.deleteMember(this.member).subscribe(
+          (res) => {
+            let index = this.memberData.indexOf(user);
+            if (index > -1) {
+              this.memberData.splice(index, 1);
+              this.dataSource = new MatTableDataSource(this.memberData);
+              this.message = 'Member Remove';
+              this.openSnackBarSuccesfull();
+
+              Swal.fire(this.message, 'Board Deleted.', 'success');
+            }
+          },
+          (err) => {
+            this.message = err.error;
+            Swal.fire(this.message, 'Cant Delete the board', 'error');
+            console.log(err.error);
+          }
+        );
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire(
+          'Cancelled',
+          'You cancel the process have a nice day',
+          'error'
+        );
+      }
+    });
   }
 
   applyFilter(event: Event) {
