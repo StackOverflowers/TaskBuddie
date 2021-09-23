@@ -89,7 +89,7 @@ form {
 .title {
   color: #fff;
   font-weight: 500;
-  font-size: 1.5rem;
+  font-size: 1.9rem;
   line-height: 1;
   margin-bottom: 0.7rem;
 }
@@ -228,8 +228,8 @@ textarea.input {
 }
 
 .icon {
-  width: 150px;
-  
+  width: 230px;
+  height: 200px;
 }
 
 .social-media {
@@ -388,4 +388,6 @@ textarea.input {
   .btn {
     padding: 0.45rem 1.2rem;
   }
+
+ 
 }

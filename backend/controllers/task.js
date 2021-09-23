@@ -132,31 +132,31 @@ const updateTask = async (req, res) => {
                 
                 acum += board.ranking - 5 
                 board.ranking = acum
-                console.log(acum)
+                //console.log(acum)
                 return board;
               }
               else if(inactiveTask.score === 4 && board.ranking > 0){
                 acum += board.ranking - 4
                 board.ranking = acum
-                console.log(acum)
+                //console.log(acum)
                 return board;
               }
               else if(inactiveTask.score === 3 && board.ranking > 0){
                 acum += board.ranking - 3 
                 board.ranking = acum
-                console.log(acum)
+                //console.log(acum)
                 return board;
               }
               else if(inactiveTask.score === 2 && board.ranking > 0){
                 acum += board.ranking - 2
                 board.ranking = acum
-                console.log(acum)
+                //console.log(acum)
                 return board;
               }
               else if(inactiveTask.score === 1 && board.ranking > 0){
                 acum += board.ranking - 1
                 board.ranking = acum
-                console.log(acum)
+                //console.log(acum)
                 return board;
               }
             } else {
@@ -256,13 +256,13 @@ const updateTask = async (req, res) => {
           if (element.id.toString() === req.user._id.toString() && inactiveTask.score === 5) {
             acum += element.ranking += 5
             element.ranking = acum
-            console.log(acum)
+            //console.log(acum)
             return element;
           } 
           else if(element.id.toString() === req.user._id.toString() && inactiveTask.score === 4){
             acum += element.ranking += 4
             element.ranking = acum
-            console.log(acum)
+            //console.log(acum)
             return element;
           }
           else if(element.id.toString() === req.user._id.toString() && inactiveTask.score === 3){
