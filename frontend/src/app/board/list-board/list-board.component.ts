@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { BoardService } from '../../services/board.service';
 import { OwlOptions } from 'ngx-owl-carousel-o';
+import { ActivatedRoute, Params, Router } from '@angular/router';
+import Swal from 'sweetalert2';
 import {
   MatSnackBar,
   MatSnackBarHorizontalPosition,
@@ -18,19 +20,20 @@ export class ListBoardComponent implements OnInit {
   horizontalPosition: MatSnackBarHorizontalPosition = 'end';
   verticalPosition: MatSnackBarVerticalPosition = 'top';
   durationInSeconds: number = 2;
+  public id: any;
 
   constructor(
     private _boardService: BoardService,
     private _snackBar: MatSnackBar
   ) {
     this.boardData = [];
+    this.id = {};
   }
 
   ngOnInit(): void {
     this._boardService.listBoard().subscribe(
       (res) => {
         this.boardData = res.board;
-        console.log(this.boardData);
       },
       (err) => {
         this.message = err.error;
@@ -40,20 +43,38 @@ export class ListBoardComponent implements OnInit {
   }
 
   deleteBoard(board: any) {
-    this._boardService.deleteBoard(board).subscribe(
-      (res) => {
-        let index = this.boardData.indexOf(board);
-        if (index > -1) {
-          this.boardData.splice(index, 1);
-          this.message = res.message;
-          this.openSnackBarSuccesfull();
-        }
-      },
-      (err) => {
-        this.message = err.error;
-        this.openSnackBarError();
+    Swal.fire({
+      title: 'Are you sure you want to delete the board?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete!',
+      cancelButtonText: 'No, keep it',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this._boardService.deleteBoard(board).subscribe(
+          (res) => {
+            let index = this.boardData.indexOf(board);
+            if (index > -1) {
+              this.boardData.splice(index, 1);
+              this.message = res.message;
+              this.openSnackBarSuccesfull();
+              Swal.fire(this.message, 'Board Deleted.', 'success');
+            }
+          },
+          (err) => {
+            this.message = err.error;
+            Swal.fire(this.message, 'Cant Delete the board', 'error');
+            console.log(err.error);
+          }
+        );
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire(
+          'Cancelled',
+          'You cancel the process have a nice day',
+          'error'
+        );
       }
-    );
+    });
   }
   updateBoard(board: any) {
     this._boardService.deleteBoard(board).subscribe(
@@ -62,6 +83,7 @@ export class ListBoardComponent implements OnInit {
         if (index > -1) {
           this.boardData.splice(index, 1);
           this.message = res.message;
+          Swal.fire(this.message, 'Board Updated.', 'success');
           this.openSnackBarSuccesfull();
         }
       },
@@ -94,7 +116,6 @@ export class ListBoardComponent implements OnInit {
       940: {
         items: 4,
       },
-      
     },
     nav: false,
   };

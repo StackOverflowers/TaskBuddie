@@ -1,8 +1,14 @@
 .bgFooter {
-    background-color: #343338;
-    color: #e1dcdc;
-    position: fixed;
-    width: 100%;
-    bottom: 0;
-    height:auto;
-  }
+  position: fixed;
+  left: 0px;
+  bottom: 0px;
+  width: 100%;
+  background-color: #343338;
+  color: #e1dcdc;
+  padding-left: 150px;
+}
+
+a {
+  text-decoration: none;
+  color: var(--textoblanco);
+}

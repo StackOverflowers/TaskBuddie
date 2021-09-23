@@ -5,6 +5,7 @@ const moment = require("moment");
 const path = require("path");
 const Role = require("../models/role");
 const mongoose = require("mongoose");
+const Board = require("../models/board");
 
 const registerUser = async (req, res) => {
   if (!req.body.name || !req.body.email || !req.body.password)
@@ -99,9 +100,51 @@ const updateUser = async (req, res) => {
   return res.status(200).send({ user });
 };
 
+// Actualizar nombre o password por parte de un usuario normal de la app
+const updateProfile = async (req, res) => {
+  if (!req.body._id || !req.body.name)
+    return res.status(400).send("Incomplete data");
+
+  let pass = "";
+
+  if (req.body.password) {
+    pass = await bcrypt.hash(req.body.password, 10);
+  } else {
+    const userFind = await User.findOne({ email: req.body.email });
+    pass = userFind.password;
+  }
+
+  const user2 = await User.find({ _id: req.body._id });
+
+  let array = [];
+
+  if (user2) {
+    user2.map((element) => {
+      console.log(element.AssignedTasks.username);
+      array = element.AssignedTasks.map((elements) => {
+        if (elements.username != req.body.name) {
+          elements.username = req.body.name;
+          return elements;
+        } else {
+          return elements;
+        }
+      });
+    });
+  }
+
+  const user = await User.findByIdAndUpdate(req.body._id, {
+    name: req.body.name,
+    password: pass,
+    AssignedTasks: array,
+  });
+
+
+  if (!user) return res.status(400).send("Error editing user");
+  return res.status(200).send({ user });
+};
+
 // Actualizar foto de perfil del usuario
 const updatePhoto = async (req, res) => {
-
   if (!req.body._id || !req.files.photo)
     return res.status(400).send("Incomplete data");
 
@@ -224,13 +267,13 @@ const getId = async (req, res) => {
 };
 
 const profile = async (req, res) => {
-  const user = await User.findOne({_id:req.user._id});
-  
-  if(!user) return res.status(400).send("Please Login in the account please");
-  return res.status(200).send({user});
-}
+  const user = await User.findOne({ _id: req.user._id });
 
-const findUser = async (req, res) => {  
+  if (!user) return res.status(400).send("Please Login in the account please");
+  return res.status(200).send({ user });
+};
+
+const findUser = async (req, res) => {
   const user = await User.findOne({ _id: req.params["_id"] })
     .populate("roleId")
     .exec();
@@ -239,15 +282,14 @@ const findUser = async (req, res) => {
   return res.status(200).send({ user });
 };
 
-const findUserByEmail = async(req,res) =>{
-  if(!req.body.email) return res.status(400).send("Incomplete data");
+const findUserByEmail = async (req, res) => {
+  if (!req.body.email) return res.status(400).send("Incomplete data");
 
-  const user = await User.findOne({email: req.body.email});
+  const user = await User.findOne({ email: req.body.email });
   if (!user || user.length === 0)
     return res.status(400).send("User doesn't exists");
   return res.status(200).send({ user });
-}
-
+};
 
 module.exports = {
   registerUser,
@@ -264,4 +306,5 @@ module.exports = {
   updatePhoto,
   getId,
   findUserByEmail,
+  updateProfile,
 };

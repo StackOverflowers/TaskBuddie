@@ -38,7 +38,7 @@ export class SaveBoardComponent implements OnInit {
 
   saveBoard() {
     if (!this.registerData.name || !this.registerData.description) {
-      this.message = 'Failed process: Imcomplete data';
+      this.message = 'Failed process: Incomplete data';
       this.openSnackBarError();
       this.registerData = {};
     } else {
@@ -55,7 +55,7 @@ export class SaveBoardComponent implements OnInit {
           this.message = 'Succes registering your board';
           this.openSnackBarSuccesfull();
           this.registerData = {};
-          this._router.navigate(['/listBoard']);
+          location.href = 'listBoard';
           
           
         },

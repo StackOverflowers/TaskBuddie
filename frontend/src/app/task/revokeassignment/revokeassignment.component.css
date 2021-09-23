@@ -6,8 +6,7 @@
 } 
 .bgComponent {
   -webkit-box-align: center;
-          align-items: center;
-  background-color:  #eb9240; 
+          align-items: center; 
   display: -webkit-box;
   display: flex;
   font-family: "Rajdhani", sans-serif;
@@ -15,6 +14,11 @@
   overflow: hidden;
   -webkit-box-pack: center;
           justify-content: center;
+          -webkit-background-size: cover;
+          -moz-background-size: cover;
+          -o-background-size: cover;
+          background-size: cover;
+          background-image: url("../../../assets/img/bg2.png");
 } 
 .contact-wrapper{
   background:#fff;

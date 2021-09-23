@@ -86,7 +86,7 @@ export class SaveTaskComponent implements OnInit {
       !this.registerData.description ||
       !this.registerData.score
     ) {
-      this.message = 'Failed process: Imcomplete data';
+      this.message = 'Failed process: Incomplete data';
       this.openSnackBarError();
       this.registerData = {};
     } else {

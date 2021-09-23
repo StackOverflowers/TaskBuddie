@@ -45,6 +45,7 @@ export class RegisterComponent implements OnInit {
           this._router.navigate(['/saveBoard']);
           this.message = 'Successfull user registration';
           this.openSnackBarSuccesfull();
+          location.reload();
           this.registerData = {};
         },
         (err) => {

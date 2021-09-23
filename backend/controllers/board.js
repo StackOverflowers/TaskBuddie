@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const fs = require("fs");
 const path = require("path");
 const moment = require("moment");
+const Task = require("../models/task");
 
 const registerBoard = async (req, res) => {
   if (!req.body.name || !req.body.description)
@@ -17,7 +18,7 @@ const registerBoard = async (req, res) => {
     id: user._id,
     name: user.name,
     role: "Owner",
-    ranking: "0",
+    ranking: 0,
   });
 
   let imageUrl = "";
@@ -99,6 +100,8 @@ const deleteMember = async (req, res) => {
   if (member.userId.toString() !== req.user._id.toString())
     return res.status(400).send("You have no permission");
 
+ 
+
   let delMember = member.members;
 
   for (var i = 0; i < delMember.length; i++) {
@@ -133,7 +136,7 @@ const listBoardMember = async (req, res) => {
 
   let array = [];
 
-  console.log()
+  
 
   let test = board.map(element=>{
     if(element.userId!=req.user._id){
@@ -149,6 +152,38 @@ const listBoardMember = async (req, res) => {
   return res.status(200).send({ array });
 };
 
+const listBoardShared = async (req, res) => {
+  console.log(req.params._id)
+  if(!req.params._id) return res.status(400).send("Sorry please send the fucking id")
+  let user = await User.findById(req.params._id);
+  console.log(user)
+  if (!user) return res.status(400).send("User not found");
+
+  
+
+  let board = await Board.find({ "members.id": user._id });
+
+  console.log(board)
+
+  let array = [];
+
+  
+
+  let test = board.map(element=>{
+    if(element.userId != req.params._id ){
+      array.push(element);
+    }
+  })
+
+  
+  if(array.length==0) return res.status(400).send("Sorry No one have shared boards with you")
+  
+  
+  if (!board || board.length === 0)
+    return res.status(400).send("You have no assigned tasks");
+  return res.status(200).send({ array });
+}
+
 const deleteBoard = async (req, res) => {
   let validId = mongoose.Types.ObjectId.isValid(req.params._id);
   if (!validId) return res.status(400).send("Invalid id");
@@ -161,6 +196,10 @@ const deleteBoard = async (req, res) => {
   taskImg = taskImg.imageUrl;
   taskImg = taskImg.split("/")[4];
   let serverImg = "./uploads/" + taskImg;
+
+  const task = await Task.find({ boardId:req.params._id});
+
+  if(task.length > 0 ) return res.status(400).send("Sorry please delete all the tasks of this board to eliminate the board");
 
   let board = await Board.findByIdAndDelete(req.params._id);
   if (!board) return res.status(400).send("Board not found");
@@ -195,6 +234,8 @@ const updateBoard = async (req, res) => {
   return res.status(200).send({ board });
 };
 
+
+
 //Lista los miembrios de un board
 const listMember = async (req, res) => {
   let board = await Board.findById(req.body.boardId);
@@ -219,4 +260,5 @@ module.exports = {
   updateBoard,
   listMember,
   getBoard,
+  listBoardShared
 };

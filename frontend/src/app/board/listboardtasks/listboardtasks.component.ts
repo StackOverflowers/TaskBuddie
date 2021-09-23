@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { TaskService } from '../../services/task.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { DeleteTasksComponent } from "../../dialogs/delete-tasks/delete-tasks.component";
-import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
+import { DeleteTasksComponent } from '../../dialogs/delete-tasks/delete-tasks.component';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { UpdateTaskComponent } from '../../dialogs/update-task/update-task.component';
+import { UserService } from "../../services/user.service";
+import Swal from 'sweetalert2'
 import {
   MatSnackBar,
   MatSnackBarHorizontalPosition,
@@ -24,33 +27,40 @@ export class ListboardtasksComponent implements OnInit {
   _id: String;
   board: Array<string>;
   public reload: any;
+  
   constructor(
     private _taskService: TaskService,
     private _snackBar: MatSnackBar,
     private _arouter: ActivatedRoute,
-    private _dialog: MatDialog
+    private _dialog: MatDialog,
+    private _router: Router,
+    private _userService: UserService
   ) {
     this._id = '';
     this.taskData = [];
     this.board = ['to-do', 'in-progress', 'done'];
-    
   }
 
   ngOnInit(): void {
-    this.gettasks()
-    
-    
+    this.gettasks();
+    this.getprofile();
   }
 
-  
+  getprofile(){
+    this._userService.getProfile().subscribe(
+      (res)=>{
+        this.reload = res.user
+      }
+    )
+  }
 
-  gettasks(){
+  gettasks() {
     this._arouter.params.subscribe((params) => {
       this._id = params['_id'];
       this._taskService.getBoardTask(this._id).subscribe(
         (res) => {
           this.taskData = res.task;
-          console.log(this.taskData)
+          console.log(this.taskData);
         },
         (err) => {
           this.message = err.error;
@@ -61,56 +71,98 @@ export class ListboardtasksComponent implements OnInit {
   }
 
   updateTask(task: any, status: string) {
-    let tempstatus = task.taskStatus;
-    
-    task.taskStatus = status;
-    this._taskService.updateTask(task).subscribe(
-      (res) => {
-        task.status=status;
-        
-      },
-      (err)=>{
-        task.status=tempstatus;
-        this.message = err.error;
-        this.openSnackBarError();
-        setTimeout(function(){
-          location.reload()
-        },2500)
-        
+    console.log(task);
+    if (task.assigned != true) {
+      this.message = 'Sorry please asign this task';
+      this._dialog
+        .open(UpdateTaskComponent, { data: task, width: '500px' })
+        .afterClosed()
+        .subscribe((response) => {
+          if (response) {
+            this._router.navigate(['asign']);
+          } else {
+            this.message = 'Sorry please asign this task';
+            Swal.fire(
+              this.message,
+              'You must assign the task first before you can update it.',
+              'error'
+            );
+            return this.openSnackBarError();
+          }
+        });
+    } else {
+
+      const{_id} = this.reload;
+
+      if(_id != task.assignedTo){
+        this.message = 'Failed process the task its asigned to another person please check'
+        return this.openSnackBarError()
+      }else{
+
+        let tempstatus = task.taskStatus;
+
+        task.taskStatus = status;
+        this._taskService.updateTask(task).subscribe(
+          (res) => {
+            task.status = status;
+          },
+          (err) => {
+            task.status = tempstatus;
+            this.message = err.error;
+            this.openSnackBarError();
+          }
+        );
       }
-    )
+
+      
+    }
   }
 
   drop(event: CdkDragDrop<string[]>) {
     moveItemInArray(this.taskData, event.previousIndex, event.currentIndex);
-    console.log(moveItemInArray)
+    console.log(moveItemInArray);
   }
 
-  deleteTask(task:any){
-    this._dialog.open(DeleteTasksComponent,{data:task,width:'500px'})
-    .afterClosed()
-    .subscribe(response=>{
-      if(response){
-        this._taskService.deleteTask(task).subscribe(
-          (res)=>{
-            let index = this.taskData.indexOf(task);
-            if(index>-1){
-              this.taskData.splice(index,1);
-              this.message=res.message;
+  deleteTask(task: any) {
+    this._dialog
+      .open(DeleteTasksComponent, { data: task, width: '400px' ,})
+      .afterClosed()
+      .subscribe((response) => {
+        if (response) {
+          this._taskService.deleteTask(task).subscribe(
+            (res) => {
+              
+              if(res){
+                let index = this.taskData.indexOf(task);
+              if (index > -1) {
+                this.taskData.splice(index, 1);
+                this.message = res.message;
+                Swal.fire(
+                  'Done',
+                  this.message,
+                  'success'
+                );
+              }
+              }
+            },
+            (err) => {
+              this.message = err.error;
               this.openSnackBarError();
-            
-            
-  
+              Swal.fire(
+                'error',
+                this.message,
+                'error'
+              );
             }
-            
-          },
-          (err)=>{
-            this.message=err.error;
-            this.openSnackBarError();
-          }
-      )
-      }
-    })
+          );
+        }else{
+          Swal.fire(
+            'error',
+            'You cancel the action',
+            'error'
+          );
+        }
+      });
   }
 
   openSnackBarSuccesfull() {
