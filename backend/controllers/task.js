@@ -488,7 +488,7 @@ const unassingTask = async (req, res) => {
   const board = await Board.findOne({ _id: task.boardId });
 
   if (task.taskStatus == "done") {
-    return res.status(400).send("Sorry The Task its Already Completed");
+    return res.status(400).send("Sorry the task its already completed go to your board and change the status to continue");
   }
 
   //console.log(board);

@@ -30,6 +30,7 @@ export class RegisterComponent implements OnInit {
   ngOnInit(): void {}
 
   registerUser() {
+    console.log(this.registerData);
     if (
       !this.registerData.name ||
       !this.registerData.email ||
@@ -42,10 +43,9 @@ export class RegisterComponent implements OnInit {
       this._userService.registerUser(this.registerData).subscribe(
         (res) => {
           localStorage.setItem('token', res.jwtToken);
-          this._router.navigate(['/saveBoard']);
+          location.href = '/listBoard';
           this.message = 'Successfull user registration';
           this.openSnackBarSuccesfull();
-          location.reload();
           this.registerData = {};
         },
         (err) => {
@@ -55,6 +55,7 @@ export class RegisterComponent implements OnInit {
       );
     }
   }
+
 
   openSnackBarSuccesfull() {
     this._snackBar.open(this.message, 'X', {

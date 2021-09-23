@@ -1,6 +1,6 @@
 <div class="bgComponent">
     <div class="contact-wrapper">
-      <div class="left_side">
+      <div class="left_side" >
         <img src="../../../assets/img/logo.png" />
       </div>
       <div class="right_side">
@@ -30,9 +30,9 @@
           </mat-form-field>
           <mat-form-field class="formsito">
             <mat-label>Select The Task</mat-label>
-            <mat-select [(ngModel)]="registerData._idTask" name="task">
+            <mat-select [(ngModel)]="registerData._idTask" name="task" >
               <mat-option
-              *ngFor="let task of taskData"
+              *ngFor="let task of asigned"
               value="{{task._id}}"
               >{{task.name}}</mat-option>
             </mat-select>

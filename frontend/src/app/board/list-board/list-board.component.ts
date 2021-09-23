@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { BoardService } from '../../services/board.service';
 import { OwlOptions } from 'ngx-owl-carousel-o';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import { UserService } from "../../services/user.service";
 import Swal from 'sweetalert2';
 import {
   MatSnackBar,
@@ -21,25 +22,46 @@ export class ListBoardComponent implements OnInit {
   verticalPosition: MatSnackBarVerticalPosition = 'top';
   durationInSeconds: number = 2;
   public id: any;
+  public user: any;
 
   constructor(
     private _boardService: BoardService,
-    private _snackBar: MatSnackBar
+    private _snackBar: MatSnackBar,
+    private _userService: UserService
   ) {
     this.boardData = [];
     this.id = {};
+    this.user = {}
   }
 
   ngOnInit(): void {
+    this.getProfile();
     this._boardService.listBoard().subscribe(
       (res) => {
         this.boardData = res.board;
+        console.log(this.boardData.length)
+        
       },
       (err) => {
         this.message = err.error;
         this.openSnackBarError();
       }
     );
+  }
+
+  getProfile(){
+    interface User{
+      name:string
+    }
+
+    this._userService.getProfile().subscribe(
+      (res)=>{
+        const user:User = res.user;
+        this.user = user
+        console.log(this.user)
+      }
+    )
+
   }
 
   deleteBoard(board: any) {

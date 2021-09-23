@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { TaskService } from "../../services/task.service";
-import { BoardService } from "../../services/board.service";
-import Swal from 'sweetalert2'
+import { TaskService } from '../../services/task.service';
+import { BoardService } from '../../services/board.service';
+import Swal from 'sweetalert2';
 import {
   MatSnackBar,
   MatSnackBarHorizontalPosition,
@@ -11,33 +11,38 @@ import {
 @Component({
   selector: 'app-revokeassignment',
   templateUrl: './revokeassignment.component.html',
-  styleUrls: ['./revokeassignment.component.css']
+  styleUrls: ['./revokeassignment.component.css'],
 })
 export class RevokeassignmentComponent implements OnInit {
-  public boardData:any;
-  public message:string;
-  public search:any;
+  public boardData: any;
+  public message: string;
+  public search: any;
   public taskData: any;
   public userData: any;
+  public asigned: any;
   public registerData: any;
   horizontalPosition: MatSnackBarHorizontalPosition = 'end';
   verticalPosition: MatSnackBarVerticalPosition = 'top';
   durationInSeconds: number = 2;
-  constructor(private _taskService: TaskService , private _boardService: BoardService , private _snackBar: MatSnackBar) {
-    this.boardData={};
-    this.message=""
-    this.search={};
-    this.taskData={};
-    this.userData={};
+  constructor(
+    private _taskService: TaskService,
+    private _boardService: BoardService,
+    private _snackBar: MatSnackBar
+  ) {
+    this.boardData = {};
+    this.message = '';
+    this.search = {};
+    this.taskData = [];
+    this.userData = {};
     this.registerData = {};
-   }
-
-  ngOnInit(): void {
-    this.getBoards()
+    this.asigned = [];
   }
 
+  ngOnInit(): void {
+    this.getBoards();
+  }
 
-  alert(){
+  alert() {
     if (!this.registerData._idUser || !this.registerData._idTask) {
       this.message = 'Failed process please check all the camps';
       this.openSnackBarError();
@@ -48,11 +53,11 @@ export class RevokeassignmentComponent implements OnInit {
         icon: 'warning',
         showCancelButton: true,
         confirmButtonText: 'Yes, unsubscribe!',
-        cancelButtonText: 'No, keep it'
+        cancelButtonText: 'No, keep it',
       }).then((result) => {
         if (result.isConfirmed) {
           this._taskService.UnassignTask(this.registerData).subscribe(
-            (res)=>{
+            (res) => {
               Swal.fire(
                 'unsubscribed!',
                 'Your file has been unsubscribe.',
@@ -60,79 +65,77 @@ export class RevokeassignmentComponent implements OnInit {
               );
               this.listAssigned();
             },
-            (err)=>{
-              Swal.fire(
-                'Sorry you are not the Owner please contact the Owner OR you are the admin please check the asignement module',
-                'Cant unsubscribe the task',
-                'error'
-              );
-              console.log(err.error)
+            (err) => {
+              this.message = err.error;
+              Swal.fire(this.message, 'Cant unsubscribe the task', 'error');
+              console.log(err.error);
             }
-          )
-          
+          );
         } else if (result.dismiss === Swal.DismissReason.cancel) {
           Swal.fire(
             'Cancelled',
             'You cancell the process have a nice day',
             'error'
-          )
+          );
         }
-      })
+      });
     }
-    
-    
   }
-
-
 
   getBoards() {
     this._boardService.listBoard().subscribe(
       (res) => {
         this.boardData = res.board;
-        console.log(this.boardData)
       },
       (err) => {
         this.message = err.error;
-        
       }
     );
   }
 
   listme() {
-    
-
     this._taskService.getTaskMemeber(this.search).subscribe((res) => {
       this.userData = res;
-      
     });
-
-    
   }
 
-  listAssigned(){
-    
+  listAssigned() {
     this._taskService.Unasign(this.registerData).subscribe(
-      
-      (res)=>{
-        this.taskData = res.task
+      (res) => {
+        this.taskData = res.task;
+
+        interface Task {
+          name: string;
+          _id: any;
+          assigned: boolean;
+        }
+
+        function recibirDatos(task: Task[]) {
+          let especifico: any;
+          especifico = task.filter(({ assigned }) => {
+            return assigned != false;
+          });
+          return especifico;
+        }
+
+        this.asigned = recibirDatos(this.taskData);
       },
-      (err)=>{
+      (err) => {
         this.message = err.error;
       }
-    )
+    );
   }
 
-  removeTask(){
-    console.log(this.registerData)
+  removeTask() {
+    console.log(this.registerData);
     this._taskService.UnassignTask(this.registerData).subscribe(
-      (res)=>{
-        console.log(res)
+      (res) => {
         this.listAssigned();
       },
-      (err)=>{
-        console.log(err.error)
+      (err) => {
+        console.log(err.error);
       }
-    )
+    );
   }
 
   openSnackBarSuccesfull() {
@@ -152,5 +155,4 @@ export class RevokeassignmentComponent implements OnInit {
       panelClass: ['style-snackBarFalse'],
     });
   }
-  
 }
