@@ -167,3 +167,34 @@ img {
         width: 10.5%
     }
 }
+.imagensita{
+    border-radius: 1rem;
+}
+.fileUpload{
+    padding-left: 3.1rem;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+.createTaskBtn{
+    height: fit-content;
+    width: fit-content;
+    margin-left: 3rem;      
+}
+.createTask{
+    
+        background-color:#eb9240;
+        color:#fff;
+        cursor: pointer;
+        font-weight: bold;
+        height: 2rem;
+        width: 12rem;
+        border-radius: 1rem;
+        font-size: large;
+        transition:all 300ms ease;
+        font-family: "Rajdhani", sans-serif;
+      
+}
+.createTask:hover{
+    background-color:#364f70;
+    
+}
